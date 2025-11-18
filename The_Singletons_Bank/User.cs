@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-    internal abstract class User
+    public abstract class User
     {
         private string _username;//Behövs detta??????
 
@@ -23,6 +23,7 @@ namespace The_Singletons_Bank
             Password = password;
             
         }
-
+        
+        
     }
 }
