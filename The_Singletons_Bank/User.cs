@@ -18,6 +18,9 @@ namespace The_Singletons_Bank
 
         public bool UserIsBlocked { get; set; } = false;
 
+        public bool IsAdmin { get; set; } = false;
+
+
         
         public User(string username, string password)
         {
@@ -26,12 +29,26 @@ namespace The_Singletons_Bank
             
         }
 
-       
-
-        public  bool PasswordCheck(string password)
+        public User(string username, string password, bool isadmin)
         {
-            //Console.WriteLine($"{password}");
-            if (Password == password)
+            Username = username;
+            Password = password;
+            IsAdmin = isadmin;
+        }
+
+       public bool Admincheck(string password, string username)
+        {
+            if (Password == password && Username == username && IsAdmin==true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public  bool Logincheck(string password, string username)
+        {
+            
+            if (Password == password && Username==username )
             {
                 return true;
             }

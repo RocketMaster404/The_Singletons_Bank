@@ -12,7 +12,7 @@ namespace The_Singletons_Bank
         private static List<User> _users = new List<User>()
         {
            new Customer("olof", "1234"),
-           new Admin("Admin","4321")
+           new Admin("Admin","4321",true)
         };
        
         public static User LogIn()
@@ -22,12 +22,20 @@ namespace The_Singletons_Bank
             Console.WriteLine("Ange Lösenord:");
             string passWord = Console.ReadLine();
             
+            foreach (var user in _users)
+            {
+                if (user.Admincheck(passWord, userName))
+                {
+                    Console.WriteLine("Lyckad Admin inloggning");
+                    return user;
+                }
+            }
             
 
            foreach (var user in _users)
             {
                
-                if (user.PasswordCheck(passWord) )
+                if (user.Logincheck(passWord,userName) )
                 {
                     Console.WriteLine("Lyckad inloggning");
                     return user;

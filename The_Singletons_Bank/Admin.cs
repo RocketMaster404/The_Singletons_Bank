@@ -17,6 +17,11 @@ namespace The_Singletons_Bank
 
         }
 
+        public Admin(string username, string password, bool isadmin) : base(username, password,isadmin)
+        {
+
+        }
+
         public static void CreateUser()
         {
             Console.WriteLine("Ange användarnamn: ");
