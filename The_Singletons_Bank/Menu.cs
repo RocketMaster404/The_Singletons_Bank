@@ -10,15 +10,7 @@ namespace The_Singletons_Bank
    internal class Menu
    {
 
-      public static int GetUserNumberMinMax(int min, int max)
-      {
-         int input;
-         while (!int.TryParse(Console.ReadLine(), out input) || input < min || input > max)
-         {
-            Console.WriteLine($"Du måste ange ett tal mellan {min}-{max}");
-         }
-         return input;
-      }
+     
 
       public static void PrintLogInMenu()
       {
@@ -30,22 +22,23 @@ namespace The_Singletons_Bank
 
       public static void LogInMenuChoice()
       {
-         int input = GetUserNumberMinMax(1, 2);
+
+         int input = Utilities.GetUserNumberMinMax(1, 2);
          switch (input)
          {
             case 1:
-               Console.WriteLine("Ange användare");
-               string logIn = Console.ReadLine().ToLower();
-               if(logIn == "user")
+                    var user = Bank.LogIn();
+              
+               if(user!=null)
                {
                   PrintCustomerMainMenu();
                   CustomerMainMenuChoice();
                }
-               else if(logIn == "admin")
-               {
-                  PrintAdminMainMenu();
-                  AdminMainMenuChoice();
-               }
+               //else if()
+               //{
+               //   PrintAdminMainMenu();
+               //   AdminMainMenuChoice();
+               //}
                   break;
             case 2:
                Console.WriteLine("Avsluta");
@@ -66,7 +59,7 @@ namespace The_Singletons_Bank
 
       public static void CustomerMainMenuChoice()
       {
-         int input = GetUserNumberMinMax(1, 5);
+         int input = Utilities.GetUserNumberMinMax(1, 5);
          switch (input)
          {
             case 1:
@@ -98,7 +91,7 @@ namespace The_Singletons_Bank
 
       public static void AdminMainMenuChoice()
       {
-         int input = GetUserNumberMinMax(1, 3);
+         int input = Utilities.GetUserNumberMinMax(1, 3);
 
          switch (input)
          {
