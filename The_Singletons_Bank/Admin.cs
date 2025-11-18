@@ -25,7 +25,7 @@ namespace The_Singletons_Bank
             string password = Console.ReadLine();
 
             
-            Bank.users.Add(userName, password); //Users bör ej vara publik. Gör metod för att lägga till users i bank-klassen istället
+            //Bank.users.Add(userName, password); //Users bör ej vara publik. Gör metod för att lägga till users i bank-klassen istället
 
         }
     }

@@ -22,22 +22,23 @@ namespace The_Singletons_Bank
 
       public static void LogInMenuChoice()
       {
+
          int input = Utilities.GetUserNumberMinMax(1, 2);
          switch (input)
          {
             case 1:
-               Console.WriteLine("Ange användare");
-               string logIn = Console.ReadLine().ToLower();
-               if(logIn == "user")
+                    var user = Bank.LogIn();
+              
+               if(user!=null)
                {
                   PrintCustomerMainMenu();
                   CustomerMainMenuChoice();
                }
-               else if(logIn == "admin")
-               {
-                  PrintAdminMainMenu();
-                  AdminMainMenuChoice();
-               }
+               //else if()
+               //{
+               //   PrintAdminMainMenu();
+               //   AdminMainMenuChoice();
+               //}
                   break;
             case 2:
                Console.WriteLine("Avsluta");

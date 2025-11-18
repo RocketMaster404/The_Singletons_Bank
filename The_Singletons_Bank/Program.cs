@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Bank.users.Add("Daniel", "123");
+            
 
          RunProgram.Run();
         }

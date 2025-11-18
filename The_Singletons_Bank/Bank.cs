@@ -9,19 +9,56 @@ namespace The_Singletons_Bank
 {
     internal class Bank
     {
-        private static Dictionary<string, string> _users = new Dictionary<string, string>();
-       
-
-        public static void AddUser(string userName, string password)
+        private static List<User> _users = new List<User>()
         {
-            if (userExists)
+           new Customer("olof", "1234"),
+           new Admin("Admin","4321")
+        };
+       
+        public static User LogIn()
+        {
+            Console.WriteLine("Ange användarnamn:");
+            string userName = Console.ReadLine();
+            Console.WriteLine("Ange Lösenord:");
+            string passWord = Console.ReadLine();
+            
+            
+
+           foreach (var user in _users)
             {
-                // felmeddelande
-                return;
+               
+                if (user.PasswordCheck(passWord) )
+                {
+                    Console.WriteLine("Lyckad inloggning");
+                    return user;
+                }
+                
+                    Console.WriteLine("Misslyckad inloggning");
+                
+                
             }
-            _users.Add()
+
+            return null;
         }
 
-       
+
+
+
+
+
+
+
+
+        //public static void AddUser(string userName, string password)
+        //{
+        //    if (userExists)
+        //    {
+        //        // felmeddelande
+        //        return;
+        //    }
+        //    _users.Add()
+        //}
+
+
     }
 }
