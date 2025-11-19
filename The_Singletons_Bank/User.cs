@@ -19,6 +19,7 @@ namespace The_Singletons_Bank
         public bool UserIsBlocked { get; set; } = false;
 
         public bool IsAdmin { get; set; } = false;
+        
 
 
         
