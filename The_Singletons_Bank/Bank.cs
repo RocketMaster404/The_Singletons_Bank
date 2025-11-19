@@ -61,7 +61,7 @@ namespace The_Singletons_Bank
 
             foreach (var user in _users)
             {
-               if (user.Username == userName)
+               if (user.GetUsername() == userName)
                {
                   Console.WriteLine("Användarnamn upptaget");
                   userNameUnique = false;
@@ -90,7 +90,7 @@ namespace The_Singletons_Bank
 
             foreach (var user in _users)
             {
-               if (user.Username == userName)
+               if (user.GetUsername() == userName)
                {
                   Console.WriteLine("Användarnamn upptaget");
                   userNameUnique = false;
