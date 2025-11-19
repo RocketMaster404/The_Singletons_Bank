@@ -15,14 +15,33 @@ namespace The_Singletons_Bank
            new Admin("Admin","4321",true)
         };
 
+        public static bool LogInActive;
+
+        public static bool userExists(string username)
+        {
+            foreach (var user in _users)
+            {
+                if (user.Username == username)
+                {
+                    return true;
+                }
+               
+            }
+            return false;
+        }
         public static User LogIn()
         {
-            for (int tries = 4; tries > 0; tries--)
+            while (true)
             {
-               
-
                 Console.WriteLine("Ange användarnamn:");
                 string userName = Console.ReadLine();
+                bool check=userExists(userName);
+
+                if (check == false)
+                {
+                    Console.WriteLine("Användaren finns inte. Försök igen");
+                    continue;
+                }
                 Console.WriteLine("Ange Lösenord:");
                 string passWord = Console.ReadLine();
 
@@ -30,14 +49,14 @@ namespace The_Singletons_Bank
                 {
                     if (user.Admincheck(passWord, userName))
                     {
-                        if (user.Username==userName&&user.UserIsBlocked == true)
+                        if (user.Username == userName && user.UserIsBlocked == true)
                         {
-                            
+
                             break;
                         }
                         Console.WriteLine("Lyckad Admin inloggning");
                         return user;
-                        
+
                     }
                 }
 
@@ -59,25 +78,24 @@ namespace The_Singletons_Bank
                     {
                         if (user.LoginAttempts == 1)
                         {
-                           user.UserIsBlocked = true;
+                            user.UserIsBlocked = true;
                             Console.WriteLine($"Användare {user.Username} är låst. Var god kontakta administratör");
                             return user;
-                            
+
                         }
                         user.LoginAttempts--;
-                        Console.WriteLine($"Fel lösenord för {user.Username}\nDu har {user.LoginAttempts} försök kvar. ");
+                        Console.Write($"Fel lösenord för {user.Username}, Du har ");
+                        Utilities.startColoring(ConsoleColor.Red,ConsoleColor.Black);
+                        Console.Write($"{user.LoginAttempts}");
+                        Console.ResetColor();
+                        Console.Write(" försök kvar.\n");
                         break;
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Misslyckad inloggning");
                     }
 
                 }
 
             }
-                return null;
+            
         }
 
         public void AddCustomer()
