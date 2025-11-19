@@ -7,107 +7,115 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-   internal class Menu
-   {
+    internal class Menu
+    {
 
-     
 
-      public static void PrintLogInMenu()
-      {
-         Console.WriteLine("Singletons Bank - since 1807\n");
-         Console.WriteLine("1. Logga in");
-         Console.WriteLine("2. Avsluta");
-         Console.Write("Ange val: ");
-      }
 
-      public static void LogInMenuChoice()
-      {
+        public static void PrintLogInMenu()
+        {
+            Console.WriteLine("Singletons Bank - since 1807\n");
+            Console.WriteLine("1. Logga in");
+            Console.WriteLine("2. Avsluta");
+            Console.Write("Ange val: ");
+        }
 
-         int input = Utilities.GetUserNumberMinMax(1, 2);
-         switch (input)
-         {
-            case 1:
+        public static void LogInMenuChoice()
+        {
+
+            int input = Utilities.GetUserNumberMinMax(1, 2);
+            switch (input)
+            {
+                case 1:
                     var user = Bank.LogIn();
-              
-               if(user!=null)
-               {
-                  PrintCustomerMainMenu();
-                  CustomerMainMenuChoice();
-               }
-               //else if()
-               //{
-               //   PrintAdminMainMenu();
-               //   AdminMainMenuChoice();
-               //}
-                  break;
-            case 2:
-               Console.WriteLine("Avsluta");
-               break;
-         }
 
-      }
-      public static void PrintCustomerMainMenu()
-      {
-         Console.WriteLine("Meny");
-         Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
-         Console.WriteLine("2. Överföring"); // gör undermeny
-         Console.WriteLine("3. Skapa konto"); // Gör undermeny
-         Console.WriteLine("4. Lån"); // gör under meny
-         Console.WriteLine("5. Logga ut");
-         Console.Write("Ange val: ");
-      }
+                    if (user != null) // We need to fix so that these 2 options actually gets choosen depending on if the logged in user is admin or not
+                    {
+                        PrintAdminMainMenu();
+                        AdminMainMenuChoice();
+                        //PrintCustomerMainMenu();
+                        //CustomerMainMenuChoice();
+                    }
+                    //else if()
+                    //{
+                    //   PrintAdminMainMenu();
+                    //   AdminMainMenuChoice();
+                    //}
+                    break;
+                case 2:
+                    Console.WriteLine("Avsluta");
+                    break;
+            }
 
-      public static void CustomerMainMenuChoice()
-      {
-         int input = Utilities.GetUserNumberMinMax(1, 5);
-         switch (input)
-         {
-            case 1:
-               Console.WriteLine("Kontoöversikt");
-               break;
-            case 2:
-               Console.WriteLine("Överföring");
-               break;
-            case 3:
-               Console.WriteLine("Skapa konto");
-               break;
-            case 4:
-               Console.WriteLine("Lån");
-               break;
-            case 5:
-               Console.WriteLine("Logga ut");
-               break;
-         }
+        }
+        public static void PrintCustomerMainMenu()
+        {
+            Console.WriteLine("Meny");
+            Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
+            Console.WriteLine("2. Överföring"); // gör undermeny
+            Console.WriteLine("3. Skapa konto"); // Gör undermeny
+            Console.WriteLine("4. Lån"); // gör under meny
+            Console.WriteLine("5. Logga ut");
+            Console.Write("Ange val: ");
+        }
 
-      }
+        public static void CustomerMainMenuChoice()
+        {
+            int input = Utilities.GetUserNumberMinMax(1, 5);
+            switch (input)
+            {
+                case 1:
+                    Console.WriteLine("Kontoöversikt");
+                    break;
+                case 2:
+                    Console.WriteLine("Överföring");
+                    break;
+                case 3:
+                    Console.WriteLine("Skapa konto");
+                    break;
+                case 4:
+                    Console.WriteLine("Lån");
+                    break;
+                case 5:
+                    Console.WriteLine("Logga ut");
+                    break;
+            }
 
-      public static void PrintAdminMainMenu()
-      {
-         Console.WriteLine("Admin Meny\n");
-         Console.WriteLine("1. Skapa användare");
-         Console.WriteLine("2. Växelkurs");
-         Console.WriteLine("3. Logga ut");
-      }
+        }
 
-      public static void AdminMainMenuChoice()
-      {
-         int input = Utilities.GetUserNumberMinMax(1, 3);
+        public static void PrintAdminMainMenu()
+        {
+            Console.WriteLine("Admin Meny\n");
+            Console.WriteLine("1. Skapa användare");
+            Console.WriteLine("2. Växelkurs");
+            Console.WriteLine("3. UnBlockAccount"); // I have added this choise [Simon, 2025-11-19]
+            Console.WriteLine("4. Logga ut");
+        }
 
-         switch (input)
-         {
-            case 1:
-               Console.WriteLine("1. Skapa användare");
-               break;
-            case 2:
-               Console.WriteLine("2. Växelkurs");
-               break;
-            case 3:
-               Console.WriteLine("3. Logga ut");
-               break;
-         }
+        public static void AdminMainMenuChoice()
+        {
+            int input = Utilities.GetUserNumberMinMax(1, 3);
 
-         
-      }
+            switch (input)
+            {
+                case 1:
+                    Console.WriteLine("1. Skapa användare");
+                    break;
+                case 2:
+                    Console.WriteLine("2. Växelkurs");
+                    break;
+                case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
+                    Console.WriteLine("3. UnBlockAccount");
+                    Admin.UnBlockAccount();
+
+                    break;
+                case 4:
+                    Console.WriteLine("4. Logga ut");
+                    break;
+            }
+
+
+        }
 
 
 
@@ -115,5 +123,5 @@ namespace The_Singletons_Bank
 
 
 
-   }
+    }
 }

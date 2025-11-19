@@ -9,15 +9,24 @@ namespace The_Singletons_Bank
 {
    internal class Bank
    {
-      private static List<User> _users = new List<User>()
+      private static List<User> _users = new List<User>() 
         {
            new Customer("olof", "1234"),
            new Admin("Admin","4321",true)
         };
 
-      public static User LogIn()
+        public static List<User> GetUsers()
+        {
+            return _users;
+        }
+
+        public static User LogIn()
       {
-         Console.WriteLine("Ange användarnamn:");
+            // Temporrary thigny mahjign
+            Customer firstCustomer = _users[0] as Customer;
+            firstCustomer.UserIsBlocked = true;
+            // REMPORTAR
+            Console.WriteLine("Ange användarnamn:");
          string userName = Console.ReadLine();
          Console.WriteLine("Ange Lösenord:");
          string passWord = Console.ReadLine();
