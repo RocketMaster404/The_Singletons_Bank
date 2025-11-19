@@ -29,7 +29,7 @@ namespace The_Singletons_Bank
             case 1:
                     var user = Bank.LogIn();
               
-               if(user!=null)
+               if(user!=null&&user.UserIsBlocked!=true)
                {
                   PrintCustomerMainMenu();
                   CustomerMainMenuChoice();
@@ -39,10 +39,14 @@ namespace The_Singletons_Bank
                //   PrintAdminMainMenu();
                //   AdminMainMenuChoice();
                //}
+               
                   break;
             case 2:
                Console.WriteLine("Avsluta");
                break;
+
+               
+
          }
 
       }

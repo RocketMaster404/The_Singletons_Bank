@@ -8,10 +8,13 @@ namespace The_Singletons_Bank
 {
    internal class RunProgram
    {
+       
       public static void Run()
       {
-         Menu.PrintLogInMenu();
-         Menu.LogInMenuChoice();
+            
+                Menu.PrintLogInMenu();
+                Menu.LogInMenuChoice();
+            
       }
    }
 }

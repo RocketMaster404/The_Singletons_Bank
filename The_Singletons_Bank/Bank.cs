@@ -7,106 +7,137 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-   internal class Bank
-   {
-      private static List<User> _users = new List<User>()
+    internal class Bank
+    {
+        private static List<User> _users = new List<User>()
         {
            new Customer("olof", "1234"),
            new Admin("Admin","4321",true)
         };
 
-      public static User LogIn()
-      {
-         Console.WriteLine("Ange användarnamn:");
-         string userName = Console.ReadLine();
-         Console.WriteLine("Ange Lösenord:");
-         string passWord = Console.ReadLine();
-
-         foreach (var user in _users)
-         {
-            if (user.Admincheck(passWord, userName))
+        public static User LogIn()
+        {
+            for (int tries = 4; tries > 0; tries--)
             {
-               Console.WriteLine("Lyckad Admin inloggning");
-               return user;
-            }
-         }
-
-
-         foreach (var user in _users)
-         {
-
-            if (user.Logincheck(passWord, userName))
-            {
-               Console.WriteLine("Lyckad inloggning");
-               return user;
-            }
-
-            Console.WriteLine("Misslyckad inloggning");
-
-
-         }
-
-         return null;
-      }
-
-      public void AddCustomer()
-      {
-         bool userNameUnique = true;
-         Console.WriteLine("Skapa kundkort\n");
-         string userName;
-         do
-         {
-            Console.WriteLine("Ange användarnamn: ");
-            userName = Console.ReadLine();
-
-            foreach (var user in _users)
-            {
-               if (user.Username == userName)
-               {
-                  Console.WriteLine("Användarnamn upptaget");
-                  userNameUnique = false;
-               }
                
+
+                Console.WriteLine("Ange användarnamn:");
+                string userName = Console.ReadLine();
+                Console.WriteLine("Ange Lösenord:");
+                string passWord = Console.ReadLine();
+
+                foreach (var user in _users)
+                {
+                    if (user.Admincheck(passWord, userName))
+                    {
+                        if (user.Username==userName&&user.UserIsBlocked == true)
+                        {
+                            
+                            break;
+                        }
+                        Console.WriteLine("Lyckad Admin inloggning");
+                        return user;
+                        
+                    }
+                }
+
+                foreach (var user in _users)
+                {
+                    if (user.Username == userName && user.UserIsBlocked == true)
+                    {
+                        Console.WriteLine("Användare blockerad. Var god kontakta administratör");
+                        return user;
+                    }
+
+                    if (user.Logincheck(passWord, userName))
+                    {
+                        Console.WriteLine("Lyckad inloggning");
+                        return user;
+                    }
+
+                    else if (user.Username == userName)
+                    {
+                        if (user.LoginAttempts == 1)
+                        {
+                           user.UserIsBlocked = true;
+                            Console.WriteLine($"Användare {user.Username} är låst. Var god kontakta administratör");
+                            return user;
+                            
+                        }
+                        user.LoginAttempts--;
+                        Console.WriteLine($"Fel lösenord för {user.Username}\nDu har {user.LoginAttempts} försök kvar. ");
+                        break;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Misslyckad inloggning");
+                    }
+
+                }
+
             }
+                return null;
+        }
 
-         } while (!userNameUnique);
-
-         Console.WriteLine("Ange användarens lösenord: ");
-         string password = Console.ReadLine();
-
-         var customer = new Customer(userName, password);
-         _users.Add(customer);
-         Console.WriteLine($"Användare: {userName} har skapats");
-      }
-      public void AddAdminAccount()
-      {
-         bool userNameUnique = true;
-         Console.WriteLine("Skapa Adminkonto\n");
-         string userName;
-         do
-         {
-            Console.WriteLine("Ange användarnamn: ");
-            userName = Console.ReadLine();
-
-            foreach (var user in _users)
+        public void AddCustomer()
+        {
+            bool userNameUnique = true;
+            Console.WriteLine("Skapa kundkort\n");
+            string userName;
+            do
             {
-               if (user.Username == userName)
-               {
-                  Console.WriteLine("Användarnamn upptaget");
-                  userNameUnique = false;
-               }
-               
-            }
+                Console.WriteLine("Ange användarnamn: ");
+                userName = Console.ReadLine();
 
-         } while (!userNameUnique);
+                foreach (var user in _users)
+                {
+                    if (user.Username == userName)
+                    {
+                        Console.WriteLine("Användarnamn upptaget");
+                        userNameUnique = false;
+                    }
 
-         Console.WriteLine("Ange användarens lösenord: ");
-         string password = Console.ReadLine();
+                }
 
-         var admin = new Admin(userName, password, true);
-         _users.Add(admin);
-         Console.WriteLine($"Admin: {userName} har skapats");
-      }
+            } while (!userNameUnique);
+
+            Console.WriteLine("Ange användarens lösenord: ");
+            string password = Console.ReadLine();
+
+            var customer = new Customer(userName, password);
+            _users.Add(customer);
+            Console.WriteLine($"Användare: {userName} har skapats");
+        }
+        public void AddAdminAccount()
+        {
+            bool userNameUnique = true;
+            Console.WriteLine("Skapa Adminkonto\n");
+            string userName;
+            do
+            {
+                Console.WriteLine("Ange användarnamn: ");
+                userName = Console.ReadLine();
+
+                foreach (var user in _users)
+                {
+                    if (user.Username == userName)
+                    {
+                        Console.WriteLine("Användarnamn upptaget");
+                        userNameUnique = false;
+                    }
+
+                }
+
+            } while (!userNameUnique);
+
+            Console.WriteLine("Ange användarens lösenord: ");
+            string password = Console.ReadLine();
+
+            var admin = new Admin(userName, password, true);
+            _users.Add(admin);
+            Console.WriteLine($"Admin: {userName} har skapats");
+        }
 
 
 
@@ -116,16 +147,16 @@ namespace The_Singletons_Bank
 
 
 
-      //public static void AddUser(string userName, string password)
-      //{
-      //    if (userExists)
-      //    {
-      //        // felmeddelande
-      //        return;
-      //    }
-      //    _users.Add()
-      //}
+        //public static void AddUser(string userName, string password)
+        //{
+        //    if (userExists)
+        //    {
+        //        // felmeddelande
+        //        return;
+        //    }
+        //    _users.Add()
+        //}
 
 
-   }
+    }
 }
