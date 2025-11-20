@@ -45,14 +45,14 @@ namespace The_Singletons_Bank
          return number;
       }
 
-      public void ShowAccount (Account account) 
+      public static void ShowAccount (Account account) 
       {
          Console.WriteLine($"Kontoöversikt\n");
          Console.WriteLine($"Kontonummer: {account._accountNumber}");
          Console.WriteLine($"Saldo: {account._balance} {account._currency}");
       }
 
-      public  void CreateAccount(User user) // Behöver fixas så att man adderar till users lista
+      public  static void CreateAccount(Customer user) 
       {
          Console.WriteLine("Skapa konto");
          Console.WriteLine("1. Konto i SEK");
@@ -67,21 +67,21 @@ namespace The_Singletons_Bank
                var accountSEK = new Account(1000, "SEK");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountSEK);
-               // Lägg till konto till users lista
+               user.AddToAccountList(accountSEK);
                break;
                
             case 2:
                var accountUSD = new Account(10, "USD");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountUSD);
-               // Lägg till konto till users lista
+               user.AddToAccountList(accountUSD);
                break;
 
             case 3:
                var accountEUR = new Account(10, "EUR");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountEUR);
-               // Lägg till konto till users lista
+               user.AddToAccountList(accountEUR);
                break;
 
          }
