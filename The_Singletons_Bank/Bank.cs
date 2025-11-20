@@ -134,8 +134,13 @@ namespace The_Singletons_Bank
             string userName;
             do
             {
-                Console.WriteLine("Ange användarnamn: ");
-                userName = Console.ReadLine();
+               if (user.GetUsername() == userName)
+               {
+                  Console.WriteLine("Användarnamn upptaget");
+                  userNameUnique = false;
+               }
+               
+            }
 
                 foreach (var user in _users)
                 {
@@ -145,7 +150,15 @@ namespace The_Singletons_Bank
                         userNameUnique = false;
                     }
 
-                }
+            foreach (var user in _users)
+            {
+               if (user.GetUsername() == userName)
+               {
+                  Console.WriteLine("Användarnamn upptaget");
+                  userNameUnique = false;
+               }
+               
+            }
 
             } while (!userNameUnique);
 
