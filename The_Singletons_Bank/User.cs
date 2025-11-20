@@ -17,6 +17,7 @@ namespace The_Singletons_Bank
         public bool UserIsBlocked { get; set; } = false;
 
         public bool IsAdmin { get; set; } = false;
+        
 
         List<T> accounts = new List<T> { }; // Ska innehålla accounts från accounts klassen
         List<T> savingAccounts = new List<T> { }; // Ska innehålla savingAccounts från accounts klassen
