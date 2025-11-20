@@ -27,6 +27,11 @@ namespace The_Singletons_Bank
          _accounts.Add(account);
       }
 
+      public void AddToSavingAccountList(SavingAccount account)
+      {
+         _savingAccounts.Add(account);
+      }
+
       public static void ShowCustomerAccounts(Customer user)
       {
          if (user._accounts.Count == 0)
@@ -40,11 +45,18 @@ namespace The_Singletons_Bank
          }
       }
 
+      public static void ShowCustomerSavingAccounts(Customer user)
+      {
+         if (user._savingAccounts.Count == 0)
+         {
+            Console.WriteLine("Du har inga aktiva sparkonton");
+         }
 
-
-
-
-
+         foreach (var account in user._savingAccounts)
+         {
+            SavingAccount.ShowSavingAccountInfo(account);
+         }
+      }
 
    }
 }
