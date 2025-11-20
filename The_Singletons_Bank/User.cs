@@ -14,7 +14,7 @@ namespace The_Singletons_Bank
 
         private string _password { get; set; } 
 
-        public int LoginAttempts { get; set; } = 0;
+        public int LoginAttempts { get; set; } = 3;
 
         public bool UserIsBlocked { get; set; } = false;
 
