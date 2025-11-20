@@ -95,7 +95,8 @@ namespace The_Singletons_Bank
             Console.WriteLine("Admin Meny\n");
             Console.WriteLine("1. Skapa användare");
             Console.WriteLine("2. Växelkurs");
-            Console.WriteLine("3. Logga ut");
+            Console.WriteLine("3. UnBlockAccount"); // I have added this choise [Simon, 2025-11-19]
+            Console.WriteLine("4. Logga ut");
         }
 
         public static void AdminMainMenuChoice()
@@ -110,8 +111,13 @@ namespace The_Singletons_Bank
                 case 2:
                     Console.WriteLine("2. Växelkurs");
                     break;
-                case 3:
-                    Console.WriteLine("3. Logga ut");
+                case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
+                    Console.WriteLine("3. UnBlockAccount");
+                    Admin.UnBlockAccount();
+
+                    break;
+                case 4:
+                    Console.WriteLine("4. Logga ut");
                     break;
             }
 
