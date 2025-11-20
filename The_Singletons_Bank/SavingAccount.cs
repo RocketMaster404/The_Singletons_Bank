@@ -8,16 +8,22 @@ namespace The_Singletons_Bank
 {
    internal class SavingAccount : Account
    {
-      private double _interestRate { get; set; }
+      private static double _interestRate { get; set; } = 1.4;
 
       public SavingAccount(decimal balance):base(balance,"SEK")
       {
          
       }
 
-      public void CreateSavingAccount(User user) // Måste adderas till users listan
+      public double GetInterest()
       {
-         Console.WriteLine($"Skapa sparkonto\n Ränta: {_interestRate}");
+         return _interestRate;
+      }
+
+      public static void CreateSavingAccount(Customer user) // Måste adderas till users listan
+      {
+         
+         Console.WriteLine($"Skapa sparkonto med ränta {_interestRate}");
          Console.WriteLine("Vill du skapa ett konto? y/n");
          string input = Console.ReadLine().ToLower();
 
@@ -26,11 +32,20 @@ namespace The_Singletons_Bank
             var savingAccount = new SavingAccount(0);
             Console.WriteLine($"Du har skapat ett sparkonto");
             ShowAccount(savingAccount);
-            // Lägg till det till users lista
+            user.AddToSavingAccountList(savingAccount);
+           
          }
 
          
 
+      }
+
+      public static void ShowSavingAccountInfo(Account account)
+      {
+         Console.WriteLine($"Sparkonto");
+         Console.WriteLine($"Kontonummer: {account.GetAccountNumber()}");
+         Console.WriteLine($"Saldo: {account.GetBalance()} Kr");
+         Console.WriteLine("**************************");
       }
 
    }
