@@ -8,11 +8,13 @@ namespace The_Singletons_Bank
 {
     internal class Customer:User
     {
+      List<Account> accounts; 
+      List<SavingAccount> savingAccounts; 
 
-
-        public Customer(string username, string password) :base(username,password)
+      public Customer(string username, string password) :base(username,password)
         {
-            
+         accounts = new List<Account>();
+         savingAccounts = new List<SavingAccount>();
         }
 
       

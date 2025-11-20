@@ -46,10 +46,10 @@ namespace The_Singletons_Bank
 
             foreach (User user in _users)
             {
-                if(user.Username == username)
+                if(user.GetUsername() == username)
                 {
                     user.UserIsBlocked = false;
-                    Console.WriteLine($"Is user blocked? : {user.Username} {user.UserIsBlocked}");
+                    Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
                 }
             }
         }
