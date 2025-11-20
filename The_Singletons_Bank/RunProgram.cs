@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-   internal class RunProgram
-   {
-      public static void Run()
-      {
-         Menu.PrintLogInMenu();
-         Menu.LogInMenuChoice();
-      }
-   }
+    internal class RunProgram
+    {
+
+        public static void Run()
+        {
+
+            Menu.PrintLogInMenu();
+            Menu.LogInMenuChoice();
+
+        }
+    }
 }

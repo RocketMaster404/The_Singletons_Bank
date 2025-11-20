@@ -29,22 +29,29 @@ namespace The_Singletons_Bank
                 case 1:
                     var user = Bank.LogIn();
 
-                    if (user != null) // We need to fix so that these 2 options actually gets choosen depending on if the logged in user is admin or not
+                    if (user != null && user.UserIsBlocked != true)//LogIn-logiken följer med hit
                     {
-                        PrintAdminMainMenu();
-                        AdminMainMenuChoice();
-                        //PrintCustomerMainMenu();
-                        //CustomerMainMenuChoice();
+                        PrintCustomerMainMenu();
+                        CustomerMainMenuChoice();
                     }
                     //else if()
                     //{
                     //   PrintAdminMainMenu();
                     //   AdminMainMenuChoice();
                     //}
+                    else
+                    {
+                        
+                        RunProgram.Run();
+                    }
+
                     break;
                 case 2:
                     Console.WriteLine("Avsluta");
                     break;
+
+
+
             }
 
         }
