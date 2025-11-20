@@ -8,8 +8,7 @@ namespace The_Singletons_Bank
 {
    internal class Account
    {
-      private static List<int> usedAccountNumbers = new(); // OBS! Måste vara statisk annars skapas en ny varje gång
-      // Dictionary keyValue som valuta?
+      private static List<int> usedAccountNumbers = new(); 
       private int _accountNumber { get; set; }
       private decimal _balance { get; set; }
       private string _currency { get; set; } = "SEK";
@@ -53,7 +52,7 @@ namespace The_Singletons_Bank
          Console.WriteLine($"Saldo: {account._balance} {account._currency}");
       }
 
-      public  Account CreateAccount()
+      public  void CreateAccount(User user) // Behöver fixas så att man adderar till users lista
       {
          Console.WriteLine("Skapa konto");
          Console.WriteLine("1. Konto i SEK");
@@ -68,24 +67,26 @@ namespace The_Singletons_Bank
                var accountSEK = new Account(1000, "SEK");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountSEK);
-               return accountSEK;
+               // Lägg till konto till users lista
+               break;
                
             case 2:
                var accountUSD = new Account(10, "USD");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountUSD);
-               return accountUSD;
-               
+               // Lägg till konto till users lista
+               break;
+
             case 3:
                var accountEUR = new Account(10, "EUR");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountEUR);
-               return accountEUR;
- 
+               // Lägg till konto till users lista
+               break;
+
          }
 
-         return null;
-
+         
       }
 
 
