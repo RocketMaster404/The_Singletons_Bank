@@ -21,6 +21,17 @@ namespace The_Singletons_Bank
           
       }
 
+      public int GetAccountNumber()
+      {
+         return _accountNumber;
+      }
+
+      public decimal GetBalance()
+      {
+         return _balance;
+      }
+      
+
 
       public int GenerateAccountNumber()
       {
@@ -47,10 +58,13 @@ namespace The_Singletons_Bank
 
       public static void ShowAccount (Account account) 
       {
-         Console.WriteLine($"Kontoöversikt\n");
+         Console.WriteLine($"Konto");
          Console.WriteLine($"Kontonummer: {account._accountNumber}");
          Console.WriteLine($"Saldo: {account._balance} {account._currency}");
+         Console.WriteLine("**************************");
       }
+
+      
 
       public  static void CreateAccount(Customer user) 
       {

@@ -82,13 +82,15 @@ namespace The_Singletons_Bank
          {
             case 1:
                Customer.ShowCustomerAccounts(user);
+               Customer.ShowCustomerSavingAccounts(user);
                Console.ReadKey();
                break;
             case 2:
                Console.WriteLine("Överföring");
                break;
             case 3:
-               Account.CreateAccount(user);
+               PrintCreateAccountMenu();
+               CreateAccountMenuChoice(user);
                break;
             case 4:
                Console.WriteLine("Lån");
@@ -131,6 +133,26 @@ namespace The_Singletons_Bank
                break;
          }
 
+
+      }
+
+      public static void PrintCreateAccountMenu()
+      {
+         Console.WriteLine("1. Skapa konto");
+         Console.WriteLine("2. Skapa sparkonto");
+      }
+      public  static void CreateAccountMenuChoice(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 2);
+         switch (input)
+         {
+            case 1:
+               Account.CreateAccount(user);
+               break;
+            case 2:
+               SavingAccount.CreateSavingAccount(user);
+               break;
+         }
 
       }
 
