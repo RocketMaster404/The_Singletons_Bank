@@ -38,6 +38,7 @@ namespace The_Singletons_Bank
             IsAdmin = isadmin;
         }
 
+      
        public bool Admincheck(string password, string username)
         {
             if (_password == password && _username == username && IsAdmin==true)
@@ -76,6 +77,7 @@ namespace The_Singletons_Bank
         {
 
         }
+
 
     }
 }
