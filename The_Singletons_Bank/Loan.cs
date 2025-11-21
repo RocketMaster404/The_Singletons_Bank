@@ -9,7 +9,7 @@ namespace The_Singletons_Bank
     internal class Loan
     {
 
-        public decimal Interestrate { get; private set; } = 1.4m;
+        public decimal Interestrate { get; private set; }=2.4m;
 
         private decimal Loanamount { get; set; }
 
@@ -57,12 +57,7 @@ namespace The_Singletons_Bank
                 Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate/100) * loan}Kr\n" +
                     $"Godkänner du detta vilkor? (Y/N)");
 
-                string choice = Console.ReadLine();
-                while (choice != "y" || choice != "n")
-                {
-                    Console.WriteLine("Ange (Y) eller (N)");
-
-                }
+                string choice=Utilities.GetUserChoiceYN();
                 if (choice == "y")
                 {
                     Loan loan1 = new Loan(owner, Interestrate, loan);
@@ -73,7 +68,7 @@ namespace The_Singletons_Bank
                     return loan1;
 
                 }
-                else if (choice == "n")
+                else 
                 {
                     Console.WriteLine("Låneförfrågan avbruten.");
                     return null;
@@ -82,10 +77,10 @@ namespace The_Singletons_Bank
             }
             else
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan");
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
                 return null;
             }
-            return null;
+           
 
         }
 

@@ -8,6 +8,26 @@ namespace The_Singletons_Bank
 {
     internal class Utilities
     {
+        public static string GetUserChoiceYN()
+        {
+            string choice = Console.ReadLine().ToLower();
+            while (choice != "y" || choice != "n")
+            {
+                Console.WriteLine("Ange (Y) eller (N)");
+
+            }
+            if (choice == "y")
+            {
+               
+                return "y";
+
+            }
+            else 
+            {
+                return "n";
+            }
+        }
+
         public static int GetUserNumberMinMax(int min, int max)
         {
             int input;
