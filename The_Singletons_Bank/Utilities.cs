@@ -10,21 +10,21 @@ namespace The_Singletons_Bank
     {
         public static string GetUserChoiceYN()
         {
-            string choice = Console.ReadLine().ToLower();
-            while (choice != "y" || choice != "n")
+            while (true)
             {
                 Console.WriteLine("Ange (Y) eller (N)");
+                string choice = Console.ReadLine().ToLower();
 
-            }
-            if (choice == "y")
-            {
-               
-                return "y";
+                if (choice == "y")
+                {
 
-            }
-            else 
-            {
-                return "n";
+                    return "y";
+
+                }
+                else if (choice == "n")
+                {
+                    return "n";
+                }
             }
         }
 
