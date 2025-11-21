@@ -24,6 +24,7 @@ namespace The_Singletons_Bank
 
         public static void ShowLoanMenu(Customer owner)
         {
+            Console.Clear();
             Console.WriteLine("1.Visa lån");
             Console.WriteLine("2.Ta nytt lån");
             Console.WriteLine("3.Gå tillbaka");
@@ -33,6 +34,7 @@ namespace The_Singletons_Bank
             {
                 case 1:
                     Console.WriteLine("lånelista");
+                    //owner._loans.show()
                     break;
 
                 case 2:
@@ -41,6 +43,7 @@ namespace The_Singletons_Bank
                     break;
 
                 default:
+                    Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
                     break;
             }
 
@@ -57,15 +60,16 @@ namespace The_Singletons_Bank
             if (ok)
             {
                 Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate / 100) * loanamount}Kr\n" +
-                    $"Godkänner du detta vilkor? (Y/N)");
+                    $"Godkänner du detta vilkor?");
 
                 string choice = Utilities.GetUserChoiceYN();
                 if (choice == "y")
                 {
                     Loan loan = new Loan(owner, Interestrate, loanamount);
-                    Console.WriteLine($"Du har lånat {loanamount} till en ränta av {Interestrate}%");
+                    Console.WriteLine($"Du har lånat {loanamount}SEK till en ränta av {Interestrate}%");
                     //Console.WriteLine("Välj konto för insättning:");
                     //transaction.Send(loan1.Loanamount); Send money to correct account with transactionclass - Daniel [21/11-25]
+                    owner._loans.Add(loan);
                     return loan;
                 }
                 else
