@@ -93,7 +93,7 @@ namespace The_Singletons_Bank
                CreateAccountMenuChoice(user);
                break;
             case 4:
-                    Loan.ShowLoanMenu();
+                    Loan.ShowLoanMenu(user);
                break;
             case 5:
                Console.WriteLine("Logga ut");

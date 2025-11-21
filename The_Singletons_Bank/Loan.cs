@@ -9,7 +9,7 @@ namespace The_Singletons_Bank
     internal class Loan
     {
 
-        public decimal Interestrate { get; private set; }=2.4m;
+        public static decimal Interestrate { get; private set; } = 2.4m;//Interest is now static.... should it? 
 
         private decimal Loanamount { get; set; }
 
@@ -22,71 +22,67 @@ namespace The_Singletons_Bank
 
         }
 
-        //public decimal Showinterestrate()
-        //{
-        //    return Interestrate;
-        //}
-
-        public static void ShowLoanMenu()
+        public static void ShowLoanMenu(Customer owner)
         {
             Console.WriteLine("1.Visa lån");
             Console.WriteLine("2.Ta nytt lån");
-            int choice = Utilities.GetUserNumberMinMax(1, 2);
+            Console.WriteLine("3.Gå tillbaka");
+            int choice = Utilities.GetUserNumberMinMax(1, 3);
 
-            if (choice == 1)
+            switch (choice)
             {
-                //CreateLoan();
+                case 1:
+                    Console.WriteLine("lånelista");
+                    break;
+
+                case 2:
+                    Console.WriteLine("Ange önskat lånebelopp:");
+                    CreateLoan(owner);
+                    break;
+
+                default:
+                    break;
             }
+
+
 
         }
 
-        public Loan CreateLoan(Customer owner)
+        public static Loan CreateLoan(Customer owner)
         {
-            Console.WriteLine("Hur mycket vill du låna?");
+            decimal loanamount = Utilities.GetUserNumber();
 
-            decimal loan;
-            while (!decimal.TryParse(Console.ReadLine(), out loan))
+            bool ok = Loangranted(loanamount, owner.ShowBalance());
+
+            if (ok)
             {
-                Console.WriteLine("Ange heltal i tKr");
-            }
-
-            bool ok = Loangranted(loan, owner.ShowBalance());
-
-            if (ok == true)
-            {
-                Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate/100) * loan}Kr\n" +
+                Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate / 100) * loanamount}Kr\n" +
                     $"Godkänner du detta vilkor? (Y/N)");
 
-                string choice=Utilities.GetUserChoiceYN();
+                string choice = Utilities.GetUserChoiceYN();
                 if (choice == "y")
                 {
-                    Loan loan1 = new Loan(owner, Interestrate, loan);
-                    Console.WriteLine($"Du har lånat {loan} till en ränta av {Interestrate}%");
-
+                    Loan loan = new Loan(owner, Interestrate, loanamount);
+                    Console.WriteLine($"Du har lånat {loanamount} till en ränta av {Interestrate}%");
                     //Console.WriteLine("Välj konto för insättning:");
                     //transaction.Send(loan1.Loanamount); Send money to correct account with transactionclass - Daniel [21/11-25]
-                    return loan1;
-
+                    return loan;
                 }
-                else 
+                else
                 {
-                    Console.WriteLine("Låneförfrågan avbruten.");
+                    Console.WriteLine("Låneförfrågan avbruten.\nTryck på valfri tangent för att gå tillbaka...");
+                    Console.ReadLine();
                     return null;
                 }
-
             }
             else
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
+                    $"Tryck på valfri tangent för att gå tillbaka...");
+                Console.ReadLine();
                 return null;
             }
-           
-
         }
-
-
-
-
         public static bool Loangranted(decimal loanRequest, decimal balance)
         {
 
@@ -98,36 +94,6 @@ namespace The_Singletons_Bank
         }
 
 
-        //internal double Interestrate;
 
-
-        //public static void TakeLoan(Account user)
-        //{
-        //    decimal loanlimit=user.ShowAccBalance();
-        //    LoanLimit = Loanrequest(loanlimit);
-
-        //    if (LoanLimit = true)
-        //    {
-        //        Console.WriteLine($"Ditt lån har blivit beviljat.\nDu har lånat -{loan}Kr");
-        //         =  + loan;
-
-        //    }
-
-        //    else
-        //    {
-        //        Console.WriteLine($"Du kan inte låna mer än" + { account.balance}
-        //        *5 + "\nDitt lån har blivit nekat");
-        //    }
-        //}
-
-        //public static bool Loanrequest(decimal loanRequest)
-        //{
-        //    decimal balance =;
-        //    if (loanRequest >= (balance * 5))
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
     }
 }
