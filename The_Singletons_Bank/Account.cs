@@ -30,10 +30,20 @@ namespace The_Singletons_Bank
       {
          return _balance;
       }
-      
+
+      public void AddMoney(decimal ammount)
+      {
+          _balance += ammount;
+      }
+
+      public void RemoveMoney(decimal ammount)
+      {
+            _balance -= ammount;
+        }
 
 
-      public int GenerateAccountNumber()
+
+        public int GenerateAccountNumber()
       {
          Random random = new Random();
          bool uniqueNumber;

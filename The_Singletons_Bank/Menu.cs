@@ -87,6 +87,8 @@ namespace The_Singletons_Bank
                break;
             case 2:
                Console.WriteLine("Överföring");
+               PrintTransferMenu();
+               TransferMenuChoice(user);
                break;
             case 3:
                PrintCreateAccountMenu();
@@ -136,7 +138,27 @@ namespace The_Singletons_Bank
 
       }
 
-      public static void PrintCreateAccountMenu()
+        public static void PrintTransferMenu()
+        {
+            Console.WriteLine("1. Internal Överföring");
+            Console.WriteLine("2. External Överföring");
+        }
+        public static void TransferMenuChoice(Customer user)
+        {
+            int input = Utilities.GetUserNumberMinMax(1, 2);
+            switch (input)
+            {
+                case 1:
+                    Transaction.InternalTransfer(user);
+                    break;
+                case 2:
+                    Transaction.ExternalTransfer(user);
+                    break;
+            }
+
+        }
+
+        public static void PrintCreateAccountMenu()
       {
          Console.WriteLine("1. Skapa konto");
          Console.WriteLine("2. Skapa sparkonto");
