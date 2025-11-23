@@ -109,15 +109,17 @@ namespace The_Singletons_Bank
 
                         // Lite lätt fast, osäker hur jag får mottagarens konton och deras värde :(
 
-                        if(ammountToSend > accounts[accountPicked].GetBalance())
+                        if(ammountToSend < accounts[accountPicked].GetBalance())
                         {
-                            List<User> _users = Bank.GetUsers();
-                            foreach (User user1 in _users)
-                            {
-                                if (user1.GetUsername() == recipient)
+                            List<User> _users = Bank.GetUsers(); //User user1 in _users
+                            for (int i = 0; i < _users.Count; i++)
+                            {                     
+                                if (recipient == _users[i].GetUsername())
                                 {
-                                    
-                                    
+                                    Console.WriteLine($"Found user: {_users[i].GetUsername()} sending the money to him now");
+
+                                    //_users[i].
+                                    //Osäker hur man hittar kontots accounts. jag kan hitta dens username men jag kan inte få tillgång till Customer functionen GetAccountList
                                 }
                             }
                         }
