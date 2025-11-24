@@ -13,14 +13,14 @@ namespace The_Singletons_Bank
 
         private decimal Loanamount { get; set; }
 
-
-
         public Loan(Customer owner, decimal interestrate, decimal loanamount)
         {
             Interestrate = interestrate;
             Loanamount = loanamount;
-
         }
+
+
+
 
         public static void ShowLoanMenu(Customer owner)
         {
@@ -55,12 +55,10 @@ namespace The_Singletons_Bank
 
 
         }
-
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
         }
-
         public static Loan CreateLoan(Customer owner)
         {
             decimal loanamount = Utilities.GetUserNumber();
