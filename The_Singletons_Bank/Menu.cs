@@ -95,7 +95,7 @@ namespace The_Singletons_Bank
                CreateAccountMenuChoice(user);
                break;
             case 4:
-               Console.WriteLine("Lån");
+                    Loan.ShowLoanMenu(user);
                break;
             case 5:
                Console.WriteLine("Logga ut");
