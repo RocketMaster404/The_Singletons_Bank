@@ -37,29 +37,20 @@ namespace The_Singletons_Bank
 
                   if (user != null && user.UserIsBlocked != true && user is Customer customer)//LogIn-logiken följer med hit
                   {
-                     Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
-                     PrintCustomerMainMenu();
-                     CustomerMainMenuChoice(customer);
-                  }
-                  //else if()
-                  //{
-                  //   PrintAdminMainMenu();
-                  //   AdminMainMenuChoice();
-                  //}
-                  else
-                  {
+                     RunProgram.RunCustomerProgram(customer);
 
-                     RunProgram.Run();
                   }
+                  else if (user != null && user.UserIsBlocked != true && user is Admin admin)
+                  {
+                     RunProgram.RunAdminProgram(admin);
+                  }
+
                   Console.ReadKey();
                }
                break;
             case 2:
-               Console.WriteLine("Avsluta");
+               Console.WriteLine("Programmet avslutas!");
                break;
-
-
-
 
          }
 
@@ -113,7 +104,7 @@ namespace The_Singletons_Bank
          Console.WriteLine("4. Logga ut");
       }
 
-      public static void AdminMainMenuChoice()
+      public static void AdminMainMenuChoice(Admin admin)
       {
          int input = Utilities.GetUserNumberMinMax(1, 3);
 
@@ -121,6 +112,17 @@ namespace The_Singletons_Bank
          {
             case 1:
                Console.WriteLine("1. Skapa användare");
+               Console.WriteLine("2. Skapa Admin");
+               int choice = Utilities.GetUserNumberMinMax(1, 2);
+               if (choice == 1)
+               {
+                  Bank.AddCustomer();
+               }
+               else if (choice == 2)
+               {
+                  Bank.AddAdminAccount();
+               }
+
                break;
             case 2:
                Console.WriteLine("2. Växelkurs");
@@ -163,7 +165,7 @@ namespace The_Singletons_Bank
          Console.WriteLine("1. Skapa konto");
          Console.WriteLine("2. Skapa sparkonto");
       }
-      public  static void CreateAccountMenuChoice(Customer user)
+      public static void CreateAccountMenuChoice(Customer user)
       {
          int input = Utilities.GetUserNumberMinMax(1, 2);
          switch (input)

@@ -76,6 +76,11 @@ namespace The_Singletons_Bank
          Console.WriteLine("**************************");
       }
 
+      public void changeBalance(decimal balance)
+      {
+         _balance = balance;
+      }
+
       
 
       public  static void CreateAccount(Customer user) 
