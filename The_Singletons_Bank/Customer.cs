@@ -10,14 +10,16 @@ namespace The_Singletons_Bank
     {
         private List<Account> _accounts;
         private List<SavingAccount> _savingAccounts;
-        public List<Loan> _loans { get; set; }
+        public List<Loan> _loans;
 
         public Customer(string username, string password) : base(username, password)
         {
             _accounts = new List<Account>();
             _savingAccounts = new List<SavingAccount>();
+            _loans = new List<Loan>();
         }
 
+        
         public List<Account> GetAccountList()
         {
             return _accounts;

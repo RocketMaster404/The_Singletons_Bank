@@ -33,8 +33,13 @@ namespace The_Singletons_Bank
             switch (choice)
             {
                 case 1:
-                    Console.WriteLine("lånelista");
-                    //owner._loans.show()
+                    Console.WriteLine("Mina lån\n");
+                    foreach (Loan loan in owner._loans)
+                    {
+                        Utilities.DashDivide();
+                        Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
+                        Utilities.DashDivide();
+                    }
                     break;
 
                 case 2:
@@ -49,6 +54,11 @@ namespace The_Singletons_Bank
 
 
 
+        }
+
+        public decimal ShowLoanInterestrate()
+        {
+            return Interestrate;
         }
 
         public static Loan CreateLoan(Customer owner)
