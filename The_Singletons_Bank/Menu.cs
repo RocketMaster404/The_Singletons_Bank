@@ -142,10 +142,11 @@ namespace The_Singletons_Bank
         {
             Console.WriteLine("1. Internal Överföring");
             Console.WriteLine("2. External Överföring");
+            Console.WriteLine("3. Se historiken");
         }
         public static void TransferMenuChoice(Customer user)
         {
-            int input = Utilities.GetUserNumberMinMax(1, 2);
+            int input = Utilities.GetUserNumberMinMax(1, 3);
             switch (input)
             {
                 case 1:
@@ -153,6 +154,9 @@ namespace The_Singletons_Bank
                     break;
                 case 2:
                     Transaction.ExternalTransfer(user);
+                    break;
+                case 3:
+                    Transaction.PrintTransactionLogs();
                     break;
             }
 

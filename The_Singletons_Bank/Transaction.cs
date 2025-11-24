@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,21 @@ namespace The_Singletons_Bank
 {
     internal class Transaction
     {
+        private static Queue<string> _transactionQueue = new Queue<string>();
+        
+        public static void PrintTransactionLogs()
+        {
+            foreach (var transaction in _transactionQueue)
+            {
+                Console.WriteLine(transaction);
+            }
+            Console.ReadKey();
+        }
+        public static void TransactionLogger(decimal ammountSent, int bankNummer1, string currency1, int bankNummer2)
+        {
+            string time = DateTime.Now.ToString();
+            _transactionQueue.Enqueue($"Account {bankNummer1} sent {ammountSent}{currency1} to {bankNummer2} | Time:{time}");
+        }
         public static void InternalTransfer(Customer user)
         {
             //As long as this is true the loop will continue
@@ -48,7 +64,10 @@ namespace The_Singletons_Bank
                         {
                             accounts[accountSender ].RemoveMoney(ammountToSend);
                             accounts[accountRecipitent].AddMoney(ammountToSend);
-                           Console.WriteLine("Uppdaterad konto lista:");
+                        //Save to log function thingy mahjing
+                        TransactionLogger(ammountToSend, accounts[accountSender].GetAccountNumber(), accounts[accountSender].GetCurrency(), accounts[accountRecipitent].GetAccountNumber());
+                           
+                            Console.WriteLine("Uppdaterad konto lista:");
                             for (int i = 0; i < accounts.Count; i++)
                             {
                                 decimal balance = accounts[i].GetBalance();
@@ -63,7 +82,7 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Du försöker skicka mer pengar än som finns på kontot");
                     }
 
-
+                    
 
                     }
 
