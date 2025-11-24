@@ -10,7 +10,7 @@ namespace The_Singletons_Bank
    {
       private static double _interestRate { get; set; } = 1.4;
 
-      public SavingAccount(decimal balance):base(balance,"SEK")
+      public SavingAccount(string name,decimal balance):base(name,balance,"SEK")
       {
          
       }
@@ -29,7 +29,9 @@ namespace The_Singletons_Bank
 
          if(input == "y")
          {
-            var savingAccount = new SavingAccount(0);
+            Console.WriteLine("Ange namnet på ditt konto: ");
+            string name = Console.ReadLine();
+            var savingAccount = new SavingAccount(name,0);
             Console.WriteLine($"Du har skapat ett sparkonto");
             ShowAccount(savingAccount);
             user.AddToSavingAccountList(savingAccount);
@@ -42,7 +44,7 @@ namespace The_Singletons_Bank
 
       public static void ShowSavingAccountInfo(Account account)
       {
-         Console.WriteLine($"Sparkonto");
+         Console.WriteLine($"Sparkonto: {account.Name}");
          Console.WriteLine($"Kontonummer: {account.GetAccountNumber()}");
          Console.WriteLine($"Saldo: {account.GetBalance()} Kr");
          Console.WriteLine("**************************");
