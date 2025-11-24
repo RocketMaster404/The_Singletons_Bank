@@ -11,6 +11,8 @@ namespace The_Singletons_Bank
     internal class Transaction
     {
         private static Queue<string> _transactionQueue = new Queue<string>();
+
+        
         
         public static void PrintTransactionLogs()
         {
