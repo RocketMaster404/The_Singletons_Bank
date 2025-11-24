@@ -98,7 +98,7 @@ namespace The_Singletons_Bank
          }
       }
 
-      public void AddCustomer()
+      public static void AddCustomer()
       {
          bool userNameUnique = true;
          Console.WriteLine("Skapa kundkort\n");
@@ -129,7 +129,7 @@ namespace The_Singletons_Bank
          Console.WriteLine($"Användare: {userName} har skapats");
       }
 
-      public void AddAdminAccount()
+      public static void AddAdminAccount()
       {
          bool userNameUnique = true;
          Console.WriteLine("Skapa Adminkonto\n");

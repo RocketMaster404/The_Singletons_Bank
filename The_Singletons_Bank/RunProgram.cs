@@ -16,5 +16,18 @@ namespace The_Singletons_Bank
             Menu.LogInMenuChoice();
 
         }
+
+      public static void RunCustomerProgram(Customer customer)
+      {
+         Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
+         Menu.PrintCustomerMainMenu();
+         Menu.CustomerMainMenuChoice(customer);
+      }
+
+      public static void RunAdminProgram(Admin admin)
+      {
+         Menu.PrintAdminMainMenu();
+         Menu.AdminMainMenuChoice(admin);
+      }
     }
 }
