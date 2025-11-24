@@ -8,14 +8,14 @@ namespace The_Singletons_Bank
 {
    internal class SavingAccount : Account
    {
-      private static double _interestRate { get; set; } = 1.4;
+      private static decimal _interestRate { get; set; } = 1.4m;
 
       public SavingAccount(decimal balance):base(balance,"SEK")
       {
          
       }
 
-      public double GetInterest()
+      public decimal GetInterest()
       {
          return _interestRate;
       }
@@ -38,6 +38,14 @@ namespace The_Singletons_Bank
 
          
 
+      }
+
+      public void IncreaseBalance()
+      {
+         decimal balance = GetBalance();
+         decimal newBalance = balance * (1 + _interestRate / 100);
+         changeBalance(newBalance);
+         
       }
 
       public static void ShowSavingAccountInfo(Account account)
