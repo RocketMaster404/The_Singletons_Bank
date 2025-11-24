@@ -8,13 +8,15 @@ namespace The_Singletons_Bank
 {
    internal class Account
    {
-      private static List<int> usedAccountNumbers = new(); 
+      private static List<int> usedAccountNumbers = new();
+      public string Name { get; set; } = string.Empty;
       private int _accountNumber { get; set; }
       private decimal _balance { get; set; }
       private string _currency { get; set; } = "SEK";
 
-      public Account(decimal balance, string currency)
+      public Account(string name,decimal balance, string currency)
       {
+         Name = name;
          _accountNumber = GenerateAccountNumber();
          _balance = balance;
          _currency = currency;
@@ -58,7 +60,7 @@ namespace The_Singletons_Bank
 
       public static void ShowAccount (Account account) 
       {
-         Console.WriteLine($"Konto");
+         Console.WriteLine($"Konto: {account.Name}");
          Console.WriteLine($"Kontonummer: {account._accountNumber}");
          Console.WriteLine($"Saldo: {account._balance} {account._currency}");
          Console.WriteLine("**************************");
@@ -74,25 +76,32 @@ namespace The_Singletons_Bank
          Console.WriteLine("3. Konto i EUR");
          Console.Write("Ange valuta: ");
          int input = Utilities.GetUserNumberMinMax(1, 3);
+         string name;
 
          switch (input)
          {
             case 1:
-               var accountSEK = new Account(1000, "SEK");
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               var accountSEK = new Account(name,1000, "SEK");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountSEK);
                user.AddToAccountList(accountSEK);
                break;
                
             case 2:
-               var accountUSD = new Account(10, "USD");
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               var accountUSD = new Account(name,10, "USD");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountUSD);
                user.AddToAccountList(accountUSD);
                break;
 
             case 3:
-               var accountEUR = new Account(10, "EUR");
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               var accountEUR = new Account(name,10, "EUR");
                Console.WriteLine("Konto skapat\n");
                ShowAccount(accountEUR);
                user.AddToAccountList(accountEUR);
