@@ -11,9 +11,10 @@ namespace The_Singletons_Bank
 
         public static void Run()
         {
-
+            Utilities.AsciiArtPrinter(true);
             Menu.PrintLogInMenu();
             Menu.LogInMenuChoice();
+            
 
         }
     }
