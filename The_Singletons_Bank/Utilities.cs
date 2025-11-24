@@ -8,6 +8,10 @@ namespace The_Singletons_Bank
 {
     internal class Utilities
     {
+        public static void DashDivide()
+        {
+            Console.WriteLine("_________________________________________________________________________________________");
+        }
         public static string GetUserChoiceYN()
         {
             while (true)
