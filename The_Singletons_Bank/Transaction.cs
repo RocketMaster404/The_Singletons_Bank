@@ -49,6 +49,7 @@ namespace The_Singletons_Bank
                     {
                         Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
                         transferInProgress = false;
+                        
                     }
                     else
                     {
