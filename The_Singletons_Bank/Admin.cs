@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace The_Singletons_Bank
 {
@@ -11,7 +12,7 @@ namespace The_Singletons_Bank
     {
         //public bool IsAdmin = true;
 
-
+        public static Dictionary<Customer, decimal> Loantickets = new Dictionary<Customer, decimal>();
 
         public Admin(string username, string password) : base(username, password)
         {
@@ -20,7 +21,23 @@ namespace The_Singletons_Bank
 
         public Admin(string username, string password, bool isadmin) : base(username, password, isadmin)
         {
+           
+        }
 
+        //public void DeQueueLoans(int choice)
+        //{
+        //    Loantickets.Remove(choice);
+        //}
+        public static Loan HandleLoanRequest(Customer owner,decimal loanrequest)
+        {
+            Console.Write("Sätt ränta:");
+            decimal loanRequest = loanrequest;
+            decimal setInterest=Utilities.GetUserNumber();
+
+            Loan loan = new Loan(owner, setInterest, loanRequest);
+
+            decimal interest;
+            return loan;
         }
 
         public static void CreateUser()
@@ -52,6 +69,13 @@ namespace The_Singletons_Bank
                     Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
                 }
             }
+        }
+
+        //__________________________________________________________________________________________
+
+        public void HandleLoanRequest()
+        {
+
         }
     }
     

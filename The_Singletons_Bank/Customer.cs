@@ -11,15 +11,40 @@ namespace The_Singletons_Bank
         private List<Account> _accounts;
         private List<SavingAccount> _savingAccounts;
         public List<Loan> _loans;
+        public List<String> _inbox;
 
-        public Customer(string username, string password) : base(username, password)
+        public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
         {
             _accounts = new List<Account>();
             _savingAccounts = new List<SavingAccount>();
             _loans = new List<Loan>();
+            _inbox = new List<string>;
+
         }
 
-        
+        public void ShowInbox()
+        {
+            Console.WriteLine("Dina ärenden:");
+            int counter = 1;
+            foreach (string letter in _inbox)
+            {
+                Utilities.DashDivide();
+                Console.WriteLine(counter + ".");
+                Console.WriteLine(letter);
+                Utilities.DashDivide();
+                counter++;
+            }
+        }
+
+        public void AcceptLoan()
+        {
+            int choice = Utilities.GetUserNumberMinMax(1, _inbox.Count());
+
+            _inbox.Remove(_inbox[choice - 1]);
+
+
+        }
+
         public List<Account> GetAccountList()
         {
             return _accounts;
@@ -61,6 +86,7 @@ namespace The_Singletons_Bank
             }
         }
 
+        public void
 
 
 

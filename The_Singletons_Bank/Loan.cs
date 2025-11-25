@@ -9,95 +9,132 @@ namespace The_Singletons_Bank
     internal class Loan
     {
 
-        public static decimal Interestrate { get; private set; } = 2.4m;//Interest is now static.... should it? 
+        private decimal Interestrate { get; set; } = 2.4m;//Interest is now static.... should it? Bör ej va static
 
+        //private int LoanNumber { get; set; }
         private decimal Loanamount { get; set; }
 
         public Loan(Customer owner, decimal interestrate, decimal loanamount)
         {
             Interestrate = interestrate;
             Loanamount = loanamount;
+            //LoanNumber = loannumber;//Later we should add function to number/name loans
         }
 
 
 
 
-        public static void ShowLoanMenu(Customer owner)
-        {
-            Console.Clear();
-            Console.WriteLine("1.Visa lån");
-            Console.WriteLine("2.Ta nytt lån");
-            Console.WriteLine("3.Gå tillbaka");
-            int choice = Utilities.GetUserNumberMinMax(1, 3);
+        //public static void ShowLoanMenu(Customer owner)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("1.Visa lån");
+        //    Console.WriteLine("2.Ta nytt lån");
+        //    Console.WriteLine("3.Gå tillbaka");
+        //    int choice = Utilities.GetUserNumberMinMax(1, 3);
 
-            switch (choice)
-            {
-                case 1:
-                    Console.WriteLine("Mina lån\n");
-                    foreach (Loan loan in owner._loans)
-                    {
-                        Utilities.DashDivide();
-                        Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
-                        Utilities.DashDivide();
-                    }
-                    break;
+        //    switch (choice)
+        //    {
+        //        case 1:
+        //            Console.WriteLine("Mina lån\n");
+        //            foreach (Loan loan in owner._loans)
+        //            {
+        //                Utilities.DashDivide();
+        //                Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
+        //                Utilities.DashDivide();
+        //            }
+        //            break;
 
-                case 2:
-                    Console.WriteLine("Ange önskat lånebelopp:");
-                    CreateLoan(owner);
-                    break;
+        //        case 2:
+        //            Console.WriteLine("Ange önskat lånebelopp:");
+        //            CreateLoan(owner);
+        //            break;
 
-                default:
-                    Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
-                    break;
-            }
+        //        default:
+        //            Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
+        //            break;
+        //    }
 
 
 
-        }
+        //}
+
+        //public void SendLoanRequest(decimal loanrequest, Customer _owner)
+        //{
+
+        //    Admin.Loantickets.Add(_owner, loanrequest);
+        //}
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
         }
-        public static Loan CreateLoan(Customer owner)
+
+        //public static Loan CreateLoan(Customer owner)
+        //{
+        //    decimal loanamount = Utilities.GetUserNumber();
+
+        //    bool ok = Loangranted(loanamount, owner.ShowBalance());
+
+        //    if (ok)
+        //    {
+        //        Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate / 100) * loanamount}Kr\n" +
+        //            $"Godkänner du detta vilkor?");
+
+        //        string choice = Utilities.GetUserChoiceYN();
+        //        if (choice == "y")
+        //        {
+        //            Loan loan = new Loan(owner, Interestrate, loanamount);
+        //            Console.WriteLine($"Du har lånat {loanamount}SEK till en ränta av {Interestrate}%");
+        //            //Console.WriteLine("Välj konto för insättning:");
+        //            //transaction.Send(loan1.Loanamount); Send money to correct account with transactionclass - Daniel [21/11-25]
+        //            owner._loans.Add(loan);
+        //            return loan;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Låneförfrågan avbruten.\nTryck på valfri tangent för att gå tillbaka...");
+        //            Console.ReadLine();
+        //            return null;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
+        //            $"Tryck på valfri tangent för att gå tillbaka...");
+        //        Console.ReadLine();
+        //        return null;
+        //    }
+        //}
+        //public static bool Loangranted(decimal loanRequest, decimal balance)
+        //{
+
+        //    if (loanRequest > (balance * 5))
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
+        public static void CreateTestLoan(Customer owner)
         {
             decimal loanamount = Utilities.GetUserNumber();
-
-            bool ok = Loangranted(loanamount, owner.ShowBalance());
+            bool ok = Loangrantedtest(loanamount, owner.ShowBalance());
 
             if (ok)
             {
-                Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate / 100) * loanamount}Kr\n" +
-                    $"Godkänner du detta vilkor?");
+                Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
+                Admin.Loantickets.Add(owner, loanamount);
 
-                string choice = Utilities.GetUserChoiceYN();
-                if (choice == "y")
-                {
-                    Loan loan = new Loan(owner, Interestrate, loanamount);
-                    Console.WriteLine($"Du har lånat {loanamount}SEK till en ränta av {Interestrate}%");
-                    //Console.WriteLine("Välj konto för insättning:");
-                    //transaction.Send(loan1.Loanamount); Send money to correct account with transactionclass - Daniel [21/11-25]
-                    owner._loans.Add(loan);
-                    return loan;
-                }
-                else
-                {
-                    Console.WriteLine("Låneförfrågan avbruten.\nTryck på valfri tangent för att gå tillbaka...");
-                    Console.ReadLine();
-                    return null;
-                }
             }
             else
             {
                 Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
                     $"Tryck på valfri tangent för att gå tillbaka...");
                 Console.ReadLine();
-                return null;
             }
         }
-        public static bool Loangranted(decimal loanRequest, decimal balance)
-        {
 
+        public static bool Loangrantedtest(decimal loanRequest, decimal balance)
+        {
             if (loanRequest > (balance * 5))
             {
                 return false;
@@ -105,7 +142,6 @@ namespace The_Singletons_Bank
             return true;
         }
 
-
-
     }
+}
 }
