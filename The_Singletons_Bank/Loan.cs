@@ -33,13 +33,20 @@ namespace The_Singletons_Bank
             switch (choice)
             {
                 case 1:
-                    Console.WriteLine("Mina lån\n");
-                    foreach (Loan loan in owner._loans)
+                    if (owner._loans.Count == 0)
                     {
-                        Utilities.DashDivide();
-                        Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
-                        Utilities.DashDivide();
+                        Console.WriteLine("Du har inga lån");
                     }
+                    else
+                    {
+                        Console.WriteLine("Mina lån\n");
+                        foreach (Loan loan in owner._loans)
+                        {
+                            Utilities.DashDivide();
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
+                            Utilities.DashDivide();
+                        }
+                    }                        
                     break;
 
                 case 2:
