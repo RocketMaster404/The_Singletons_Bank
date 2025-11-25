@@ -89,7 +89,10 @@ namespace The_Singletons_Bank
                     Loan.ShowLoanMenu(user);
                break;
             case 5:
-               Console.WriteLine("Logga ut");
+               Console.WriteLine("Loggar ut...");
+               Thread.Sleep(2000);
+               Console.Clear();
+               RunProgram.Run();
                break;
          }
 
@@ -106,7 +109,7 @@ namespace The_Singletons_Bank
 
       public static void AdminMainMenuChoice(Admin admin)
       {
-         int input = Utilities.GetUserNumberMinMax(1, 3);
+         int input = Utilities.GetUserNumberMinMax(1, 4);
 
          switch (input)
          {
@@ -133,7 +136,10 @@ namespace The_Singletons_Bank
 
                break;
             case 4:
-               Console.WriteLine("4. Logga ut");
+               Console.WriteLine("Loggar ut...");
+               Thread.Sleep(2000);
+               Console.Clear();
+               RunProgram.Run();
                break;
          }
 
