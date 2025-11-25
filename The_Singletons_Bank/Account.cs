@@ -28,7 +28,12 @@ namespace The_Singletons_Bank
          return _accountNumber;
       }
 
-      public decimal GetBalance()
+        public string GetCurrency()
+        {
+            return _currency;
+        }
+
+        public decimal GetBalance()
       {
          return _balance;
       }
