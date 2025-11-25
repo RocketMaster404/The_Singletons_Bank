@@ -8,6 +8,15 @@ namespace The_Singletons_Bank
 {
     internal class Utilities
     {
+        public static decimal GetUserDecimal()
+        {
+            decimal input;
+            while (!Decimal.TryParse(Console.ReadLine(), out input))
+            {
+                Console.WriteLine("Du måste ange ett giltigt tal!");
+            }
+            return input;
+        }
         public static void DashDivide()
         {
             Console.WriteLine("_________________________________________________________________________________________");
