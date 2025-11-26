@@ -8,8 +8,8 @@ namespace The_Singletons_Bank
 {
     internal class Loan
     {
-
-        private decimal Interestrate { get; set; } = 2.4m;//Interest is now static.... should it? Bör ej va static
+        public static Dictionary<Customer,Loan> PendingLoans = new Dictionary<Customer, Loan>();
+        private decimal Interestrate { get; set; }
 
         //private int LoanNumber { get; set; }
         private decimal Loanamount { get; set; }
@@ -22,47 +22,70 @@ namespace The_Singletons_Bank
         }
 
 
+        public string ShowLoandetails()
+        {
+            string loandetails = ($"Ränta: {Interestrate}\nLånebelopp: {Loanamount}\nKostnad för lån: {Loanamount}*{Interestrate / 100}");
+            return loandetails;
+
+        }
 
 
-        //public static void ShowLoanMenu(Customer owner)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("1.Visa lån");
-        //    Console.WriteLine("2.Ta nytt lån");
-        //    Console.WriteLine("3.Gå tillbaka");
-        //    int choice = Utilities.GetUserNumberMinMax(1, 3);
+        public static void ShowLoanMenu(Customer owner)
+        {
+            Console.Clear();
+            Console.WriteLine("1.Visa mina lån");
+            Console.WriteLine("2.Visa pågående ärenden");
+            Console.WriteLine("3.Ta nytt lån");
+            Console.WriteLine("4.Gå tillbaka");
+            int choice = Utilities.GetUserNumberMinMax(1, 3);
 
-        //    switch (choice)
-        //    {
-        //        case 1:
-        //            Console.WriteLine("Mina lån\n");
-        //            foreach (Loan loan in owner._loans)
-        //            {
-        //                Utilities.DashDivide();
-        //                Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
-        //                Utilities.DashDivide();
-        //            }
-        //            break;
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine("Mina lån\n");
+                    foreach (Loan loan in owner._loans)
+                    {
+                        Utilities.DashDivide();
+                        Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                        Utilities.DashDivide();
+                    }
+                    break;
 
-        //        case 2:
-        //            Console.WriteLine("Ange önskat lånebelopp:");
-        //            CreateLoan(owner);
-        //            break;
+                case 2:
+                    owner.ShowInbox();
+                    Console.WriteLine("\n Vad vill du göra?\n");
+                    Console.WriteLine("1.Hantera lån");
+                    Console.WriteLine("2.Gå tillbaka");
 
-        //        default:
-        //            Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
-        //            break;
-        //    }
+                    int userchoice = Utilities.GetUserNumberMinMax(1, 2);
+                    if (userchoice == 1)
+                    {
+                        Console.Write("Välj lån i listan:");
+                        int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
+                        bool accept = owner.HandleLoanSuggestion(loanchoice.ToString(),owner);
+                        //Fortsätt här!
+                       
+                    }
 
 
 
-        //}
+                    break;
 
-        //public void SendLoanRequest(decimal loanrequest, Customer _owner)
-        //{
+                case 3:
+                    Console.WriteLine("Ange önskat lånebelopp:");
+                    CreateTestLoan(owner);
+                    break;
 
-        //    Admin.Loantickets.Add(_owner, loanrequest);
-        //}
+                default:
+                    Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
+                    break;
+            }
+
+
+
+        }
+
+        
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
@@ -144,4 +167,4 @@ namespace The_Singletons_Bank
 
     }
 }
-}
+

@@ -21,22 +21,25 @@ namespace The_Singletons_Bank
 
         public Admin(string username, string password, bool isadmin) : base(username, password, isadmin)
         {
-           
+
         }
 
-        //public void DeQueueLoans(int choice)
-        //{
-        //    Loantickets.Remove(choice);
-        //}
-        public static Loan HandleLoanRequest(Customer owner,decimal loanrequest)
+        public static void Sendinvoice(Customer owner,Loan loan)
+        {
+            string invoice=loan.ShowLoandetails();
+            owner._inbox.Add(invoice);
+           
+        }
+        public static Loan HandleLoanRequest(Customer owner, decimal loanrequest)
         {
             Console.Write("Sätt ränta:");
             decimal loanRequest = loanrequest;
-            decimal setInterest=Utilities.GetUserNumber();
+            decimal setInterest = Utilities.GetUserNumber();
 
             Loan loan = new Loan(owner, setInterest, loanRequest);
-
-            decimal interest;
+            Admin.Sendinvoice(owner,loan);
+            Loan.PendingLoans.Add(owner,loan);
+            
             return loan;
         }
 
@@ -63,7 +66,7 @@ namespace The_Singletons_Bank
 
             foreach (User user in _users)
             {
-                if(user.GetUsername() == username)
+                if (user.GetUsername() == username)
                 {
                     user.UserIsBlocked = false;
                     Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
@@ -71,12 +74,7 @@ namespace The_Singletons_Bank
             }
         }
 
-        //__________________________________________________________________________________________
-
-        public void HandleLoanRequest()
-        {
-
-        }
+       
     }
-    
+
 }

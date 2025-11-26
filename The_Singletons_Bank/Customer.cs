@@ -18,7 +18,7 @@ namespace The_Singletons_Bank
             _accounts = new List<Account>();
             _savingAccounts = new List<SavingAccount>();
             _loans = new List<Loan>();
-            _inbox = new List<string>;
+            _inbox = new List<string>();
 
         }
 
@@ -36,13 +36,28 @@ namespace The_Singletons_Bank
             }
         }
 
-        public void AcceptLoan()
+        public bool HandleLoanSuggestion(string letter, Customer customer)
         {
-            int choice = Utilities.GetUserNumberMinMax(1, _inbox.Count());
-
-            _inbox.Remove(_inbox[choice - 1]);
-
-
+            Console.WriteLine("Accepterar du lånevillkoren för valt lån?");
+            string userchoice = Utilities.GetUserChoiceYN();
+            if (userchoice == "y")
+            {
+                if (Loan.PendingLoans.ContainsKey(customer))
+                {
+                    Console.WriteLine("Du accepterade lånevillkoren. Du kan se ditt lån under \"mina lån\"");
+                    Loan loan = Loan.PendingLoans[customer]
+                    ;
+                    _loans.Add(loan);
+                    _inbox.Remove(letter);
+                }
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Du nekade låneförslaget");
+                _inbox.Remove(letter);
+                return false;
+            }
         }
 
         public List<Account> GetAccountList()
@@ -86,9 +101,10 @@ namespace The_Singletons_Bank
             }
         }
 
-        public void
+        
 
 
 
     }
+
 }
