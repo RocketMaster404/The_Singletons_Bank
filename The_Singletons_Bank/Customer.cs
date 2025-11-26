@@ -49,6 +49,7 @@ namespace The_Singletons_Bank
                     ;
                     _loans.Add(loan);
                     _inbox.Remove(letter);
+                    Loan.PendingLoans.Remove(customer);
                 }
                 return true;
             }
@@ -56,6 +57,7 @@ namespace The_Singletons_Bank
             {
                 Console.WriteLine("Du nekade låneförslaget");
                 _inbox.Remove(letter);
+                Loan.PendingLoans.Remove(customer);
                 return false;
             }
         }

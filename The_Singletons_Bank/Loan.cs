@@ -8,7 +8,7 @@ namespace The_Singletons_Bank
 {
     internal class Loan
     {
-        public static Dictionary<Customer,Loan> PendingLoans = new Dictionary<Customer, Loan>();
+        public static Dictionary<Customer, Loan> PendingLoans = new Dictionary<Customer, Loan>();
         private decimal Interestrate { get; set; }
 
         //private int LoanNumber { get; set; }
@@ -54,7 +54,7 @@ namespace The_Singletons_Bank
                 case 2:
                     owner.ShowInbox();
                     Console.WriteLine("\n Vad vill du göra?\n");
-                    Console.WriteLine("1.Hantera lån");
+                    Console.WriteLine("1.Se status för lånförfrågan");
                     Console.WriteLine("2.Gå tillbaka");
 
                     int userchoice = Utilities.GetUserNumberMinMax(1, 2);
@@ -62,14 +62,11 @@ namespace The_Singletons_Bank
                     {
                         Console.Write("Välj lån i listan:");
                         int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
-                        bool accept = owner.HandleLoanSuggestion(loanchoice.ToString(),owner);
-                        //Fortsätt här!
-                       
+                        bool accept = owner.HandleLoanSuggestion(loanchoice.ToString(), owner);
+                        break;
                     }
-
-
-
-                    break;
+                    else
+                        break;
 
                 case 3:
                     Console.WriteLine("Ange önskat lånebelopp:");
@@ -85,7 +82,7 @@ namespace The_Singletons_Bank
 
         }
 
-        
+
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
@@ -140,19 +137,26 @@ namespace The_Singletons_Bank
         public static void CreateTestLoan(Customer owner)
         {
             decimal loanamount = Utilities.GetUserNumber();
-            bool ok = Loangrantedtest(loanamount, owner.ShowBalance());
+            bool limitOk = Loangrantedtest(loanamount, owner.ShowBalance());
+            bool hasActiveTicket = HasActiveTicket(owner);
 
-            if (ok)
+            if (limitOk && hasActiveTicket==false)
             {
+
                 Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
-                Admin.Loantickets.Add(owner, loanamount);
+                Admin.Loantickets.Add(owner, loanamount);//Om en låneförfrågan redan finns så kan man inte göra en ny PGA samma key redan finns.
 
             }
-            else
+            else if (limitOk == false && hasActiveTicket==false)
             {
                 Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
                     $"Tryck på valfri tangent för att gå tillbaka...");
                 Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Du har redan en aktiv låneförfrågan. Denna måste hanteras innan du kan ta ett nytt lån.");
+
             }
         }
 
@@ -163,6 +167,16 @@ namespace The_Singletons_Bank
                 return false;
             }
             return true;
+        }
+
+        public static bool HasActiveTicket(Customer owner)
+        {
+            if (Admin.Loantickets.ContainsKey(owner))
+            {
+                return false;
+            }
+            else
+                return true;
         }
 
     }
