@@ -129,6 +129,8 @@ namespace The_Singletons_Bank
                break;
             case 2:
                Console.WriteLine("2. Växelkurs");
+               Currency.DisplayExchangeRates();
+               Currency.ChangeCurrencyExchangeRateMenu();
                break;
             case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                Console.WriteLine("3. UnBlockAccount");

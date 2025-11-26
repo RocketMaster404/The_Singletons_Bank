@@ -12,6 +12,7 @@ namespace The_Singletons_Bank
       private static List<User> _users = new List<User>()
         {
             new Customer("olof", "1234"),
+            new Customer("stig", "2345"),
             new Admin("Admin","4321",true)
         };
 

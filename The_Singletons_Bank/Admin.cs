@@ -38,23 +38,54 @@ namespace The_Singletons_Bank
 
       }
 
-      //Simon Code :)
-
       public static void UnBlockAccount()
       {
-         Console.WriteLine("Enter the name of the User you want to unblock");
-         string username = Console.ReadLine();
-         List<User> _users = Bank.GetUsers();
-         //Console.WriteLine(_users[0].UserIsBlocked);
+         Console.WriteLine("Ange användarnamnet eller nummret av kontot du vill avblockera.");
 
-         foreach (User user in _users)
-         {
-            if (user.GetUsername() == username)
+         List<User> _users = Bank.GetUsers();
+            Console.WriteLine("Blockerade konton:");
+            foreach (User user in _users)
             {
-               user.UserIsBlocked = false;
-               Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
+                  int i = 0;
+                  if(user.UserIsBlocked == true)
+                  {
+                    i++;
+                    Console.WriteLine($"Is user blocked? :|{i}|{user.GetUsername()} {user.UserIsBlocked}");
+                  }
             }
-         }
+
+            string userInput = Console.ReadLine();
+            if (int.TryParse(userInput, out int number))
+            {
+                // Om svaret är en int
+                foreach (User user in _users)
+                {
+                    int i = 0;
+                    if (user.UserIsBlocked == true)
+                    {
+                        i++;
+                        if(i == Convert.ToInt32(userInput))
+                        {
+                            user.UserIsBlocked = false;
+                            Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Om svaret är en string
+                foreach (User user in _users)
+                {
+                    if (user.GetUsername() == userInput)
+                    {
+                        user.UserIsBlocked = false;
+                        Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
+                    }
+                }
+
+            }
+            
       }
    }
 
