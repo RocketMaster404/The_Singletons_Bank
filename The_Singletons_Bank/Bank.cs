@@ -32,9 +32,10 @@ namespace The_Singletons_Bank
          return false;
       }
 
-      public static User LogIn()
+      public static User? LogIn()
       {
-         while (true)
+         User? currentUser = null;
+         while (currentUser == null)
          {
             Console.WriteLine("Ange användarnamn:");
             string userName = Console.ReadLine();
@@ -51,29 +52,16 @@ namespace The_Singletons_Bank
 
             foreach (var user in _users)
             {
-               if (user.Admincheck(passWord, userName))
-               {
-                  if (user.GetUsername() == userName && user.UserIsBlocked == true)
-                  {
-                     break;
-                  }
-
-                  Console.WriteLine("Lyckad Admin inloggning");
-                  return user;
-               }
-            }
-
-            foreach (var user in _users)
-            {
                if (user.GetUsername() == userName && user.UserIsBlocked == true)
                {
                   Console.WriteLine("Användare blockerad. Var god kontakta administratör");
-                  return user;
+                  return null;
                }
 
                if (user.Logincheck(passWord, userName))
                {
                   Console.WriteLine("Lyckad inloggning");
+                  
                   return user;
                }
 
@@ -83,7 +71,7 @@ namespace The_Singletons_Bank
                   {
                      user.UserIsBlocked = true;
                      Console.WriteLine($"Användare {user.GetUsername()} är låst. Var god kontakta administratör");
-                     return user;
+                     return null;
                   }
 
                   user.LoginAttempts--;
@@ -96,6 +84,7 @@ namespace The_Singletons_Bank
                }
             }
          }
+         return currentUser;
       }
 
       public static void AddCustomer()

@@ -22,38 +22,43 @@ namespace The_Singletons_Bank
 
       public static void LogInMenuChoice()
       {
-
-
-
-         int input = Utilities.GetUserNumberMinMax(1, 2);
-         switch (input)
+         bool run = true;
+         while (run)
          {
-            case 1:
 
-               var user = Bank.LogIn();
-               while (user != null)
-               {
+            PrintLogInMenu();
+            int input = Utilities.GetUserNumberMinMax(1, 2);
+            switch (input)
+            {
+               case 1:
 
+                  var user = Bank.LogIn();
 
-                  if (user != null && user.UserIsBlocked != true && user is Customer customer)//LogIn-logiken följer med hit
+                  if (user == null || user.UserIsBlocked)
+                  {
+                     continue;
+                  }
+
+                  if (user != null && user is Customer customer)//LogIn-logiken följer med hit
                   {
                      RunProgram.RunCustomerProgram(customer);
 
                   }
-                  else if (user != null && user.UserIsBlocked != true && user is Admin admin)
+                  else if (user != null && user is Admin admin)
                   {
                      RunProgram.RunAdminProgram(admin);
                   }
 
                   Console.ReadKey();
-               }
-               break;
-            case 2:
-               Console.WriteLine("Programmet avslutas!");
-               break;
 
+                  break;
+               case 2:
+                  Console.WriteLine("Programmet avslutas!");
+                  run = false;
+                  break;
+
+            }
          }
-
       }
       public static void PrintCustomerMainMenu()
       {
@@ -86,7 +91,7 @@ namespace The_Singletons_Bank
                CreateAccountMenuChoice(user);
                break;
             case 4:
-                    Loan.ShowLoanMenu(user);
+               Loan.ShowLoanMenu(user);
                break;
             case 5:
                Console.WriteLine("Loggar ut...");
@@ -146,31 +151,31 @@ namespace The_Singletons_Bank
 
       }
 
-        public static void PrintTransferMenu()
-        {
-            Console.WriteLine("1. Internal Överföring");
-            Console.WriteLine("2. External Överföring");
-            Console.WriteLine("3. Se historiken");
-        }
-        public static void TransferMenuChoice(Customer user)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 3);
-            switch (input)
-            {
-                case 1:
-                    Transaction.InternalTransfer(user);
-                    break;
-                case 2:
-                    Transaction.ExternalTransfer(user);
-                    break;
-                case 3:
-                    Transaction.PrintTransactionLogs();
-                    break;
-            }
+      public static void PrintTransferMenu()
+      {
+         Console.WriteLine("1. Internal Överföring");
+         Console.WriteLine("2. External Överföring");
+         Console.WriteLine("3. Se historiken");
+      }
+      public static void TransferMenuChoice(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 3);
+         switch (input)
+         {
+            case 1:
+               Transaction.InternalTransfer(user);
+               break;
+            case 2:
+               Transaction.ExternalTransfer(user);
+               break;
+            case 3:
+               Transaction.PrintTransactionLogs();
+               break;
+         }
 
-        }
+      }
 
-        public static void PrintCreateAccountMenu()
+      public static void PrintCreateAccountMenu()
       {
          Console.WriteLine("1. Skapa konto");
          Console.WriteLine("2. Skapa sparkonto");
