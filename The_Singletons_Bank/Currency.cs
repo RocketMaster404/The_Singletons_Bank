@@ -37,7 +37,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("Skriv in den 3 bokstavliga förkortningen för valutan du vill ändra");
             string currencyToChange = Console.ReadLine();
             Console.WriteLine("Vad vill du sätta den till?");
-            decimal newValue = Utilities.GetUserNumberDecimal();
+            decimal newValue = Utilities.GetUserDecimalInput();
             bool foundValue = false;
             foreach (var currency in _currencies.Keys) 
             {

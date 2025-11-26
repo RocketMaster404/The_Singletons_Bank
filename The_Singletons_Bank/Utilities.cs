@@ -62,15 +62,14 @@ namespace The_Singletons_Bank
 
         }
 
-        public static decimal GetUserNumberDecimal()
+        public static decimal GetUserDecimalInput()
         {
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
-                Console.WriteLine($"Du måste ange ett heltal");
+                Console.WriteLine("Du måste ange ett decimaltal.");
             }
-            return input;
-
+            return input; 
         }
 
         public static int GetUserNumbermsg(string msg)

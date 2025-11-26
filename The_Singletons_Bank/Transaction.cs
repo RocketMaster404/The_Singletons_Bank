@@ -62,7 +62,7 @@ namespace The_Singletons_Bank
                         int accountRecipitent = Utilities.GetUserNumber();
 
                         Console.WriteLine("Hur mycket will du skicka?");
-                        int ammountToSend = Utilities.GetUserNumber();
+                        decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
 
                         if (accounts[accountSender - 1].GetCurrency() != null || accounts[accountRecipitent - 1].GetCurrency() != null)
@@ -133,12 +133,18 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
                         int accountPicked = Utilities.GetUserNumber();
 
-                        Console.WriteLine("Hur mycket pengar vill du skicka?");
-                        int ammountToSend = Utilities.GetUserNumber();
+                        Console.WriteLine("Hur mycket will du skicka?");
+                        decimal ammountToSend = Utilities.GetUserDecimalInput();
+                        decimal ConvertedAmmountToSend = ammountToSend;
 
+                        //Få detta fungera på något sätt
+                        //if (accounts[accountSender - 1].GetCurrency() != null || accounts[accountRecipitent - 1].GetCurrency() != null)
+                        //{
+                        //    ConvertedAmmountToSend = Currency.ConvertCurrency(accounts[accountSender - 1].GetCurrency(), accounts[accountRecipitent - 1].GetCurrency(), Convert.ToDecimal(ammountToSend));
+                        //}
                         // Lite lätt fast, osäker hur jag får mottagarens konton och deras värde :(
 
-                        if(ammountToSend <= accounts[accountPicked].GetBalance() && ammountToSend >= 0)
+                        if (ammountToSend <= accounts[accountPicked].GetBalance() && ammountToSend >= 0)
                         {
                             List<User> _users = Bank.GetUsers(); //User user1 in _users
                             for (int i = 0; i < _users.Count; i++)
