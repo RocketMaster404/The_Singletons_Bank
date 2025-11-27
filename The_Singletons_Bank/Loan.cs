@@ -44,9 +44,8 @@ namespace The_Singletons_Bank
                 case 1:
                     if (owner._loans.Count == 0)
                     {
-                        Utilities.DashDivide();
-                        //Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
-                        Utilities.DashDivide();
+                        Console.WriteLine("Du har inga lån.");
+                        break;
                     }
                     else
                     {
@@ -54,7 +53,7 @@ namespace The_Singletons_Bank
                         foreach (Loan loan in owner._loans)
                         {
                             Utilities.DashDivide();
-                            //Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(Interestrate / 100) * loan.Loanamount}Kr ");
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
                             Utilities.DashDivide();
                         }
                     }                        
