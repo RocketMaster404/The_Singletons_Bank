@@ -247,7 +247,7 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärende du vill hantera:");
+                Console.WriteLine("Ange ärende du vill bevilja:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
                 string keyToRemove = cases[(casechoice - 1)];
 
@@ -258,6 +258,9 @@ namespace The_Singletons_Bank
                         Admin.HandleLoanRequest(kvp.Key, kvp.Value);
 
                         Admin.Loantickets.Remove(kvp.Key);
+
+                        Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
+                        Utilities.NoContentMsg();
                     }
                 }
             }

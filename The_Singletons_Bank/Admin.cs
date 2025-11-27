@@ -39,7 +39,7 @@ namespace The_Singletons_Bank
         {
             Console.Write("Sätt ränta:");
             decimal loanRequest = loanrequest;
-            decimal setInterest = Utilities.GetUserNumber();
+            decimal setInterest = Utilities.GetUserNumberMinMax(1,100);
 
             Loan loan = new Loan(owner, setInterest, loanRequest);
             Admin.Sendinvoice(owner,loan);
