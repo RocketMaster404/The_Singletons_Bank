@@ -119,7 +119,7 @@ namespace The_Singletons_Bank
 
       public static void AdminMainMenuChoice(Admin admin)
       {
-         int input = Utilities.GetUserNumberMinMax(1, 4);
+         int input = Utilities.GetUserNumberMinMax(1, 5);
 
          switch (input)
          {

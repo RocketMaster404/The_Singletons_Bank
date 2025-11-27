@@ -37,7 +37,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("2.Visa pågående ärenden");
             Console.WriteLine("3.Ta nytt lån");
             Console.WriteLine("4.Gå tillbaka");
-            int choice = Utilities.GetUserNumberMinMax(1, 3);
+            int choice = Utilities.GetUserNumberMinMax(1, 4);
 
             switch (choice)
             {
