@@ -144,7 +144,11 @@ namespace The_Singletons_Bank
                     Admin.UnBlockAccount();
 
                     break;
-                case 4:
+
+                case 4: Console.WriteLine("Inkomna ärenden:");
+                    break;
+
+                case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
