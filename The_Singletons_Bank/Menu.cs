@@ -32,7 +32,6 @@ namespace The_Singletons_Bank
                 switch (input)
                 {
                     case 1:
-
                         var user = Bank.LogIn();
 
                         if (user == null || user.UserIsBlocked)
@@ -43,15 +42,13 @@ namespace The_Singletons_Bank
                         if (user != null && user is Customer customer)//LogIn-logiken följer med hit
                         {
                             RunProgram.RunCustomerProgram(customer);
-
+                            run = false;
                         }
                         else if (user != null && user is Admin admin)
                         {
                             RunProgram.RunAdminProgram(admin);
+                            run = false;
                         }
-
-                        Console.ReadKey();
-
                         break;
                     case 2:
                         Console.WriteLine("Programmet avslutas!");
@@ -72,7 +69,7 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        public static void CustomerMainMenuChoice(Customer user)
+        public static void CustomerMainMenuChoice(Customer user, bool run)
         {
             int input = Utilities.GetUserNumberMinMax(1, 5);
             switch (input)
@@ -95,6 +92,7 @@ namespace The_Singletons_Bank
                     Loan.ShowLoanMenu(user);
                     break;
                 case 5:
+                    run = true;
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -114,9 +112,9 @@ namespace The_Singletons_Bank
             Console.WriteLine("5. Logga ut");
         }
 
-        public static void AdminMainMenuChoice(Admin admin)
+        public static void AdminMainMenuChoice(Admin admin, bool run)
         {
-            int input = Utilities.GetUserNumberMinMax(1, 4);
+            int input = Utilities.GetUserNumberMinMax(1, 5);
 
             switch (input)
             {
@@ -145,10 +143,12 @@ namespace The_Singletons_Bank
 
                     break;
 
-                case 4: Console.WriteLine("Inkomna ärenden:");
+                case 4:
+                    Console.WriteLine("Inkomna ärenden:");
                     break;
 
                 case 5:
+                    run = true;
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
