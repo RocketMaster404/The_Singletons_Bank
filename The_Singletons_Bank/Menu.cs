@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-   internal class Menu
-   {
+    internal class Menu
+    {
+
+        public static List<string> cases { get; set; }
 
 
-
-      public static void PrintLogInMenu()
-      {
-         Console.WriteLine("Singletons Bank - since 1807\n");
-         Console.WriteLine("1. Logga in");
-         Console.WriteLine("2. Avsluta");
-         Console.Write("Ange val: ");
-      }
+        public static void PrintLogInMenu()
+        {
+            Console.WriteLine("Singletons Bank - since 1807\n");
+            Console.WriteLine("1. Logga in");
+            Console.WriteLine("2. Avsluta");
+            Console.Write("Ange val: ");
+        }
 
       public static void LogInMenuChoice()
       {
@@ -88,7 +89,7 @@ namespace The_Singletons_Bank
                break;
             case 3:
                PrintCreateAccountMenu();
-               CreateAccountMenuChoice(user);
+               CreateAccountChoice(user);
                break;
             case 4:
                Loan.ShowLoanMenu(user);
@@ -134,6 +135,8 @@ namespace The_Singletons_Bank
                break;
             case 2:
                Console.WriteLine("2. Växelkurs");
+               Currency.DisplayExchangeRates();
+               Currency.ChangeCurrencyExchangeRateMenu();
                break;
             case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                Console.WriteLine("3. UnBlockAccount");
@@ -180,19 +183,114 @@ namespace The_Singletons_Bank
          Console.WriteLine("1. Skapa konto");
          Console.WriteLine("2. Skapa sparkonto");
       }
-      public static void CreateAccountMenuChoice(Customer user)
+      public static void CreateAccountMenuChoice1(Customer user)
       {
          int input = Utilities.GetUserNumberMinMax(1, 2);
          switch (input)
          {
             case 1:
-               Account.CreateAccount(user);
+               PrintCreateAccountMenu();
+               CreateAccountChoice(user);
                break;
             case 2:
                SavingAccount.CreateSavingAccount(user);
                break;
          }
 
+        }
+
+        public static void PrintLoanHandlingMenu()
+        {
+            int LoanHandlingCounter = 1;
+
+            Console.WriteLine("Ohanterade ärenden:");
+            List<string> cases = new List<string>();
+
+            foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
+            {
+                cases.Add(kvp.Key.GetUsername());
+                Utilities.DashDivide();
+                Console.WriteLine(LoanHandlingCounter + ".");
+                Console.WriteLine($"{kvp.Key}");
+                Console.WriteLine($"{kvp.Value}");
+                Utilities.DashDivide();
+                LoanHandlingCounter++;
+            }
+            Console.WriteLine("\n Vad vill du göra?\n");
+            Console.WriteLine("1.Hantera lån");
+            Console.WriteLine("2.Gå tillbaka");
+
+        }
+
+        public static void LoanHandlingMenuChoice()
+        {
+            int choice = Utilities.GetUserNumberMinMax(1, 2);
+            if (choice == 1)
+            {
+                Console.WriteLine("Ange ärende du vill hantera:");
+                int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
+                string keyToRemove = cases[casechoice - 1];
+
+                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
+                {
+                    if (keyToRemove == kvp.Key.GetUsername())
+                    {
+                        Admin.HandleLoanRequest(kvp.Key, kvp.Value);
+
+                        Admin.Loantickets.Remove(kvp.Key);
+                    }
+                }
+
+            }
+            else
+            {
+                Console.Clear();
+                //RunProgram.RunAdminProgram(Admin admin); Gp tillbaka till huvud meny
+            }
+        }
+
+      public static void PrintCreateAccountMenu()
+      {
+         Console.WriteLine("Skapa konto");
+         Console.WriteLine("1. Konto i SEK");
+         Console.WriteLine("2. Konto i USD");
+         Console.WriteLine("3. Konto i EUR");
+         Console.Write("Ange val: ");
+
+      }
+
+      public static void CreateAccountChoice(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 3);
+         string name;
+
+         switch (input)
+         {
+            case 1:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountSEK = Account.CreateAccount(name, 0, "SEK", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountSEK);
+               break;
+
+            case 2:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountUSD = Account.CreateAccount(name, 0, "USD", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountUSD);
+               break;
+
+            case 3:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountEUR = Account.CreateAccount(name, 0, "EUR", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountEUR);
+               break;
+
+         }
       }
 
 
@@ -201,5 +299,5 @@ namespace The_Singletons_Bank
 
 
 
-   }
+    }
 }

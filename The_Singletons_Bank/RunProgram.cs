@@ -11,6 +11,8 @@ namespace The_Singletons_Bank
 
         public static void Run()
         {
+            List<User> _users = Bank.GetUsers();
+            _users[1].UserIsBlocked = true;
             Utilities.AsciiArtPrinter(true);
             //Menu.PrintLogInMenu();
             Menu.LogInMenuChoice();
