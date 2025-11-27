@@ -22,7 +22,14 @@ namespace The_Singletons_Bank
 
       }
 
-        public static void Sendinvoice(Customer owner,Loan loan)
+      public Admin(string username, string password, bool isADmin) : base(username, password)
+      {
+
+      }
+
+
+
+      public static void Sendinvoice(Customer owner,Loan loan)
         {
             string invoice=loan.ShowLoandetails();
             owner._inbox.Add(invoice);
@@ -50,17 +57,6 @@ namespace The_Singletons_Bank
 
       }
 
-      public static void CreateUser()
-      {
-         Console.WriteLine("Ange användarnamn: ");
-         string userName = Console.ReadLine();
-         Console.WriteLine("Ange Lösenord: ");
-         string password = Console.ReadLine();
-
-
-         //Bank.users.Add(userName, password); //Users bör ej vara publik. Gör metod för att lägga till users i bank-klassen istället
-
-      }
 
       public static void UnBlockAccount()
       {
