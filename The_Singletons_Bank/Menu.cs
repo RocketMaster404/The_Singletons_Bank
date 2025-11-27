@@ -7,189 +7,26 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-    internal class Menu
-    {
+   internal class Menu
+   {
 
-        public static List<string> cases { get; set; }
-
-
-        public static void PrintLogInMenu()
-        {
-            Console.WriteLine("Singletons Bank - since 1807\n");
-            Console.WriteLine("1. Logga in");
-            Console.WriteLine("2. Avsluta");
-            Console.Write("Ange val: ");
-        }
-
-        public static void LogInMenuChoice()
-        {
-            bool run = true;
-            while (run)
-            {
-
-                PrintLogInMenu();
-                int input = Utilities.GetUserNumberMinMax(1, 2);
-                switch (input)
-                {
-                    case 1:
-                        var user = Bank.LogIn();
-
-                        if (user == null || user.UserIsBlocked)
-                        {
-                            continue;
-                        }
-
-                        if (user != null && user is Customer customer)//LogIn-logiken följer med hit
-                        {
-                            RunProgram.RunCustomerProgram(customer);
-                            run = false;
-                        }
-                        else if (user != null && user is Admin admin)
-                        {
-                            RunProgram.RunAdminProgram(admin);
-                            run = false;
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("Programmet avslutas!");
-                        run = false;
-                        break;
-
-                }
-            }
-        }
-        public static void PrintCustomerMainMenu()
-        {
-            Console.WriteLine("Meny");
-            Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
-            Console.WriteLine("2. Överföring"); // gör undermeny
-            Console.WriteLine("3. Skapa konto"); // Gör undermeny
-            Console.WriteLine("4. Lån"); // gör under meny
-            Console.WriteLine("5. Logga ut");
-            Console.Write("Ange val: ");
-        }
-
-        public static void CustomerMainMenuChoice(Customer user, bool run)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 5);
-            switch (input)
-            {
-                case 1:
-                    Customer.ShowCustomerAccounts(user);
-                    Customer.ShowCustomerSavingAccounts(user);
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    Console.WriteLine("Överföring");
-                    PrintTransferMenu();
-                    TransferMenuChoice(user);
-                    break;
-                case 3:
-                    PrintCreateBankAccountMenu();
-                    CreateAccountChoice(user);
-                    break;
-                case 4:
-                    Loan.ShowLoanMenu(user);
-                    break;
-                case 5:
-                    run = true;
-                    Console.WriteLine("Loggar ut...");
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                    RunProgram.Run();
-                    break;
-            }
-
-        }
-
-        public static void PrintAdminMainMenu()
-        {
-            Console.WriteLine("Admin Meny\n");
-            Console.WriteLine("1. Skapa användare");
-            Console.WriteLine("2. Växelkurs");
-            Console.WriteLine("3. UnBlockAccount"); // I have added this choise [Simon, 2025-11-19]
-            Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
-            Console.WriteLine("5. Logga ut");
-        }
-
-        public static void AdminMainMenuChoice(Admin admin, bool run)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 5);
-
-            switch (input)
-            {
-                case 1:
-                    Console.WriteLine("1. Skapa användare");
-                    Console.WriteLine("2. Skapa Admin");
-                    int choice = Utilities.GetUserNumberMinMax(1, 2);
-                    if (choice == 1)
-                    {
-                        Bank.AddCustomer();
-                    }
-                    else if (choice == 2)
-                    {
-                        Bank.AddAdminAccount();
-                    }
-
-                    break;
-                case 2:
-                    Console.WriteLine("2. Växelkurs");
-                    Currency.DisplayExchangeRates();
-                    Currency.ChangeCurrencyExchangeRateMenu();
-                    break;
-                case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
-                    Console.WriteLine("3. UnBlockAccount");
-                    Admin.UnBlockAccount();
-
-                    break;
-
-                case 4:
-                    Console.WriteLine("Inkomna ärenden:");
-                    break;
-
-                case 5:
-                    run = true;
-                    Console.WriteLine("Loggar ut...");
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                    RunProgram.Run();
-                    break;
-            }
+      public static List<string> cases { get; set; }
 
 
-        }
+      public static void PrintLogInMenu()
+      {
+         Console.WriteLine("Singletons Bank - since 1807\n");
+         Console.WriteLine("1. Logga in");
+         Console.WriteLine("2. Avsluta");
+         Console.Write("Ange val: ");
+      }
 
-        public static void PrintTransferMenu()
-        {
-            Console.WriteLine("1. Internal Överföring");
-            Console.WriteLine("2. External Överföring");
-            Console.WriteLine("3. Se historiken");
-        }
-        public static void TransferMenuChoice(Customer user)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 3);
-            switch (input)
-            {
-                case 1:
-                    Transaction.InternalTransfer(user);
-                    break;
-                case 2:
-                    Transaction.ExternalTransfer(user);
-                    break;
-                case 3:
-                    Transaction.PrintTransactionLogs();
-                    break;
-            }
-
-        }
-
-        public static void PrintCreateBankAccountMenu()
-        {
-            Console.WriteLine("1. Skapa konto");
-            Console.WriteLine("2. Skapa sparkonto");
-        }
-        public static void CreateAccountMenuChoice1(Customer user)
-        {
+      public static void LogInMenuChoice()
+      {
+         bool run = true;
+         while (run)
+         {
+            PrintLogInMenu();
             int input = Utilities.GetUserNumberMinMax(1, 2);
 
             switch (input)
