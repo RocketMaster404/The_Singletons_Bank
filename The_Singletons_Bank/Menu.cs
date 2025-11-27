@@ -7,55 +7,63 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-    internal class Menu
-    {
+   internal class Menu
+   {
 
-        public static List<string> cases { get; set; }
+      public static List<string> cases { get; set; }
 
 
-        public static void PrintLogInMenu()
-        {
-            Console.WriteLine("Singletons Bank - since 1807\n");
-            Console.WriteLine("1. Logga in");
-            Console.WriteLine("2. Avsluta");
-            Console.Write("Ange val: ");
-        }
+      public static void PrintLogInMenu()
+      {
+         Console.WriteLine("Singletons Bank - since 1807\n");
+         Console.WriteLine("1. Logga in");
+         Console.WriteLine("2. Avsluta");
+         Console.Write("Ange val: ");
+      }
 
       public static void LogInMenuChoice()
       {
+
          bool run = true;
          while (run)
          {
 
+
+
             PrintLogInMenu();
             int input = Utilities.GetUserNumberMinMax(1, 2);
+
             switch (input)
             {
                case 1:
+                  User? user = null;
 
-                  var user = Bank.LogIn();
 
-                  if (user == null || user.UserIsBlocked)
+                  while (user == null)
                   {
-                     continue;
+
+                     user = Bank.LogIn();
+                     if (user == null || user.UserIsBlocked)
+                     {
+
+                        break;
+                     }
+
+                     if (user != null && user is Customer customer)//LogIn-logiken följer med hit
+                     {
+                        RunProgram.RunCustomerProgram(customer);
+
+                     }
+                     else if (user != null && user is Admin admin)
+                     {
+                        RunProgram.RunAdminProgram(admin);
+                     }
                   }
-
-                  if (user != null && user is Customer customer)//LogIn-logiken följer med hit
-                  {
-                     RunProgram.RunCustomerProgram(customer);
-
-                  }
-                  else if (user != null && user is Admin admin)
-                  {
-                     RunProgram.RunAdminProgram(admin);
-                  }
-
-                  Console.ReadKey();
-
                   break;
                case 2:
                   Console.WriteLine("Programmet avslutas!");
                   run = false;
+
                   break;
 
             }
@@ -74,6 +82,9 @@ namespace The_Singletons_Bank
 
       public static void CustomerMainMenuChoice(Customer user)
       {
+
+
+
          int input = Utilities.GetUserNumberMinMax(1, 5);
          switch (input)
          {
@@ -90,7 +101,7 @@ namespace The_Singletons_Bank
             case 3:
                PrintCreateBankAccountMenu();
                CreateBankAccountMenuChoice(user);
-               
+
                //CreateAccountChoice(user);
                break;
             case 4:
@@ -101,7 +112,7 @@ namespace The_Singletons_Bank
                Thread.Sleep(2000);
                Console.Clear();
                RunProgram.Run();
-               break;
+               return;
          }
 
       }
@@ -200,57 +211,57 @@ namespace The_Singletons_Bank
                break;
          }
 
-        }
+      }
 
-        public static void PrintLoanHandlingMenu()
-        {
-            int LoanHandlingCounter = 1;
+      public static void PrintLoanHandlingMenu()
+      {
+         int LoanHandlingCounter = 1;
 
-            Console.WriteLine("Ohanterade ärenden:");
-            List<string> cases = new List<string>();
+         Console.WriteLine("Ohanterade ärenden:");
+         List<string> cases = new List<string>();
+
+         foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
+         {
+            cases.Add(kvp.Key.GetUsername());
+            Utilities.DashDivide();
+            Console.WriteLine(LoanHandlingCounter + ".");
+            Console.WriteLine($"{kvp.Key}");
+            Console.WriteLine($"{kvp.Value}");
+            Utilities.DashDivide();
+            LoanHandlingCounter++;
+         }
+         Console.WriteLine("\n Vad vill du göra?\n");
+         Console.WriteLine("1.Hantera lån");
+         Console.WriteLine("2.Gå tillbaka");
+
+      }
+
+      public static void LoanHandlingMenuChoice()
+      {
+         int choice = Utilities.GetUserNumberMinMax(1, 2);
+         if (choice == 1)
+         {
+            Console.WriteLine("Ange ärende du vill hantera:");
+            int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
+            string keyToRemove = cases[casechoice - 1];
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
             {
-                cases.Add(kvp.Key.GetUsername());
-                Utilities.DashDivide();
-                Console.WriteLine(LoanHandlingCounter + ".");
-                Console.WriteLine($"{kvp.Key}");
-                Console.WriteLine($"{kvp.Value}");
-                Utilities.DashDivide();
-                LoanHandlingCounter++;
+               if (keyToRemove == kvp.Key.GetUsername())
+               {
+                  Admin.HandleLoanRequest(kvp.Key, kvp.Value);
+
+                  Admin.Loantickets.Remove(kvp.Key);
+               }
             }
-            Console.WriteLine("\n Vad vill du göra?\n");
-            Console.WriteLine("1.Hantera lån");
-            Console.WriteLine("2.Gå tillbaka");
 
-        }
-
-        public static void LoanHandlingMenuChoice()
-        {
-            int choice = Utilities.GetUserNumberMinMax(1, 2);
-            if (choice == 1)
-            {
-                Console.WriteLine("Ange ärende du vill hantera:");
-                int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = cases[casechoice - 1];
-
-                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
-                {
-                    if (keyToRemove == kvp.Key.GetUsername())
-                    {
-                        Admin.HandleLoanRequest(kvp.Key, kvp.Value);
-
-                        Admin.Loantickets.Remove(kvp.Key);
-                    }
-                }
-
-            }
-            else
-            {
-                Console.Clear();
-                //RunProgram.RunAdminProgram(Admin admin); Gp tillbaka till huvud meny
-            }
-        }
+         }
+         else
+         {
+            Console.Clear();
+            //RunProgram.RunAdminProgram(Admin admin); Gp tillbaka till huvud meny
+         }
+      }
 
       public static void PrintCreateAccountCurrencyMenu()
       {
@@ -303,5 +314,5 @@ namespace The_Singletons_Bank
 
 
 
-    }
+   }
 }
