@@ -196,7 +196,6 @@ namespace The_Singletons_Bank
                     Transaction.PrintTransactionLogs();
                     break;
             }
-
         }
 
         public static void PrintCreateBankAccountMenu()
@@ -219,14 +218,12 @@ namespace The_Singletons_Bank
                     SavingAccount.CreateSavingAccount(user);
                     break;
             }
-
         }
 
         public static void PrintLoanHandlingMenu()
         {
             int LoanHandlingCounter = 1;
 
-            Console.WriteLine("Ohanterade ärenden:");
             cases = new List<string>();
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
@@ -234,15 +231,15 @@ namespace The_Singletons_Bank
                 cases.Add(kvp.Key.GetUsername());
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
-                Console.WriteLine($"{kvp.Key.GetUsername()}");
-                Console.WriteLine($"{kvp.Value}");
+                Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
+                //Lägg till kredittrovärdighet?
+                Console.WriteLine($"Ansökt belopp:{kvp.Value}SEK");
                 Utilities.DashDivide();
                 LoanHandlingCounter++;
             }
-            Console.WriteLine("\n Vad vill du göra?\n");
+            Console.WriteLine("\nVad vill du göra?\n");
             Console.WriteLine("1.Hantera lån");
             Console.WriteLine("2.Gå tillbaka");
-
         }
 
         public static void LoanHandlingMenuChoice()
@@ -263,12 +260,10 @@ namespace The_Singletons_Bank
                         Admin.Loantickets.Remove(kvp.Key);
                     }
                 }
-
             }
             else
             {
                 Console.Clear();
-                //RunProgram.RunAdminProgram(Admin admin); Gp tillbaka till huvud meny
             }
         }
 
@@ -279,7 +274,6 @@ namespace The_Singletons_Bank
             Console.WriteLine("2. Konto i USD");
             Console.WriteLine("3. Konto i EUR");
             Console.Write("Ange val: ");
-
         }
 
         public static void CreateCurrencyAccountChoice(Customer user)

@@ -24,7 +24,6 @@ namespace The_Singletons_Bank
 
         public void ShowInbox()
         {
-            Console.WriteLine("Dina ärenden:");
             int counter = 1;
             foreach (string letter in _inbox)
             {

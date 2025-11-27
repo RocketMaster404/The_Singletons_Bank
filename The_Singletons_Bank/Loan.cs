@@ -25,7 +25,7 @@ namespace The_Singletons_Bank
 
         public string ShowLoandetails()
         {
-            string loandetails = ($"Ränta: {Interestrate}\nLånebelopp: {Loanamount}\nKostnad för lån: {Loanamount}*{Interestrate / 100}");
+            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nKostnad för lån: {Loanamount*(Interestrate / 100)}SEK");
             return loandetails;
 
         }
@@ -165,17 +165,18 @@ namespace The_Singletons_Bank
 
                 Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
                 Admin.Loantickets.Add(owner, loanamount);//Om en låneförfrågan redan finns så kan man inte göra en ny PGA samma key redan finns.
+                Utilities.NoContentMsg();
 
             }
             else if (limitOk == false && hasActiveTicket == false)
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
-                    $"Tryck på valfri tangent för att gå tillbaka...");
-                Console.ReadLine();
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
+                Utilities.NoContentMsg();
             }
             else
             {
                 Console.WriteLine("Du har redan en aktiv låneförfrågan. Denna måste hanteras innan du kan ta ett nytt lån.");
+                Utilities.NoContentMsg();
 
             }
         }
