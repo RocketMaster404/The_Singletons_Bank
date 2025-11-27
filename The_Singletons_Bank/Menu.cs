@@ -146,6 +146,9 @@ namespace The_Singletons_Bank
                     break;
 
                 case 4: Console.WriteLine("Inkomna ärenden:");
+
+                    PrintLoanHandlingMenu();
+                    LoanHandlingMenuChoice();
                     break;
 
                 case 5:
@@ -209,14 +212,14 @@ namespace The_Singletons_Bank
             int LoanHandlingCounter = 1;
 
             Console.WriteLine("Ohanterade ärenden:");
-            List<string> cases = new List<string>();
+            cases = new List<string>();
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
             {
                 cases.Add(kvp.Key.GetUsername());
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
-                Console.WriteLine($"{kvp.Key}");
+                Console.WriteLine($"{kvp.Key.GetUsername()}");
                 Console.WriteLine($"{kvp.Value}");
                 Utilities.DashDivide();
                 LoanHandlingCounter++;
@@ -234,7 +237,7 @@ namespace The_Singletons_Bank
             {
                 Console.WriteLine("Ange ärende du vill hantera:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = cases[casechoice - 1];
+                string keyToRemove = cases[(casechoice-1)];
 
                 foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
                 {
