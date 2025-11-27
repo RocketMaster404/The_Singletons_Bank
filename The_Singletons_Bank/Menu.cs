@@ -101,7 +101,6 @@ namespace The_Singletons_Bank
                     RunProgram.Run();
                     break;
             }
-
         }
 
         public static void PrintAdminMainMenu()
@@ -158,8 +157,6 @@ namespace The_Singletons_Bank
                     RunProgram.Run();
                     break;
             }
-
-
         }
 
         public static void PrintTransferMenu()
@@ -183,7 +180,6 @@ namespace The_Singletons_Bank
                     Transaction.PrintTransactionLogs();
                     break;
             }
-
         }
 
         public static void PrintCreateBankAccountMenu()
@@ -227,7 +223,6 @@ namespace The_Singletons_Bank
             Console.WriteLine("\n Vad vill du göra?\n");
             Console.WriteLine("1.Hantera lån");
             Console.WriteLine("2.Gå tillbaka");
-
         }
 
         public static void LoanHandlingMenuChoice()
@@ -248,7 +243,6 @@ namespace The_Singletons_Bank
                         Admin.Loantickets.Remove(kvp.Key);
                     }
                 }
-
             }
             else
             {
