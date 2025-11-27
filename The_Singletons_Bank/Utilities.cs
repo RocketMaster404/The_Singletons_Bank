@@ -62,6 +62,16 @@ namespace The_Singletons_Bank
 
         }
 
+        public static decimal GetUserDecimalInput()
+        {
+            decimal input;
+            while (!decimal.TryParse(Console.ReadLine(), out input))
+            {
+                Console.WriteLine("Du måste ange ett decimaltal.");
+            }
+            return input; 
+        }
+
         public static int GetUserNumbermsg(string msg)
         {
             int input;
@@ -88,12 +98,12 @@ namespace The_Singletons_Bank
         public static void AsciiArtPrinter(bool animationOn)
         {
             // this @ mark will make so / and other symbols dont create error
-            string asciiArt = @" _____ _                  _ _                   ______             _    
-/  ___(_)                | | |                  | ___ \           | |   
-\ `--. _ _ __   __ _  ___| | |_ ___  _ __  ___  | |_/ / __ _ _ __ | | __
- `--. \ | '_ \ / _` |/ _ \ | __/ _ \| '_ \/ __| | ___ \/ _` | '_ \| |/ /
-/\__/ / | | | | (_| |  __/ | || (_) | | | \__ \ | |_/ / (_| | | | |   < 
-\____/|_|_| |_|\__, |\___|_|\__\___/|_| |_|___/ \____/ \__,_|_| |_|_|\_\
+            string asciiArt = @" _____ _             _      _                   ______             _    
+/  ___(_)           | |    | |                  | ___ \           | |   
+\ `--. _ _ __   __ _| | ___| |_ ___  _ __  ___  | |_/ / __ _ _ __ | | __
+ `--. \ | '_ \ / _` | |/ _ \ __/ _ \| '_ \/ __| | ___ \/ _` | '_ \| |/ /
+/\__/ / | | | | (_| | |  __/ || (_) | | | \__ \ | |_/ / (_| | | | |   < 
+\____/|_|_| |_|\__, |_|\___|\__\___/|_| |_|___/ \____/ \__,_|_| |_|_|\_\
                 __/ |                                                   
                |___/                                                    ";
 
