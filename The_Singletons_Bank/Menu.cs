@@ -67,26 +67,26 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        public static void CustomerMainMenuChoice(Customer user)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 5);
-            switch (input)
-            {
-                case 1:
-                    Customer.ShowCustomerAccounts(user);
-                    Customer.ShowCustomerSavingAccounts(user);
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    Console.WriteLine("Överföring");
-                    PrintTransferMenu();
-                    TransferMenuChoice(user);
-                    break;
-                case 3:
-                    PrintCreateAccountMenu();
-                    CreateAccountMenuChoice(user);
-                    break;
-                case 4:
+      public static void CustomerMainMenuChoice(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 5);
+         switch (input)
+         {
+            case 1:
+               Customer.ShowCustomerAccounts(user);
+               Customer.ShowCustomerSavingAccounts(user);
+               Console.ReadKey();
+               break;
+            case 2:
+               Console.WriteLine("Överföring");
+               PrintTransferMenu();
+               TransferMenuChoice(user);
+               break;
+            case 3:
+               PrintCreateAccountMenu();
+               CreateAccountChoice(user);
+               break;
+            case 4:
                     Loan.ShowLoanMenu(user);
                break;
             case 5:
@@ -173,23 +173,24 @@ namespace The_Singletons_Bank
 
         }
 
-        public static void PrintCreateAccountMenu()
-        {
-            Console.WriteLine("1. Skapa konto");
-            Console.WriteLine("2. Skapa sparkonto");
-        }
-        public static void CreateAccountMenuChoice(Customer user)
-        {
-            int input = Utilities.GetUserNumberMinMax(1, 2);
-            switch (input)
-            {
-                case 1:
-                    Account.CreateAccount(user);
-                    break;
-                case 2:
-                    SavingAccount.CreateSavingAccount(user);
-                    break;
-            }
+        public static void PrintCreateAccountMainMenu()
+      {
+         Console.WriteLine("1. Skapa konto");
+         Console.WriteLine("2. Skapa sparkonto");
+      }
+      public static void CreateAccountMenuChoice1(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 2);
+         switch (input)
+         {
+            case 1:
+               PrintCreateAccountMenu();
+               CreateAccountChoice(user);
+               break;
+            case 2:
+               SavingAccount.CreateSavingAccount(user);
+               break;
+         }
 
         }
 
@@ -242,6 +243,50 @@ namespace The_Singletons_Bank
                 //RunProgram.RunAdminProgram(Admin admin); Gp tillbaka till huvud meny
             }
         }
+
+      public static void PrintCreateAccountMenu()
+      {
+         Console.WriteLine("Skapa konto");
+         Console.WriteLine("1. Konto i SEK");
+         Console.WriteLine("2. Konto i USD");
+         Console.WriteLine("3. Konto i EUR");
+         Console.Write("Ange val: ");
+
+      }
+
+      public static void CreateAccountChoice(Customer user)
+      {
+         int input = Utilities.GetUserNumberMinMax(1, 3);
+         string name;
+
+         switch (input)
+         {
+            case 1:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountSEK = Account.CreateAccount(name, 0, "SEK", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountSEK);
+               break;
+
+            case 2:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountUSD = Account.CreateAccount(name, 0, "USD", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountUSD);
+               break;
+
+            case 3:
+               Console.WriteLine("Ange namnet på ditt konto");
+               name = Console.ReadLine();
+               Account accountEUR = Account.CreateAccount(name, 0, "EUR", user);
+               Console.WriteLine("Konto skapat\n");
+               Account.ShowAccount(accountEUR);
+               break;
+
+         }
+      }
 
 
 

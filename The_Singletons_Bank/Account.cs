@@ -86,51 +86,16 @@ namespace The_Singletons_Bank
          _balance = balance;
       }
 
+      public static Account CreateAccount(string name,decimal balance, string currency,Customer user)
+      {
+         var account = new Account(name, balance, currency);
+         user.AddToAccountList(account);
+         return account;   
+      }
+
       
 
-      public  static void CreateAccount(Customer user) 
-      {
-         Console.WriteLine("Skapa konto");
-         Console.WriteLine("1. Konto i SEK");
-         Console.WriteLine("2. Konto i USD");
-         Console.WriteLine("3. Konto i EUR");
-         Console.Write("Ange valuta: ");
-         int input = Utilities.GetUserNumberMinMax(1, 3);
-         string name;
-
-         switch (input)
-         {
-            case 1:
-               Console.WriteLine("Ange namnet på ditt konto");
-               name = Console.ReadLine();
-               var accountSEK = new Account(name,1000, "SEK");
-               Console.WriteLine("Konto skapat\n");
-               ShowAccount(accountSEK);
-               user.AddToAccountList(accountSEK);
-               break;
-               
-            case 2:
-               Console.WriteLine("Ange namnet på ditt konto");
-               name = Console.ReadLine();
-               var accountUSD = new Account(name,10, "USD");
-               Console.WriteLine("Konto skapat\n");
-               ShowAccount(accountUSD);
-               user.AddToAccountList(accountUSD);
-               break;
-
-            case 3:
-               Console.WriteLine("Ange namnet på ditt konto");
-               name = Console.ReadLine();
-               var accountEUR = new Account(name,10, "EUR");
-               Console.WriteLine("Konto skapat\n");
-               ShowAccount(accountEUR);
-               user.AddToAccountList(accountEUR);
-               break;
-
-         }
-
-         
-      }
+     
 
 
    }
