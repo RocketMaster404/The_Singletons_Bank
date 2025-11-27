@@ -66,6 +66,23 @@ namespace The_Singletons_Bank
 
                   break;
 
+        public static void PrintCreateBankAccountMenu()
+        {
+            Console.WriteLine("1. Skapa konto");
+            Console.WriteLine("2. Skapa sparkonto");
+        }
+        public static void CreateAccountMenuChoice1(Customer user)
+        {
+            int input = Utilities.GetUserNumberMinMax(1, 2);
+            switch (input)
+            {
+                case 1:
+                    PrintCreateBankAccountMenu();
+                    CreateAccountChoice(user);
+                    break;
+                case 2:
+                    SavingAccount.CreateSavingAccount(user);
+                    break;
             }
          }
       }
