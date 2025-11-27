@@ -12,7 +12,7 @@ namespace The_Singletons_Bank
         private decimal Interestrate { get; set; }
 
         //private int LoanNumber { get; set; }
-        private decimal Loanamount { get; set; }
+        private decimal Loanamount { get; set; } 
 
         public Loan(Customer owner, decimal interestrate, decimal loanamount)
         {
