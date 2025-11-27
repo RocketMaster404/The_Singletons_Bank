@@ -181,10 +181,10 @@ namespace The_Singletons_Bank
         {
             if (Admin.Loantickets.ContainsKey(owner))
             {
-                return false;
+                return true;
             }
             else
-                return true;
+                return false;
         }
 
     }
