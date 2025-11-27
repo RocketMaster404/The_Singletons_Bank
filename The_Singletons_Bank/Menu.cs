@@ -88,7 +88,7 @@ namespace The_Singletons_Bank
                TransferMenuChoice(user);
                break;
             case 3:
-               PrintCreateAccountMenu();
+               PrintCreateBankAccountMenu();
                CreateAccountChoice(user);
                break;
             case 4:
@@ -178,7 +178,7 @@ namespace The_Singletons_Bank
 
       }
 
-      public static void PrintCreateAccountMenu()
+      public static void PrintCreateBankAccountMenu()
       {
          Console.WriteLine("1. Skapa konto");
          Console.WriteLine("2. Skapa sparkonto");
@@ -189,7 +189,7 @@ namespace The_Singletons_Bank
          switch (input)
          {
             case 1:
-               PrintCreateAccountMenu();
+               PrintCreateBankAccountMenu();
                CreateAccountChoice(user);
                break;
             case 2:
