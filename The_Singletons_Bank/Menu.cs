@@ -26,41 +26,44 @@ namespace The_Singletons_Bank
          bool run = true;
          while (run)
          {
-
             PrintLogInMenu();
             int input = Utilities.GetUserNumberMinMax(1, 2);
+
             switch (input)
             {
                case 1:
+                  User? user = null;
 
-                  var user = Bank.LogIn();
 
+                  user = Bank.LogIn();
+                  while(user != null)
+                  {
+
+                  
                   if (user == null || user.UserIsBlocked)
                   {
-                     continue;
+                     break;
                   }
 
-                  if (user != null && user is Customer customer)//LogIn-logiken följer med hit
+                  if (user is Customer customer)
                   {
                      RunProgram.RunCustomerProgram(customer);
-
                   }
-                  else if (user != null && user is Admin admin)
+                  else if (user is Admin admin)
                   {
                      RunProgram.RunAdminProgram(admin);
                   }
-
-                  Console.ReadKey();
-
+                  }
                   break;
+
                case 2:
                   Console.WriteLine("Programmet avslutas!");
                   run = false;
                   break;
-
             }
          }
       }
+
       public static void PrintCustomerMainMenu()
       {
          Console.WriteLine("Meny");
@@ -194,7 +197,7 @@ namespace The_Singletons_Bank
       }
       public static void CreateBankAccountMenuChoice(Customer user)
       {
-         
+
          int input = Utilities.GetUserNumberMinMax(1, 2);
          switch (input)
          {
@@ -274,7 +277,7 @@ namespace The_Singletons_Bank
       {
          int input = Utilities.GetUserNumberMinMax(1, 3);
          string name;
-         
+
          switch (input)
          {
             case 1:
