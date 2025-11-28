@@ -307,7 +307,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountEUR = Account.CreateAccount(name, 0, "EUR", user);
                     Console.WriteLine("Konto skapat\n");
-                    Account.ShowAccount(accountEUR);
+                    Account.ShowAccount(accountEUR); 
                     break;
 
             }

@@ -42,7 +42,7 @@ namespace The_Singletons_Bank
         }
         public static void NoContentMsg()
         {
-            Utilities.DashDivide();
+            DashDivide();
             Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
             Console.ReadLine();
             Console.Clear();

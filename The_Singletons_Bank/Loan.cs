@@ -73,7 +73,7 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Dina ärenden:\n");
                         owner.ShowInbox();
                         Console.WriteLine("\n Vad vill du göra?\n");
-                        Console.WriteLine("1.Se status för lånförfrågan");
+                        Console.WriteLine("1.Hantera ärende");
                         Console.WriteLine("2.Gå tillbaka");
 
                         int userchoice = Utilities.GetUserNumberMinMax(1, 2);
@@ -81,7 +81,7 @@ namespace The_Singletons_Bank
                         {
                             Console.Write("Välj lån i listan:");
                             int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
-                            bool accept = owner.HandleLoanSuggestion(loanchoice.ToString(), owner);
+                            bool accept = owner.HandleLoanSuggestion(loanchoice, owner);
                             break;
                         }
                         else
@@ -192,7 +192,7 @@ namespace The_Singletons_Bank
 
         public static bool HasActiveTicket(Customer owner)
         {
-            if (Admin.Loantickets.ContainsKey(owner))
+            if (Admin.Loantickets.ContainsKey(owner)||owner._inbox.Count()!=0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]
             {
                 return true;
             }
