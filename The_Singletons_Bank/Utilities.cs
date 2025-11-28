@@ -40,6 +40,13 @@ namespace The_Singletons_Bank
                 }
             }
         }
+        public static void NoContentMsg()
+        {
+            DashDivide();
+            Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
+            Console.ReadLine();
+            Console.Clear();
+        }
 
         public static int GetUserNumberMinMax(int min, int max)
         {

@@ -24,19 +24,21 @@ namespace The_Singletons_Bank
 
         public void ShowInbox()
         {
-            Console.WriteLine("Dina ärenden:");
             int counter = 1;
-            foreach (string letter in _inbox)
+            if (_inbox.Count() != 0)
             {
-                Utilities.DashDivide();
-                Console.WriteLine(counter + ".");
-                Console.WriteLine(letter);
-                Utilities.DashDivide();
-                counter++;
+                foreach (string letter in _inbox)
+                {
+                    Utilities.DashDivide();
+                    Console.WriteLine(counter + ".");
+                    Console.WriteLine(letter);
+                    Utilities.DashDivide();
+                    counter++;
+                }
             }
         }
 
-        public bool HandleLoanSuggestion(string letter, Customer customer)
+        public bool HandleLoanSuggestion(int letterchoice, Customer customer)
         {
             Console.WriteLine("Accepterar du lånevillkoren för valt lån?");
             string userchoice = Utilities.GetUserChoiceYN();
@@ -45,19 +47,22 @@ namespace The_Singletons_Bank
                 if (Loan.PendingLoans.ContainsKey(customer))
                 {
                     Console.WriteLine("Du accepterade lånevillkoren. Du kan se ditt lån under \"mina lån\"");
-                    Loan loan = Loan.PendingLoans[customer]
-                    ;
-                    _loans.Add(loan);
-                    _inbox.Remove(letter);
+                    Loan loan = Loan.PendingLoans[customer];
+                    customer._loans.Add(loan);
+                    customer._inbox.RemoveAt(letterchoice-1);
                     Loan.PendingLoans.Remove(customer);
                 }
                 return true;
             }
             else
             {
-                Console.WriteLine("Du nekade låneförslaget");
-                _inbox.Remove(letter);
-                Loan.PendingLoans.Remove(customer);
+                if (Loan.PendingLoans.ContainsKey(customer))
+                {
+                    Console.WriteLine("Du nekade låneförslaget");
+                    customer._inbox.RemoveAt(letterchoice-1);
+                    Loan.PendingLoans.Remove(customer);
+                    return false;
+                }
                 return false;
             }
         }
