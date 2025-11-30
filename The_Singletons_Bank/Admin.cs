@@ -60,34 +60,39 @@ namespace The_Singletons_Bank
 
       public static void UnBlockAccount()
       {
-         Console.WriteLine("Ange användarnamnet eller nummret av kontot du vill avblockera.");
+         Console.WriteLine("Ange användarnamnet eller numret av kontot du vill avblockera.");
 
          List<User> _users = Bank.GetUsers();
             Console.WriteLine("Blockerade konton:");
+            int i = 0;
             foreach (User user in _users)
             {
-                  int i = 0;
+                  
                   if(user.UserIsBlocked == true)
                   {
                     i++;
-                    Console.WriteLine($"Is user blocked? :|{i}|{user.GetUsername()} {user.UserIsBlocked}");
+                    Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
+                    Console.WriteLine($"användare :|{i}|{user.GetUsername()}");
+                    Utilities.stopColoring();
                   }
             }
-
+            i = 0;
             string userInput = Console.ReadLine();
             if (int.TryParse(userInput, out int number))
             {
                 // Om svaret är en int
                 foreach (User user in _users)
                 {
-                    int i = 0;
+                    
                     if (user.UserIsBlocked == true)
                     {
                         i++;
                         if(i == Convert.ToInt32(userInput))
                         {
                             user.UserIsBlocked = false;
-                            Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
+                            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
+                            Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                            Utilities.stopColoring();
                         }
                     }
                 }
@@ -100,7 +105,9 @@ namespace The_Singletons_Bank
                     if (user.GetUsername() == userInput)
                     {
                         user.UserIsBlocked = false;
-                        Console.WriteLine($"Is user blocked? : {user.GetUsername()} {user.UserIsBlocked}");
+                        Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
+                        Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                        Utilities.stopColoring();
                     }
                 }
 

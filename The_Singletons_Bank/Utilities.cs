@@ -104,49 +104,47 @@ namespace The_Singletons_Bank
 
         public static void AsciiArtPrinter(bool animationOn)
         {
-            // this @ mark will make so / and other symbols dont create error
-            string asciiArt = @" _____ _             _      _                   ______             _    
-/  ___(_)           | |    | |                  | ___ \           | |   
-\ `--. _ _ __   __ _| | ___| |_ ___  _ __  ___  | |_/ / __ _ _ __ | | __
- `--. \ | '_ \ / _` | |/ _ \ __/ _ \| '_ \/ __| | ___ \/ _` | '_ \| |/ /
-/\__/ / | | | | (_| | |  __/ || (_) | | | \__ \ | |_/ / (_| | | | |   < 
-\____/|_|_| |_|\__, |_|\___|\__\___/|_| |_|___/ \____/ \__,_|_| |_|_|\_\
-                __/ |                                                   
-               |___/                                                    ";
 
-            //This will split up the ascciart into lines 
-            string[] lines = asciiArt.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            Console.CursorVisible = false;
-
-            //If animationOn == true then the animation will play out otherwise just a static image
-            if(animationOn == true)
+            string[] art = new string[]
             {
-                foreach (string line in lines)
+                @" _____ _             _      _                   ______             _    ",
+                @"/  ___(_)           | |    | |                  | ___ \           | |   ",
+                @"\ `--. _ _ __   __ _| | ___| |_ ___  _ __  ___  | |_/ / __ _ _ __ | | __",
+                @" `--. \ | '_ \ / _` | |/ _ \ __/ _ \| '_ \/ __| | ___ \/ _` | '_ \| |/ /",
+                @"/\__/ / | | | | (_| | |  __/ || (_) | | | \__ \ | |_/ / (_| | | | |   < ",
+                @"\____/|_|_| |_|\__, |_|\___|\__\___/|_| |_|___/ \____/ \__,_|_| |_|_|\_\",
+                @"                __/ |                                                   ",
+                @"               |___/                                                    "
+            };
+
+
+            // Hittar den längsta stringen i arrayen för att veta när den ska sluta
+            int maxWidth = art.Max(line => line.Length);
+            Console.CursorVisible = false;
+            if (animationOn)
+            {
+                for (int currentWidth = 1; currentWidth <= maxWidth; currentWidth++)
                 {
-                    // This will loop throughout the line, increasing 'i' by 5 every time
-                    for (int i = 0; i < line.Length; i += 5)
+                    // Bättre än Console.clear()
+                    Console.SetCursorPosition(0, 0);
+
+                    // Skriver ut stringen från en bokstav tills hella texten har skrivits ut som gör en liten cool animation
+                    foreach (string line in art)
                     {
-                        // This will count how many characters are left
-                        int remaining = line.Length - i;
-
-                        // This will make count into 5 or whatever is remaining
-                        int count = Math.Min(5, remaining);
-
-                        // Outputs the text
-                        Console.Write(line.Substring(i, count));
-
-                        // Pause
-                        Thread.Sleep(10);
+                        int lengthToShow = Math.Min(currentWidth, line.Length);
+                        Console.WriteLine(line.Substring(0, lengthToShow));
                     }
 
-                    // Move to next line
-                    Console.WriteLine();
+                    Thread.Sleep(1);
                 }
             }
             else
             {
-                Console.WriteLine(asciiArt);
+                foreach (string line in art)
+                {
+                    
+                    Console.WriteLine(line.Substring(0, maxWidth));
+                }
             }
             
         }

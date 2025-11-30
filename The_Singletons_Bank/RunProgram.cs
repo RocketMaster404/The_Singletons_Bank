@@ -8,12 +8,13 @@ namespace The_Singletons_Bank
 {
     internal class RunProgram
     {
-
+        private static bool runOnce = true;
         public static void Run()
         {
-            List<User> _users = Bank.GetUsers();
-            _users[1].UserIsBlocked = true;
-            Utilities.AsciiArtPrinter(true);
+
+            Utilities.AsciiArtPrinter(runOnce);
+            runOnce = false;
+
             //Menu.PrintLogInMenu();
             Menu.LogInMenuChoice();
             
