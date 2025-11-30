@@ -72,6 +72,11 @@ namespace The_Singletons_Bank
             return _accounts;
         }
 
+        public List<SavingAccount> GetSavingAccountList()
+        {
+            return _savingAccounts;
+        }
+
         public void AddToAccountList(Account account)
         {
             _accounts.Add(account);

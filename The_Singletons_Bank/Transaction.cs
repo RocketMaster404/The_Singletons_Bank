@@ -40,14 +40,22 @@ namespace The_Singletons_Bank
 
                
                     List<Account> accounts = user.GetAccountList();
+                    List<SavingAccount> savingAccounts = user.GetSavingAccountList();
                     for (int i = 0; i < accounts.Count; i++)
                     {
                         decimal balance = accounts[i].GetBalance();
                         int accountNumber = accounts[i].GetAccountNumber();
-                        Console.WriteLine($"Konto: {i+1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+                        Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
 
                     }
-                    if (accounts.Count <= 0)
+                    for (int i = 0; i < savingAccounts.Count; i++)
+                    {
+                        decimal balance = savingAccounts[i].GetBalance();
+                        int accountNumber = savingAccounts[i].GetAccountNumber();
+                        Console.WriteLine($"SparKonto: {i + 1+ accounts.Count} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+
+                    }
+                if (accounts.Count <= 0)
                     {
                         Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
                         transferInProgress = false;
@@ -65,7 +73,7 @@ namespace The_Singletons_Bank
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
 
-                        if (accounts[accountSender - 1].GetCurrency() != null || accounts[accountRecipitent - 1].GetCurrency() != null)
+                        if (accounts[accountSender - 1].GetCurrency() != null || accounts[accountRecipitent - 1].GetCurrency() != null || accounts[accountSender - 1].GetCurrency() != null || savingAccounts[accountRecipitent - 1].GetCurrency() != null)
                         {
                             ConvertedAmmountToSend = Currency.ConvertCurrency(accounts[accountSender - 1].GetCurrency(), accounts[accountRecipitent - 1].GetCurrency(), Convert.ToDecimal(ammountToSend));
                         }
