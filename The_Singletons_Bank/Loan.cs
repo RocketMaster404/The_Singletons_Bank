@@ -90,7 +90,7 @@ namespace The_Singletons_Bank
                     break;
                 case 3:
                     Console.WriteLine("Ange önskat lånebelopp:");
-                    CreateTestLoan(owner);
+                    CreateLoan(owner);
                     break;
 
                 default:
@@ -108,55 +108,10 @@ namespace The_Singletons_Bank
             return Interestrate;
         }
 
-        //public static Loan CreateLoan(Customer owner)
-        //{
-        //    decimal loanamount = Utilities.GetUserNumber();
 
-        //    bool ok = Loangranted(loanamount, owner.ShowBalance());
-
-        //    if (ok)
-        //    {
-        //        Console.WriteLine($"Ditt lån kan bli beviljat till en ränta på {Interestrate}%.\n Total kostnad för lån: {(Interestrate / 100) * loanamount}Kr\n" +
-        //            $"Godkänner du detta vilkor?");
-
-        //        string choice = Utilities.GetUserChoiceYN();
-        //        if (choice == "y")
-        //        {
-        //            Loan loan = new Loan(owner, Interestrate, loanamount);
-        //            Console.WriteLine($"Du har lånat {loanamount}SEK till en ränta av {Interestrate}%");
-        //            //Console.WriteLine("Välj konto för insättning:");
-        //            //transaction.Send(loan1.Loanamount); Send money to correct account with transactionclass - Daniel [21/11-25]
-        //            owner._loans.Add(loan);
-        //            return loan;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Låneförfrågan avbruten.\nTryck på valfri tangent för att gå tillbaka...");
-        //            Console.ReadLine();
-        //            return null;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.\n" +
-        //            $"Tryck på valfri tangent för att gå tillbaka...");
-        //        Console.ReadLine();
-        //        return null;
-        //    }
-        //}
-        //public static bool Loangranted(decimal loanRequest, decimal balance)
-        //{
-
-        //    if (loanRequest > (balance * 5))
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        public static void CreateTestLoan(Customer owner)
+        public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserNumber();
+            decimal loanamount = Utilities.GetUserDecimal();
             bool limitOk = Loangrantedtest(loanamount, owner.ShowBalance());
             bool hasActiveTicket = HasActiveTicket(owner);
 
