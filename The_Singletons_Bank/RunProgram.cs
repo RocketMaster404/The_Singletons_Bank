@@ -8,8 +8,6 @@ namespace The_Singletons_Bank
 {
    internal class RunProgram
    {
-      private static bool runOnce = true;
-
 
       public static void Run()
       {
@@ -22,7 +20,7 @@ namespace The_Singletons_Bank
 
 
             Console.Clear();
-            Utilities.AsciiArtPrinter(runOnce);
+            Utilities.AsciiArtPrinter(true);
 
 
 

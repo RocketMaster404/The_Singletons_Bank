@@ -17,10 +17,27 @@ namespace The_Singletons_Bank
             }
             return input;
         }
-        public static void DashDivide()
+
+        public static string GetUserString()
         {
-            Console.WriteLine("_________________________________________________________________________________________");
+            string answer = null;
+
+            while (string.IsNullOrEmpty(answer))
+            {
+                answer = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(answer))
+                {
+                    Console.WriteLine("Du behöver skriva något");
+                }
+            }
+
+            return answer;
         }
+                public static void DashDivide()
+                {
+                    Console.WriteLine("_________________________________________________________________________________________");
+                }
         public static string GetUserChoiceYN()
         {
             while (true)
