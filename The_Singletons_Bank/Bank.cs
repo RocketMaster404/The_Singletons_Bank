@@ -21,7 +21,19 @@ namespace The_Singletons_Bank
          return _users;
       }
 
-      public static bool userExists(string username)
+        public static Customer GetSpecificUser(string username)
+        {
+            foreach (var user in _users)
+            {
+                if (user.GetUsername() == username && user is Customer customer) 
+                {
+                    return customer;
+                }
+            }
+            return null; 
+        }
+
+        public static bool userExists(string username)
       {
          foreach (var user in _users)
          {
