@@ -11,7 +11,7 @@ namespace The_Singletons_Bank
         public static decimal GetUserDecimal()
         {
             decimal input;
-            while (!Decimal.TryParse(Console.ReadLine(), out input))
+            while (!Decimal.TryParse(Console.ReadLine(), out input)|| input<0)
             {
                 Console.WriteLine("Du måste ange ett giltigt tal!");
             }
