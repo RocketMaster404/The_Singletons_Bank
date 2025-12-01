@@ -16,7 +16,6 @@ namespace The_Singletons_Bank
 
          while (runProgram)
          {
-                Utilities.GetUserString();
             User? user = null;
 
 
