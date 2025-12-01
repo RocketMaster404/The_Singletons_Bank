@@ -9,17 +9,55 @@ namespace The_Singletons_Bank
     internal class RunProgram
     {
         private static bool runOnce = true;
-        public static void Run()
-        {
+      
 
-            Utilities.AsciiArtPrinter(runOnce);
-            runOnce = false;
+      public static void Run()
+      {
+         bool runProgram = true;
 
-            //Menu.PrintLogInMenu();
-            Menu.LogInMenuChoice();
+         while (runProgram)
+         {
+            User? user = null;
+
             
+            if (runOnce)
+            {
+               Utilities.AsciiArtPrinter(runOnce);
+               runOnce = false;
+            }
 
-        }
+            
+            
+            Menu.PrintLogInMenu();
+            int input = Utilities.GetUserNumberMinMax(1, 2);
+
+            switch (input)
+            {
+               case 1:
+                  user = Bank.LogIn();
+                  if (user == null || user.UserIsBlocked)
+                  {
+                     break;
+                  }
+
+                  if (user is Customer customer)
+                  {
+                     RunCustomerProgram(customer);
+                  }
+                  else if (user is Admin admin)
+                  {
+                     RunAdminProgram(admin);
+                  }
+                  break;
+
+               case 2:
+                  Console.WriteLine("Programmet avslutas!");
+                  runProgram = false;
+                  break;
+            }
+         }
+      }
+
 
       public static void RunCustomerProgram(Customer customer)
       {
