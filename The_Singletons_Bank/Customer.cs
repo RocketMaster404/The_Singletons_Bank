@@ -46,11 +46,13 @@ namespace The_Singletons_Bank
             {
                 if (Loan.PendingLoans.ContainsKey(customer))
                 {
+                    Console.Clear();
                     Console.WriteLine("Du accepterade lånevillkoren. Du kan se ditt lån under \"mina lån\"");
                     Loan loan = Loan.PendingLoans[customer];
                     customer._loans.Add(loan);
                     customer._inbox.RemoveAt(letterchoice-1);
                     Loan.PendingLoans.Remove(customer);
+                    Utilities.NoContentMsg();
                 }
                 return true;
             }
@@ -58,9 +60,11 @@ namespace The_Singletons_Bank
             {
                 if (Loan.PendingLoans.ContainsKey(customer))
                 {
+                    Console.Clear();
                     Console.WriteLine("Du nekade låneförslaget");
                     customer._inbox.RemoveAt(letterchoice-1);
                     Loan.PendingLoans.Remove(customer);
+                    Utilities.NoContentMsg();
                     return false;
                 }
                 return false;
