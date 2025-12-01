@@ -34,7 +34,7 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        public static void CustomerMainMenuChoice(Customer user)
+        public static bool CustomerMainMenuChoice(Customer user)
         {
             int input = Utilities.GetUserNumberMinMax(1, 5);
             switch (input)
@@ -43,27 +43,27 @@ namespace The_Singletons_Bank
                     Customer.ShowCustomerAccounts(user);
                     Customer.ShowCustomerSavingAccounts(user);
                     Console.ReadKey();
-                    break;
+               return true;
                 case 2:
                     Console.WriteLine("Överföring");
                     PrintTransferMenu();
                     TransferMenuChoice(user);
-                    break;
+               return true;
                 case 3:
                     PrintCreateBankAccountMenu();
                     CreateBankAccountMenuChoice(user);
-                    break;
+               return true;
                 case 4:
                     Loan.ShowLoanMenu(user);
-                    break;
+               return true;
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
+               return false;
                     
-                    break;
             }
-
+         return true;
         }
 
         public static void PrintAdminMainMenu()
@@ -76,7 +76,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("5. Logga ut");
         }
 
-        public static void AdminMainMenuChoice(Admin admin)
+        public static bool AdminMainMenuChoice(Admin admin)
         {
             int input = Utilities.GetUserNumberMinMax(1, 5);
 
@@ -95,7 +95,7 @@ namespace The_Singletons_Bank
                         Bank.AddAdminAccount();
                     }
 
-                    break;
+               return true;
                 case 2:
                     Console.WriteLine("2. Växelkurs");
                     Currency.DisplayExchangeRates();
@@ -104,13 +104,13 @@ namespace The_Singletons_Bank
                     {
                         Currency.ChangeCurrencyExchangeRateMenu();
                     }
-                    
-                    break;
+
+               return true;
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                     Console.WriteLine("3. UnBlockAccount");
                     Admin.UnBlockAccount();
 
-                    break;
+               return true;
 
                 case 4:
                     Console.Clear();
@@ -118,23 +118,23 @@ namespace The_Singletons_Bank
                     {
                         Console.WriteLine("Du har inga inkomna ärenden");
                         Utilities.NoContentMsg();
-                        break;
+                  return true;
                     }
                     else
                     {
                         Console.WriteLine("Inkomna ärenden:");
                         PrintLoanHandlingMenu();
                         LoanHandlingMenuChoice();
-                        break;
+                  return true;
                     }
 
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    break;
+               return false;
             }
-
+         return true;
 
         }
 
