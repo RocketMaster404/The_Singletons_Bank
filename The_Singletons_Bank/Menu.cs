@@ -123,8 +123,8 @@ namespace The_Singletons_Bank
                     else
                     {
                         Console.WriteLine("Inkomna ärenden:");
-                        PrintLoanHandlingMenu();
-                        LoanHandlingMenuChoice();
+                        PrintAdminLoanHandlingMenu();
+                        AdminLoanHandlingMenuChoice();
                   return true;
                     }
 
@@ -183,7 +183,7 @@ namespace The_Singletons_Bank
             }
         }
 
-        public static void PrintLoanHandlingMenu()
+        public static void PrintAdminLoanHandlingMenu()
         {
             int LoanHandlingCounter = 1;
 
@@ -205,7 +205,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("2.Gå tillbaka");
         }
 
-        public static void LoanHandlingMenuChoice()
+        public static void AdminLoanHandlingMenuChoice()
         {
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)

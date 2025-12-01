@@ -79,9 +79,9 @@ namespace The_Singletons_Bank
                         int userchoice = Utilities.GetUserNumberMinMax(1, 2);
                         if (userchoice == 1)
                         {
-                            Console.Write("Välj lån i listan:");
-                            int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
-                            bool accept = owner.HandleLoanSuggestion(loanchoice, owner);
+                            //Console.Write("Välj lån i listan:");
+                            //int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
+                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 lån åt gången just nu. [Daniel-01/12}
                             break;
                         }
                         else
@@ -94,7 +94,7 @@ namespace The_Singletons_Bank
                     break;
 
                 default:
-                    Console.WriteLine("\nTryck på valfri tangent för att gå tillbaka till huvudmenyn");
+                    Console.Clear();
                     break;
             }
 
