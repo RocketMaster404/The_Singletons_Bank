@@ -21,48 +21,7 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        public static void LogInMenuChoice()
-        {
-            bool run = true;
-            while (run)
-            {
-                PrintLogInMenu();
-                int input = Utilities.GetUserNumberMinMax(1, 2);
-
-                switch (input)
-                {
-                    case 1:
-                        User? user = null;
-
-
-                        user = Bank.LogIn();
-                        while (user != null)
-                        {
-
-
-                            if (user == null || user.UserIsBlocked)
-                            {
-                                break;
-                            }
-
-                            if (user is Customer customer)
-                            {
-                                RunProgram.RunCustomerProgram(customer);
-                            }
-                            else if (user is Admin admin)
-                            {
-                                RunProgram.RunAdminProgram(admin);
-                            }
-                        }
-                        break;
-
-                    case 2:
-                        Console.WriteLine("Programmet avslutas!");
-                        run = false;
-                        break;
-                }
-            }
-        }
+        
 
         public static void PrintCustomerMainMenu()
         {
@@ -101,7 +60,7 @@ namespace The_Singletons_Bank
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    RunProgram.Run();
+                    
                     break;
             }
 
@@ -173,7 +132,6 @@ namespace The_Singletons_Bank
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    RunProgram.Run();
                     break;
             }
 
