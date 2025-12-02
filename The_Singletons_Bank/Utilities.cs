@@ -107,7 +107,7 @@ namespace The_Singletons_Bank
 
         }
 
-        public static void startColoring(ConsoleColor frontColor, ConsoleColor backgroundColor)
+        public static void startColoring(ConsoleColor frontColor, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             Console.ForegroundColor = frontColor;
             Console.BackgroundColor = backgroundColor;

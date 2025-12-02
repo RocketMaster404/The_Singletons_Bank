@@ -59,7 +59,7 @@ namespace The_Singletons_Bank
       }
 
 
-      public static void UnBlockAccount()
+      public static void AvBlockeraAnvändare()
       {
          Console.WriteLine("Ange användarnamnet eller numret av kontot du vill avblockera.");
 
@@ -112,6 +112,10 @@ namespace The_Singletons_Bank
                         Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
                         Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
                         Utilities.stopColoring();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Användare hittad inte");
                     }
                 }
 
