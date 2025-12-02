@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        
+
 
         public static void PrintCustomerMainMenu()
         {
@@ -41,31 +42,37 @@ namespace The_Singletons_Bank
             {
                 case 1:
                     Console.Clear();
+                    Console.WriteLine($"{"Konto",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10}  ");
+                    Console.WriteLine();
                     Customer.ShowCustomerAccounts(user);
+                    Console.WriteLine();
+                    //Utilities.DashDivide();
+                    Console.WriteLine($"{"Sparkonto",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"Ränta",4} ");
+                    Console.WriteLine();
                     Customer.ShowCustomerSavingAccounts(user);
                     Utilities.NoContentMsg();
-               return true;
+                    return true;
                 case 2:
                     Console.Clear();
                     Console.WriteLine("Överföring");
                     PrintTransferMenu();
                     TransferMenuChoice(user);
-               return true;
+                    return true;
                 case 3:
                     PrintCreateBankAccountMenu();
                     CreateBankAccountMenuChoice(user);
-               return true;
+                    return true;
                 case 4:
                     Loan.ShowLoanMenu(user);
-               return true;
+                    return true;
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-               return false;
-                    
+                    return false;
+
             }
-         return true;
+            return true;
         }
 
         public static void PrintAdminMainMenu()
@@ -98,7 +105,7 @@ namespace The_Singletons_Bank
                         Bank.AddAdminAccount();
                     }
 
-               return true;
+                    return true;
                 case 2:
                     Console.Clear();
                     Console.WriteLine("2. Växelkurs");
@@ -109,13 +116,13 @@ namespace The_Singletons_Bank
                         Currency.ChangeCurrencyExchangeRateMenu();
                     }
 
-               return true;
+                    return true;
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                     Console.Clear();
                     Console.WriteLine("3. UnBlockAccount");
                     Admin.UnBlockAccount();
 
-               return true;
+                    return true;
 
                 case 4:
                     Console.Clear();
@@ -123,23 +130,23 @@ namespace The_Singletons_Bank
                     {
                         Console.WriteLine("Du har inga inkomna ärenden");
                         Utilities.NoContentMsg();
-                  return true;
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Inkomna ärenden:");
                         PrintAdminLoanHandlingMenu();
                         AdminLoanHandlingMenuChoice();
-                  return true;
+                        return true;
                     }
 
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-               return false;
+                    return false;
             }
-         return true;
+            return true;
 
         }
 
@@ -274,7 +281,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountEUR = Account.CreateAccount(name, 10, "EUR", user);
                     Console.WriteLine("Konto skapat\n");
-                    Account.ShowAccount(accountEUR); 
+                    Account.ShowAccount(accountEUR);
                     break;
 
             }
