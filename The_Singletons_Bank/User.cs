@@ -21,7 +21,6 @@ namespace The_Singletons_Bank
 
         
 
-        private decimal Totalfunds = 1000m;
 
 
         public User(string username, string password)
@@ -69,11 +68,7 @@ namespace The_Singletons_Bank
         {
 
         }
-        public decimal ShowBalance()
-        {
-            //Console.WriteLine($"Du har {Totalfunds} kr");//Deleted this part in order for loan class to work - Daniel
-            return Totalfunds;
-        }
+       
         public void TakeLoan()
         {
            

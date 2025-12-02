@@ -56,7 +56,7 @@ namespace The_Singletons_Bank
                     CreateBankAccountMenuChoice(user);
                return true;
                 case 4:
-                    Loan.ShowLoanMenu(user);
+                    ShowLoanMenu(user);
                return true;
                 case 5:
                     Console.WriteLine("Loggar ut...");
@@ -281,7 +281,72 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
         }
 
+        public static void ShowLoanMenu(Customer owner)
+        {
+            Console.Clear();
+            Console.WriteLine("1.Visa mina lån");
+            Console.WriteLine("2.Inkomna låneförslag");
+            Console.WriteLine("3.Ta nytt lån");
+            Console.WriteLine("4.Gå tillbaka");
+            int choice = Utilities.GetUserNumberMinMax(1, 4);
 
+            switch (choice)
+            {
+                case 1:
+                    if (owner._loans.Count == 0)
+                    {
+                        Console.WriteLine("\nDu har inga lån.");
+                        Utilities.NoContentMsg();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Mina lån\n");
+                        foreach (Loan loan in owner._loans)
+                        {
+                            Utilities.DashDivide();
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                            Utilities.DashDivide();
+                        }
+                    }
+                    break;
+
+                case 2:
+                    if (owner._inbox.Count() == 0)
+                    {
+                        Console.WriteLine("\nDu har inga ärenden att hantera just nu.");
+                        Utilities.NoContentMsg();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Dina ärenden:\n");
+                        owner.ShowInbox();
+                        Console.WriteLine("\n Vad vill du göra?\n");
+                        Console.WriteLine("1.Hantera ärende");
+                        Console.WriteLine("2.Gå tillbaka");
+
+                        int userchoice = Utilities.GetUserNumberMinMax(1, 2);
+                        if (userchoice == 1)
+                        {
+                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 lån åt gången just nu. [Daniel-01/12}
+                            break;
+                        }
+                        else
+                            break;
+                    }
+                    break;
+                case 3:
+                    Console.WriteLine("Ange önskat lånebelopp:");
+                    Loan.CreateLoan(owner);
+                    break;
+
+                default:
+                    Console.Clear();
+                    break;
+            }
+
+        }
 
 
 

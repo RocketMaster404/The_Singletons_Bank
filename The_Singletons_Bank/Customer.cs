@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,20 @@ namespace The_Singletons_Bank
                 }
                 return false;
             }
+        }
+
+        public decimal TotalFunds()
+        {
+            decimal total=0;
+            foreach(Account funds in _accounts)
+            {
+                total = (total + funds.GetBalance());
+            }
+            foreach(Account funds in _savingAccounts)
+            {
+                total = (total + funds.GetBalance());
+            }
+            return total;
         }
 
         public List<Account> GetAccountList()
