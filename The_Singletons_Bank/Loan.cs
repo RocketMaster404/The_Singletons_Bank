@@ -28,12 +28,10 @@ namespace The_Singletons_Bank
 
         }
 
-
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
         }
-
 
         public static void CreateLoan(Customer owner)
         {

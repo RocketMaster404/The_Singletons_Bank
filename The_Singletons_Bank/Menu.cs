@@ -10,7 +10,7 @@ namespace The_Singletons_Bank
     internal class Menu
     {
 
-        public static List<string> cases { get; set; }
+        //public static List<string> cases { get; set; }
 
 
         public static void PrintLogInMenu()
@@ -191,11 +191,11 @@ namespace The_Singletons_Bank
         {
             int LoanHandlingCounter = 1;
 
-            cases = new List<string>();
+            Admin.cases = new List<string>();
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
             {
-                cases.Add(kvp.Key.GetUsername());
+                Admin.cases.Add(kvp.Key.GetUsername());
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
@@ -216,7 +216,7 @@ namespace The_Singletons_Bank
             {
                 Console.WriteLine("Ange ärende du vill bevilja:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = cases[(casechoice - 1)];
+                string keyToRemove = Admin.cases[(casechoice - 1)];
 
                 foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
                 {
@@ -308,6 +308,7 @@ namespace The_Singletons_Bank
                             Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
                             Utilities.DashDivide();
                         }
+                        Utilities.NoContentMsg();
                     }
                     break;
 
