@@ -70,7 +70,7 @@ namespace The_Singletons_Bank
                user.AddToSavingAccountList(savingAccount3);
                break;
          }
-
+            Utilities.NoContentMsg();
 
 
          
