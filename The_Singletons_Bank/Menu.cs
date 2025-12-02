@@ -252,7 +252,7 @@ namespace The_Singletons_Bank
                 case 1:
                     Console.WriteLine("Ange namnet på ditt konto");
                     name = Console.ReadLine();
-                    Account accountSEK = Account.CreateAccount(name, 0, "SEK", user);
+                    Account accountSEK = Account.CreateAccount(name, 1000, "SEK", user);
                     Console.WriteLine("Konto skapat\n");
                     Account.ShowAccount(accountSEK);
                     break;
@@ -260,7 +260,7 @@ namespace The_Singletons_Bank
                 case 2:
                     Console.WriteLine("Ange namnet på ditt konto");
                     name = Console.ReadLine();
-                    Account accountUSD = Account.CreateAccount(name, 0, "USD", user);
+                    Account accountUSD = Account.CreateAccount(name, 10, "USD", user);
                     Console.WriteLine("Konto skapat\n");
                     Account.ShowAccount(accountUSD);
                     break;
@@ -268,7 +268,7 @@ namespace The_Singletons_Bank
                 case 3:
                     Console.WriteLine("Ange namnet på ditt konto");
                     name = Console.ReadLine();
-                    Account accountEUR = Account.CreateAccount(name, 0, "EUR", user);
+                    Account accountEUR = Account.CreateAccount(name, 10, "EUR", user);
                     Console.WriteLine("Konto skapat\n");
                     Account.ShowAccount(accountEUR); 
                     break;

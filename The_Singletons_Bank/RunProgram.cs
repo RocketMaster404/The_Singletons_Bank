@@ -8,16 +8,17 @@ namespace The_Singletons_Bank
 {
    internal class RunProgram
    {
-
+      
       public static void Run()
       {
          bool runProgram = true;
-
+         Bank.MonthlyInterest();
+         Bank.CreateTestUsers();
 
          while (runProgram)
          {
             User? user = null;
-
+            
 
             Console.Clear();
             Utilities.AsciiArtPrinter(true);
@@ -35,11 +36,13 @@ namespace The_Singletons_Bank
                   user = Bank.LogIn();
                   if (user == null || user.UserIsBlocked)
                   {
+                     Utilities.NoContentMsg();
                      break;
                   }
 
                   if (user is Customer customer)
                   {
+                     
                      RunCustomerProgram(customer);
                   }
                   else if (user is Admin admin)

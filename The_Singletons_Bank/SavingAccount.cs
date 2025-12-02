@@ -79,13 +79,17 @@ namespace The_Singletons_Bank
 
       }
 
-      public void IncreaseBalance()
+      public void IncreaseBalanceInterestRate()
       {
          decimal balance = GetBalance();
-         decimal newBalance = balance * (1 + _interestRate / 100);
+         decimal newBalance = balance * ( _interestRate / 100);
          changeBalance(newBalance);
          
       }
+
+   
+
+     
 
       public static void ShowSavingAccountInfo(SavingAccount account)
       {
