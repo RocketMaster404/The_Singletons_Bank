@@ -14,15 +14,13 @@ namespace The_Singletons_Bank
     {
         private static Queue<string> _transactionQueue = new Queue<string>();
 
-
-
         public static void PrintTransactionLogs()
         {
             foreach (var transaction in _transactionQueue)
             {
                 Console.WriteLine(transaction);
             }
-            Utilities.NoContentMsg();           
+            Utilities.NoContentMsg();
             Console.Clear();
         }
         public static void TransactionLogger(decimal ammountSent, int bankNummer1, string currency1, int bankNummer2)
@@ -56,7 +54,7 @@ namespace The_Singletons_Bank
                     decimal balance = savingAccounts[i].GetBalance();
                     int accountNumber = savingAccounts[i].GetAccountNumber();
                     Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
-                    
+
                 }
 
                 //Ifall du inte har ett konto så kommer denna köras och annars så börjar transaktionen
@@ -72,37 +70,73 @@ namespace The_Singletons_Bank
                     //Här skriver användaren in vilket konto som ska skicka pengar och under det vilket konto som ska få pengar och sen hur mycket som ska skickas
 
                     bool validAnswer = false;
+                    bool senderValid = false;
+                    bool recipientValid = false;
+                    int accountRecipitent = 0;
                     int accountSender = 0;
                     while (!validAnswer)
                     {
                         Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
                         accountSender = Utilities.GetUserNumber();
-                        if (accountSender <= accounts.Count + savingAccounts.Count && accountSender >= 0)
+                        if (accountSender <= accounts.Count + savingAccounts.Count && accountSender >= 1)
                         {
-                            validAnswer = true;
+                            senderValid = true;
                         }
                         else
-                        {
-                            Console.WriteLine("ogiltigt nummer försök igen!");
+                        {   
+                            if(accountSender > accounts.Count)
+                            {
+                                Console.WriteLine("ogiltigt nummer försök igen!");
+                            }
+                            else if(accountSender < 0)
+                            {
+                                Console.WriteLine("Det kan inte vara ett negativt nummer");
+                            }else if(accountSender == 0)
+                            {
+                                Console.WriteLine("Du kan inte välja 0");
+                            }
+                                
                         }
-                    }
-
-
-                    Console.WriteLine("Skriv in numret av kontot du vill skicka pengar till?");
-                    validAnswer = false;
-                    int accountRecipitent = 0;
-                    while (!validAnswer)
-                    {
-
-                        accountRecipitent = Utilities.GetUserNumber();
-                        if (accountRecipitent <= accounts.Count + savingAccounts.Count && accountRecipitent >= 0)
+                        if (senderValid)
                         {
-                            validAnswer = true;
+                            Console.WriteLine("Skriv in numret av kontot du vill skicka pengar till?");
+                            validAnswer = false;
+                            accountRecipitent = Utilities.GetUserNumber();
+                            if (accountRecipitent <= accounts.Count + savingAccounts.Count && accountRecipitent >= 1)
+                            {
+                                recipientValid = true;
+                            }
+                            else
+                            {
+                                if (accountSender > accounts.Count)
+                                {
+                                    Console.WriteLine("ogiltigt nummer försök igen!");
+                                }
+                                else if (accountSender < 0)
+                                {
+                                    Console.WriteLine("Det kan inte vara ett negativt nummer");
+                                }
+                                else if (accountSender == 0)
+                                {
+                                    Console.WriteLine("Du kan inte välja 0");
+                                }
+                            }
+
+                            if (senderValid && recipientValid)
+                            {
+                                if (accountSender != accountRecipitent)
+                                {
+                                    validAnswer = true;
+                                }
+                                else
+                                {
+                                    Utilities.startColoring(ConsoleColor.Red);
+                                    Console.WriteLine("Du måste välja olika konton");
+                                    Utilities.stopColoring();
+                                }
+                            }
                         }
-                        else
-                        {
-                            Console.WriteLine("ogiltigt nummer försök igen!");
-                        }
+                        
                     }
 
                     Console.WriteLine("Hur mycket will du skicka?");
@@ -204,11 +238,6 @@ namespace The_Singletons_Bank
         {
             //As long as this is true the loop will continue
             bool transferInProgress = true;
-            //public List<Account> GetAccountList()
-
-
-
-
             while (transferInProgress)
             {
                 Console.WriteLine("Extern Överföring");
@@ -220,7 +249,7 @@ namespace The_Singletons_Bank
                 if (Bank.userExists(recipient))
                 {
                     List<Account> accounts = user.GetAccountList();
-                    
+
                     List<User> _users = Bank.GetUsers();
                     Customer customer = Bank.GetSpecificUser(recipient);
                     List<Account> recipientAccounts = customer.GetAccountList();
@@ -245,13 +274,24 @@ namespace The_Singletons_Bank
                         {
                             Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
                             accountPicked = Utilities.GetUserNumber();
-                            if (accountPicked <= accounts.Count && accountPicked >= 0)
+                            if (accountPicked <= accounts.Count && accountPicked >= 1)
                             {
                                 validAnswer = true;
                             }
                             else
                             {
-                                Console.WriteLine("ogiltigt nummer försök igen!");
+                                if (accountPicked > accounts.Count)
+                                {
+                                    Console.WriteLine("ogiltigt nummer försök igen!");
+                                }
+                                else if (accountPicked < 0)
+                                {
+                                    Console.WriteLine("Det kan inte vara ett negativt nummer");
+                                }
+                                else if (accountPicked == 0)
+                                {
+                                    Console.WriteLine("Du kan inte välja 0");
+                                }
                             }
                         }
 
@@ -259,18 +299,21 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Hur mycket will du skicka?");
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
+                        string currencyType = "Sek";
 
                         if (ammountToSend <= accounts[accountPicked - 1].GetBalance() && ammountToSend >= 0)
                         {
 
-                            if(recipientAccounts != null && recipientAccounts.Count > 0)
+                            if (recipientAccounts != null && recipientAccounts.Count > 0)
                             {
                                 recipientAccounts[0].AddMoney(ConvertedAmmountToSend);
-                                accounts[accountPicked-1].RemoveMoney(ConvertedAmmountToSend);
+                                accounts[accountPicked - 1].RemoveMoney(ConvertedAmmountToSend);
                                 Console.WriteLine($"Du har skickat {ConvertedAmmountToSend} till {recipient}");
                                 Thread.Sleep(2000);
                                 Console.Clear();
+                                currencyType = recipientAccounts[0].GetCurrency();
                                 transferInProgress = false;
+                                TransactionLogger(ConvertedAmmountToSend, accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber());
                             }
                             else
                             {

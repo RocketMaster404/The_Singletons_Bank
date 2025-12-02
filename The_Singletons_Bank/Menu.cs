@@ -113,7 +113,7 @@ namespace The_Singletons_Bank
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                     Console.Clear();
                     Console.WriteLine("3. UnBlockAccount");
-                    Admin.UnBlockAccount();
+                    Admin.AvBlockeraAnvändare();
 
                return true;
 
@@ -145,8 +145,8 @@ namespace The_Singletons_Bank
 
         public static void PrintTransferMenu()
         {
-            Console.WriteLine("1. Internal Överföring");
-            Console.WriteLine("2. External Överföring");
+            Console.WriteLine("1. Intern Överföring");
+            Console.WriteLine("2. Extern Överföring");
             Console.WriteLine("3. Se historiken");
         }
         public static void TransferMenuChoice(Customer user)
