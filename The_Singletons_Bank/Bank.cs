@@ -9,31 +9,50 @@ namespace The_Singletons_Bank
 {
    internal class Bank
    {
-      private static List<User> _users = new List<User>()
-        {
-            new Customer("olof", "1234"),
-            new Customer("stig", "2345"),
-            new Admin("Admin","4321",true)
-        };
+      private static List<User> _users = new List<User>();
+       
 
       public static List<User> GetUsers()
       {
          return _users;
       }
 
-        public static Customer GetSpecificUser(string username)
-        {
-            foreach (var user in _users)
-            {
-                if (user.GetUsername() == username && user is Customer customer) 
-                {
-                    return customer;
-                }
-            }
-            return null; 
-        }
+      public static void CreateTestUsers()
+      {
+         
+         var olof = new Customer("olof", "1234");
+         olof.AddToAccountList(new Account("Lönekonto", 5000, "SEK"));
+         olof.AddToAccountList(new Account("Sparkonto", 12000, "SEK"));
+         olof.AddToAccountList(new Account("USA konto", 120, "USD"));
+         olof.AddToSavingAccountList(new SavingAccount("Standard Spar", 100, 1.5m));
+         olof.AddToSavingAccountList(new SavingAccount("Medel Spar", 100, 1.7m));
+         olof.AddToSavingAccountList(new SavingAccount("Långsiktigt Spar", 100, 2.0m));
+         _users.Add(olof);
+        
+         var stig = new Customer("stig", "2345");
+         stig.AddToAccountList(new Account("Konto 1", 2000, "SEK"));
+         _users.Add(stig);
 
-        public static bool userExists(string username)
+         var admin = new Admin("Admin", "4321", true);
+         _users.Add(admin);
+
+        
+      }
+
+
+      public static Customer GetSpecificUser(string username)
+      {
+         foreach (var user in _users)
+         {
+            if (user.GetUsername() == username && user is Customer customer)
+            {
+               return customer;
+            }
+         }
+         return null;
+      }
+
+      public static bool userExists(string username)
       {
          foreach (var user in _users)
          {
@@ -74,7 +93,7 @@ namespace The_Singletons_Bank
                if (user.Logincheck(passWord, userName))
                {
                   Console.WriteLine("Lyckad inloggning");
-                  
+
                   return user;
                }
 
@@ -143,7 +162,7 @@ namespace The_Singletons_Bank
             userName = Console.ReadLine();
             userNameUnique = true;
 
-            
+
 
             foreach (var user in _users)
             {
@@ -172,7 +191,26 @@ namespace The_Singletons_Bank
          _users.Add(admin);
          Console.WriteLine($"Admin: {userName} har skapats");
 
-        
+
+      }
+
+      public static void MonthlyInterest()
+      {
+
+
+         if (DateTime.Now.Day == 1 && DateTime.Now.Hour == 12 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
+         {
+            foreach (var user in _users)
+            {
+               if (user is Customer customer)
+               {
+                  foreach (var account in customer.GetSavingAccountList())
+                  {
+                     account.IncreaseBalanceInterestRate();
+                  }
+               }
+            }
+         }
       }
 
 
