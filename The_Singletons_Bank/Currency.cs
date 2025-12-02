@@ -35,6 +35,7 @@ namespace The_Singletons_Bank
             else
             {
                 answer = false;
+                Console.Clear();
             }
                 return answer;
         }
@@ -92,6 +93,7 @@ namespace The_Singletons_Bank
                     _currencies[currency] = newValue;
                     foundValue = true;
                     Console.WriteLine($"Valutan '{currencyToChange}' växelkurs har ändrats till {newValue}.");
+                    Utilities.NoContentMsg();
                 }
             }
 

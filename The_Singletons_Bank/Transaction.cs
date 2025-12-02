@@ -22,7 +22,8 @@ namespace The_Singletons_Bank
             {
                 Console.WriteLine(transaction);
             }
-            Console.ReadKey();
+            Utilities.NoContentMsg();           
+            Console.Clear();
         }
         public static void TransactionLogger(decimal ammountSent, int bankNummer1, string currency1, int bankNummer2)
         {
@@ -54,8 +55,8 @@ namespace The_Singletons_Bank
                 {
                     decimal balance = savingAccounts[i].GetBalance();
                     int accountNumber = savingAccounts[i].GetAccountNumber();
-                    Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}");//{accounts[i].GetCurrency()}
-
+                    Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
+                    
                 }
 
                 //Ifall du inte har ett konto så kommer denna köras och annars så börjar transaktionen
@@ -92,7 +93,7 @@ namespace The_Singletons_Bank
                     int accountRecipitent = 0;
                     while (!validAnswer)
                     {
-                        Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
+
                         accountRecipitent = Utilities.GetUserNumber();
                         if (accountRecipitent <= accounts.Count + savingAccounts.Count && accountRecipitent >= 0)
                         {
@@ -106,6 +107,7 @@ namespace The_Singletons_Bank
 
                     Console.WriteLine("Hur mycket will du skicka?");
                     decimal ammountToSend = Utilities.GetUserDecimalInput();
+                    Console.Clear();
                     decimal ConvertedAmmountToSend = ammountToSend;
                     string sendersCurrency = "TEMP";
 
@@ -181,7 +183,7 @@ namespace The_Singletons_Bank
                         {
                             decimal balance = savingAccounts[i].GetBalance();
                             int accountNumber = savingAccounts[i].GetAccountNumber();
-                            Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}");//{accounts[i].GetCurrency()}
+                            Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
 
                         }
                         transferInProgress = false;
@@ -210,7 +212,7 @@ namespace The_Singletons_Bank
             while (transferInProgress)
             {
                 Console.WriteLine("Extern Överföring");
-                Console.WriteLine("Skriv in namnet av använderaren du vill skicka pengar till");
+                Console.WriteLine("Skriv in namnet av användaren du vill skicka pengar till");
 
                 string recipient = Console.ReadLine();
 
@@ -227,7 +229,7 @@ namespace The_Singletons_Bank
                     {
                         decimal balance = accounts[i].GetBalance();
                         int accountNumber = accounts[i].GetAccountNumber();
-                        Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}");
+                        Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
 
                     }
                     if (accounts.Count <= 0)
@@ -266,6 +268,8 @@ namespace The_Singletons_Bank
                                 recipientAccounts[0].AddMoney(ConvertedAmmountToSend);
                                 accounts[accountPicked-1].RemoveMoney(ConvertedAmmountToSend);
                                 Console.WriteLine($"Du har skickat {ConvertedAmmountToSend} till {recipient}");
+                                Thread.Sleep(2000);
+                                Console.Clear();
                                 transferInProgress = false;
                             }
                             else
@@ -286,7 +290,7 @@ namespace The_Singletons_Bank
                 }
                 else
                 {
-                    Console.WriteLine("Does not exist try again");
+                    Console.WriteLine("Användaren hittades inte, försök igen");
                 }
             }
         }

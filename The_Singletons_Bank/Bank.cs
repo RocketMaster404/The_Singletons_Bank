@@ -87,12 +87,15 @@ namespace The_Singletons_Bank
                if (user.GetUsername() == userName && user.UserIsBlocked == true)
                {
                   Console.WriteLine("Användare blockerad. Var god kontakta administratör");
+                  Console.ReadLine();
                   return null;
                }
 
                if (user.Logincheck(passWord, userName))
                {
                   Console.WriteLine("Lyckad inloggning");
+                  Thread.Sleep(1000);
+                  Console.Clear();
 
                   return user;
                }
@@ -148,7 +151,8 @@ namespace The_Singletons_Bank
          var customer = new Customer(userName, password);
          _users.Add(customer);
          Console.WriteLine($"Användare: {userName} har skapats");
-      }
+         Utilities.NoContentMsg();
+        }
 
       public static void AddAdminAccount()
       {
@@ -190,9 +194,9 @@ namespace The_Singletons_Bank
          var admin = new Admin(userName, password, true);
          _users.Add(admin);
          Console.WriteLine($"Admin: {userName} har skapats");
+         Utilities.NoContentMsg();
 
-
-      }
+        }
 
       public static void MonthlyInterest()
       {

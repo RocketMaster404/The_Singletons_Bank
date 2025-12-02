@@ -50,6 +50,7 @@ namespace The_Singletons_Bank
 
         public static void CreateUser()
         {
+            Console.Clear();
             Console.WriteLine("Ange användarnamn: ");
             string userName = Console.ReadLine();
             Console.WriteLine("Ange Lösenord: ");
@@ -90,8 +91,11 @@ namespace The_Singletons_Bank
                         if(i == Convert.ToInt32(userInput))
                         {
                             user.UserIsBlocked = false;
+                            user.LoginAttempts = 3;
                             Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
                             Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                            Thread.Sleep(2000);
+                            Console.Clear();
                             Utilities.stopColoring();
                         }
                     }

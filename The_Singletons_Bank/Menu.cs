@@ -40,11 +40,13 @@ namespace The_Singletons_Bank
             switch (input)
             {
                 case 1:
+                    Console.Clear();
                     Customer.ShowCustomerAccounts(user);
                     Customer.ShowCustomerSavingAccounts(user);
-                    Console.ReadKey();
+                    Utilities.NoContentMsg();
                return true;
                 case 2:
+                    Console.Clear();
                     Console.WriteLine("Överföring");
                     PrintTransferMenu();
                     TransferMenuChoice(user);
@@ -83,6 +85,7 @@ namespace The_Singletons_Bank
             switch (input)
             {
                 case 1:
+                    Console.Clear();
                     Console.WriteLine("1. Skapa användare");
                     Console.WriteLine("2. Skapa Admin");
                     int choice = Utilities.GetUserNumberMinMax(1, 2);
@@ -97,6 +100,7 @@ namespace The_Singletons_Bank
 
                return true;
                 case 2:
+                    Console.Clear();
                     Console.WriteLine("2. Växelkurs");
                     Currency.DisplayExchangeRates();
                     bool changeCurrency = Currency.AskIfToChangeCurrencyExchangeRate();
@@ -107,6 +111,7 @@ namespace The_Singletons_Bank
 
                return true;
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
+                    Console.Clear();
                     Console.WriteLine("3. UnBlockAccount");
                     Admin.UnBlockAccount();
 
@@ -175,7 +180,6 @@ namespace The_Singletons_Bank
                 case 1:
                     PrintCreateCurrencyAccountMenu();
                     CreateCurrencyAccountChoice(user);
-                    Console.ReadKey();
                     break;
                 case 2:
                     SavingAccount.CreateSavingAccount(user);
@@ -274,6 +278,7 @@ namespace The_Singletons_Bank
                     break;
 
             }
+            Utilities.NoContentMsg();
         }
 
 
