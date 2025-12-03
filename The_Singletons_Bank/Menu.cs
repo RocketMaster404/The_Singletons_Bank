@@ -10,8 +10,6 @@ namespace The_Singletons_Bank
     internal class Menu
     {
 
-        //public static List<string> cases { get; set; }
-
 
         public static void PrintLogInMenu()
         {
@@ -313,9 +311,15 @@ namespace The_Singletons_Bank
                     break;
 
                 case 2:
-                    if (owner._inbox.Count() == 0)
+                    if (owner._inbox.Count() == 0 && !Admin.Loantickets.ContainsKey(owner))
                     {
                         Console.WriteLine("\nDu har inga ärenden att hantera just nu.");
+                        Utilities.NoContentMsg();
+                    }
+                    else if (Admin.Loantickets.ContainsKey(owner))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle");
                         Utilities.NoContentMsg();
                     }
                     else

@@ -10,7 +10,6 @@ namespace The_Singletons_Bank
 {
     internal class Admin : User
     {
-        //public bool IsAdmin = true;
 
 
         public static Dictionary<Customer, decimal> Loantickets = new Dictionary<Customer, decimal>();
