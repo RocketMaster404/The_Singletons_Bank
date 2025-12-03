@@ -12,14 +12,12 @@ namespace The_Singletons_Bank
         public static Dictionary<Customer, Loan> PendingLoans = new Dictionary<Customer, Loan>();
         private decimal Interestrate { get; set; }
 
-        //private int LoanNumber { get; set; }
-        private decimal Loanamount { get; set; }
+        public decimal Loanamount { get; set; }
 
         public Loan(Customer owner, decimal interestrate, decimal loanamount)
         {
             Interestrate = interestrate;
             Loanamount = loanamount;
-            //LoanNumber = loannumber;//Later we should add function to number/name loans
         }
 
 
@@ -30,89 +28,15 @@ namespace The_Singletons_Bank
 
         }
 
-
-        public static void ShowLoanMenu(Customer owner)
-        {
-            Console.Clear();
-            Console.WriteLine("1.Visa mina lån");
-            Console.WriteLine("2.Inkomna låneförslag");
-            Console.WriteLine("3.Ta nytt lån");
-            Console.WriteLine("4.Gå tillbaka");
-            int choice = Utilities.GetUserNumberMinMax(1, 4);
-
-            switch (choice)
-            {
-                case 1:
-                    if (owner._loans.Count == 0)
-                    {
-                        Console.WriteLine("\nDu har inga lån.");
-                        Utilities.NoContentMsg();
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Mina lån\n");
-                        foreach (Loan loan in owner._loans)
-                        {
-                            Utilities.DashDivide();
-                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
-                            Utilities.DashDivide();
-                        }
-                    }
-                    break;
-
-                case 2:
-                    if (owner._inbox.Count() == 0)
-                    {
-                        Console.WriteLine("\nDu har inga ärenden att hantera just nu.");
-                        Utilities.NoContentMsg();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Dina ärenden:\n");
-                        owner.ShowInbox();
-                        Console.WriteLine("\n Vad vill du göra?\n");
-                        Console.WriteLine("1.Hantera ärende");
-                        Console.WriteLine("2.Gå tillbaka");
-
-                        int userchoice = Utilities.GetUserNumberMinMax(1, 2);
-                        if (userchoice == 1)
-                        {
-                            //Console.Write("Välj lån i listan:");
-                            //int loanchoice = Utilities.GetUserNumberMinMax(1, owner._inbox.Count());
-                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 lån åt gången just nu. [Daniel-01/12}
-                            break;
-                        }
-                        else
-                            break;
-                    }
-                    break;
-                case 3:
-                    Console.WriteLine("Ange önskat lånebelopp:");
-                    CreateLoan(owner);
-                    break;
-
-                default:
-                    Console.Clear();
-                    break;
-            }
-
-
-
-        }
-
-
         public decimal ShowLoanInterestrate()
         {
             return Interestrate;
         }
 
-
         public static void CreateLoan(Customer owner)
         {
             decimal loanamount = Utilities.GetUserDecimal();
-            bool limitOk = Loangrantedtest(loanamount, owner.ShowBalance());
+            bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
             if (limitOk && hasActiveTicket == false)
@@ -125,7 +49,7 @@ namespace The_Singletons_Bank
             }
             else if (limitOk == false && hasActiveTicket == false)
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.ShowBalance() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.TotalFunds() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
                 Utilities.NoContentMsg();
             }
             else

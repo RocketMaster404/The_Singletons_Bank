@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
@@ -8,44 +9,51 @@ using System.Xml;
 
 namespace The_Singletons_Bank
 {
-   internal class Admin : User
-   {
-      //public bool IsAdmin = true;
-      
+    internal class Admin : User
+    {
+
 
         public static Dictionary<Customer, decimal> Loantickets = new Dictionary<Customer, decimal>();
 
-
-
-      public Admin(string username, string password) : base(username, password)
-      {
-
-      }
-
-      public Admin(string username, string password, bool isADmin) : base(username, password)
-      {
-
-      }
+        public static List<string> cases { get; set; }
 
 
 
-      public static void Sendinvoice(Customer owner,Loan loan)
+        public Admin(string username, string password) : base(username, password)
         {
-            string invoice=loan.ShowLoandetails();
-            owner._inbox.Add(invoice);
-           
+
         }
-        public static Loan HandleLoanRequest(Customer owner, decimal loanrequest)
+
+        public Admin(string username, string password, bool isADmin) : base(username, password)
+        {
+
+        }
+
+
+
+        public static void Sendinvoice(Customer owner, Loan loan)
+        {
+            string invoice = loan.ShowLoandetails();
+            owner._inbox.Add(invoice);
+
+        }
+
+        public static void Sendinvoice(Customer owner, string msg)
+        {
+            string invoice = msg;
+            owner._inbox.Add(invoice); //Tagga denna med en bool så man vet vad som är lån och vad som är msg? 
+        }
+        public static void HandleLoanRequest(Customer owner, decimal loanrequest)
         {
             Console.Write("Sätt ränta:");
             decimal loanRequest = loanrequest;
-            decimal setInterest = Utilities.GetUserNumberMinMax(1,100);
+            decimal setInterest = Utilities.GetUserNumberMinMax(1, 100);
 
             Loan loan = new Loan(owner, setInterest, loanRequest);
-            Admin.Sendinvoice(owner,loan);
-            Loan.PendingLoans.Add(owner,loan);
-            
-            return loan;
+            Sendinvoice(owner, loan);
+            Loan.PendingLoans.Add(owner, loan);
+
+            //return loan; //ändra från void till Loan ifall det finns behov i framtiden
         }
 
         public static void CreateUser()
@@ -56,26 +64,26 @@ namespace The_Singletons_Bank
             Console.WriteLine("Ange Lösenord: ");
             string password = Console.ReadLine();
 
-      }
+        }
 
 
       public static void AvBlockeraAnvändare()
       {
          Console.WriteLine("Ange användarnamnet eller numret av kontot du vill avblockera.");
 
-         List<User> _users = Bank.GetUsers();
+            List<User> _users = Bank.GetUsers();
             Console.WriteLine("Blockerade konton:");
             int i = 0;
             foreach (User user in _users)
             {
-                  
-                  if(user.UserIsBlocked == true)
-                  {
+
+                if (user.UserIsBlocked == true)
+                {
                     i++;
                     Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
                     Console.WriteLine($"användare :|{i}|{user.GetUsername()}");
                     Utilities.stopColoring();
-                  }
+                }
             }
             i = 0;
             string userInput = Console.ReadLine();
@@ -84,11 +92,11 @@ namespace The_Singletons_Bank
                 // Om svaret är en int
                 foreach (User user in _users)
                 {
-                    
+
                     if (user.UserIsBlocked == true)
                     {
                         i++;
-                        if(i == Convert.ToInt32(userInput))
+                        if (i == Convert.ToInt32(userInput))
                         {
                             user.UserIsBlocked = false;
                             user.LoginAttempts = 3;
@@ -120,8 +128,8 @@ namespace The_Singletons_Bank
                 }
 
             }
-            
-      }
-   }
+
+        }
+    }
 
 }

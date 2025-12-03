@@ -11,8 +11,6 @@ namespace The_Singletons_Bank
     internal class Menu
     {
 
-        public static List<string> cases { get; set; }
-
 
         public static void PrintLogInMenu()
         {
@@ -63,7 +61,7 @@ namespace The_Singletons_Bank
                     CreateBankAccountMenuChoice(user);
                     return true;
                 case 4:
-                    Loan.ShowLoanMenu(user);
+                    ShowLoanMenu(user);
                     return true;
                 case 5:
                     Console.WriteLine("Loggar ut...");
@@ -198,11 +196,11 @@ namespace The_Singletons_Bank
         {
             int LoanHandlingCounter = 1;
 
-            cases = new List<string>();
+            Admin.cases = new List<string>();
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
             {
-                cases.Add(kvp.Key.GetUsername());
+                Admin.cases.Add(kvp.Key.GetUsername());
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
@@ -221,20 +219,39 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärende du vill bevilja:");
+                Console.WriteLine("Ange ärende du vill hantera:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = cases[(casechoice - 1)];
+                string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
 
-                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
+                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)//Loopar för att hitta rätt användare med keytoremove
                 {
-                    if (keyToRemove == kvp.Key.GetUsername())
+                    if (keyToRemove == kvp.Key.GetUsername())//om användaren finns i dictionaryn så hanterar man det caset
                     {
-                        Admin.HandleLoanRequest(kvp.Key, kvp.Value);
+                        Utilities.DashDivide();
+                        Console.WriteLine("1.Godkänn låneansökan\n2.Avslå låneansökan");
+                        int handlingchoice = Utilities.GetUserNumberMinMax(1, 2);
 
-                        Admin.Loantickets.Remove(kvp.Key);
+                        if (handlingchoice == 1)
+                        {
+                            Admin.HandleLoanRequest(kvp.Key, kvp.Value);
 
-                        Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
-                        Utilities.NoContentMsg();
+                            Admin.Loantickets.Remove(kvp.Key);
+
+                            Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
+                            Utilities.NoContentMsg();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Du har nekat låneförfrågan.\nVar god skriv ett meddelande till kund (valfritt):");
+                            string msg = Console.ReadLine() + $"\n\nInfo: Låneförfrågan gällande {kvp.Value}SEK avslås.";
+
+                            Customer owner = kvp.Key;
+                            Admin.Sendinvoice(owner, msg);
+                            Console.WriteLine("Meddelande skickat.");
+
+                            Admin.Loantickets.Remove(kvp.Key);
+                            Utilities.NoContentMsg();
+                        }
                     }
                 }
             }
@@ -288,7 +305,88 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
         }
 
+        public static void ShowLoanMenu(Customer owner)
+        {
+            Console.Clear();
+            Console.WriteLine("1.Visa mina lån");
+            Console.WriteLine("2.Mina ärenden");
+            Console.WriteLine("3.Ta nytt lån");
+            Console.WriteLine("4.Gå tillbaka");
+            int choice = Utilities.GetUserNumberMinMax(1, 4);
 
+            switch (choice)
+            {
+                case 1:
+                    if (owner._loans.Count == 0)
+                    {
+                        Console.WriteLine("\nDu har inga lån.");
+                        Utilities.NoContentMsg();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Mina lån\n");
+                        foreach (Loan loan in owner._loans)
+                        {
+                            Utilities.DashDivide();
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                            Utilities.DashDivide();
+                        }
+                        Utilities.NoContentMsg();
+                    }
+                    break;
+
+                case 2:
+                    if (owner._inbox.Count() == 0 && !Admin.Loantickets.ContainsKey(owner))
+                    {
+                        Console.WriteLine("\nDu har inga ärenden att hantera just nu.");
+                        Utilities.NoContentMsg();
+                    }
+                    else if (Admin.Loantickets.ContainsKey(owner))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle.");
+                        Utilities.NoContentMsg();
+                    }
+                    else if (!owner._inbox.Contains("Ränta:"))
+                    {
+                        Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:");
+                        owner.ShowInbox();
+                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn");
+                        owner._inbox.Clear();
+                        Utilities.NoContentMsg();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Dina ärenden:\n");
+                        owner.ShowInbox();
+                        Console.WriteLine("\n Vad vill du göra?\n");
+                        Console.WriteLine("1.Hantera ärende");
+                        Console.WriteLine("2.Gå tillbaka");
+
+                        int userchoice = Utilities.GetUserNumberMinMax(1, 2);
+                        if (userchoice == 1)
+                        {
+                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 lån åt gången just nu. [Daniel-01/12}
+                            break;
+                        }
+                        else
+                            break;
+                    }
+                    break;
+                case 3:
+                    Console.WriteLine("Ange önskat lånebelopp:");
+                    Loan.CreateLoan(owner);
+                    break;
+
+                default:
+                    Console.Clear();
+                    break;
+            }
+
+        }
 
 
 

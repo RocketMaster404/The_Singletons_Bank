@@ -61,7 +61,7 @@ namespace The_Singletons_Bank
         {
             DashDivide();
             Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
-            Console.ReadLine();
+            Console.ReadKey();
             Console.Clear();
         }
 
