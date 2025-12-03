@@ -43,7 +43,7 @@ namespace The_Singletons_Bank
             string invoice = msg;
             owner._inbox.Add(invoice); //Tagga denna med en bool så man vet vad som är lån och vad som är msg? 
         }
-        public static Loan HandleLoanRequest(Customer owner, decimal loanrequest)
+        public static void HandleLoanRequest(Customer owner, decimal loanrequest)
         {
             Console.Write("Sätt ränta:");
             decimal loanRequest = loanrequest;
@@ -53,7 +53,7 @@ namespace The_Singletons_Bank
             Sendinvoice(owner, loan);
             Loan.PendingLoans.Add(owner, loan);
 
-            return loan;
+            //return loan; //ändra från void till Loan ifall det finns behov i framtiden
         }
 
         public static void CreateUser()

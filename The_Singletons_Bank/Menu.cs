@@ -241,9 +241,9 @@ namespace The_Singletons_Bank
                             Customer owner = kvp.Key;
                             Admin.Sendinvoice(owner, msg);
                             Console.WriteLine("Meddelande skickat.");
-                            
-                            Utilities.NoContentMsg();
+
                             Admin.Loantickets.Remove(kvp.Key);
+                            Utilities.NoContentMsg();
                         }
                     }
                 }
@@ -302,7 +302,7 @@ namespace The_Singletons_Bank
         {
             Console.Clear();
             Console.WriteLine("1.Visa mina lån");
-            Console.WriteLine("2.Inkomna låneförslag");
+            Console.WriteLine("2.Mina ärenden");
             Console.WriteLine("3.Ta nytt lån");
             Console.WriteLine("4.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 4);
@@ -338,8 +338,17 @@ namespace The_Singletons_Bank
                     else if (Admin.Loantickets.ContainsKey(owner))
                     {
                         Console.Clear();
-                        Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle");
+                        Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle.");
                         Utilities.NoContentMsg();
+                    }
+                    else if (!owner._inbox.Contains("Ränta:"))
+                    {
+                        Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:");
+                        owner.ShowInbox();
+                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn");
+                        owner._inbox.Clear();
+                        Utilities.NoContentMsg();
+
                     }
                     else
                     {
