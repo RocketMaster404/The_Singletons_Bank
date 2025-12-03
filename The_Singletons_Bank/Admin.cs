@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
@@ -36,6 +37,12 @@ namespace The_Singletons_Bank
             owner._inbox.Add(invoice);
 
         }
+
+        public static void Sendinvoice(Customer owner, string msg)
+        {
+            string invoice = msg;
+            owner._inbox.Add(invoice); //Tagga denna med en bool så man vet vad som är lån och vad som är msg? 
+        }
         public static Loan HandleLoanRequest(Customer owner, decimal loanrequest)
         {
             Console.Write("Sätt ränta:");
@@ -43,7 +50,7 @@ namespace The_Singletons_Bank
             decimal setInterest = Utilities.GetUserNumberMinMax(1, 100);
 
             Loan loan = new Loan(owner, setInterest, loanRequest);
-            Admin.Sendinvoice(owner, loan);
+            Sendinvoice(owner, loan);
             Loan.PendingLoans.Add(owner, loan);
 
             return loan;

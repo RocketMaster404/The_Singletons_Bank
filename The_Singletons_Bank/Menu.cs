@@ -19,7 +19,7 @@ namespace The_Singletons_Bank
             Console.Write("Ange val: ");
         }
 
-        
+
 
         public static void PrintCustomerMainMenu()
         {
@@ -42,28 +42,28 @@ namespace The_Singletons_Bank
                     Customer.ShowCustomerAccounts(user);
                     Customer.ShowCustomerSavingAccounts(user);
                     Utilities.NoContentMsg();
-               return true;
+                    return true;
                 case 2:
                     Console.Clear();
                     Console.WriteLine("Överföring");
                     PrintTransferMenu();
                     TransferMenuChoice(user);
-               return true;
+                    return true;
                 case 3:
                     PrintCreateBankAccountMenu();
                     CreateBankAccountMenuChoice(user);
-               return true;
+                    return true;
                 case 4:
                     ShowLoanMenu(user);
-               return true;
+                    return true;
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-               return false;
-                    
+                    return false;
+
             }
-         return true;
+            return true;
         }
 
         public static void PrintAdminMainMenu()
@@ -96,7 +96,7 @@ namespace The_Singletons_Bank
                         Bank.AddAdminAccount();
                     }
 
-               return true;
+                    return true;
                 case 2:
                     Console.Clear();
                     Console.WriteLine("2. Växelkurs");
@@ -107,13 +107,13 @@ namespace The_Singletons_Bank
                         Currency.ChangeCurrencyExchangeRateMenu();
                     }
 
-               return true;
+                    return true;
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
                     Console.Clear();
                     Console.WriteLine("3. UnBlockAccount");
                     Admin.UnBlockAccount();
 
-               return true;
+                    return true;
 
                 case 4:
                     Console.Clear();
@@ -121,23 +121,23 @@ namespace The_Singletons_Bank
                     {
                         Console.WriteLine("Du har inga inkomna ärenden");
                         Utilities.NoContentMsg();
-                  return true;
+                        return true;
                     }
                     else
                     {
                         Console.WriteLine("Inkomna ärenden:");
                         PrintAdminLoanHandlingMenu();
                         AdminLoanHandlingMenuChoice();
-                  return true;
+                        return true;
                     }
 
                 case 5:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
-               return false;
+                    return false;
             }
-         return true;
+            return true;
 
         }
 
@@ -220,12 +220,31 @@ namespace The_Singletons_Bank
                 {
                     if (keyToRemove == kvp.Key.GetUsername())//om användaren finns i dictionaryn så hanterar man det caset
                     {
-                        Admin.HandleLoanRequest(kvp.Key, kvp.Value);
+                        Utilities.DashDivide();
+                        Console.WriteLine("1.Godkänn låneansökan\n2.Avslå låneansökan");
+                        int handlingchoice = Utilities.GetUserNumberMinMax(1, 2);
 
-                        Admin.Loantickets.Remove(kvp.Key);
+                        if (handlingchoice == 1)
+                        {
+                            Admin.HandleLoanRequest(kvp.Key, kvp.Value);
 
-                        Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
-                        Utilities.NoContentMsg();
+                            Admin.Loantickets.Remove(kvp.Key);
+
+                            Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
+                            Utilities.NoContentMsg();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Du har nekat låneförfrågan.\nVar god skriv ett meddelande till kund (valfritt):");
+                            string msg = Console.ReadLine() + $"\n\nInfo: Låneförfrågan gällande {kvp.Value}SEK avslås.";
+
+                            Customer owner = kvp.Key;
+                            Admin.Sendinvoice(owner, msg);
+                            Console.WriteLine("Meddelande skickat.");
+                            
+                            Utilities.NoContentMsg();
+                            Admin.Loantickets.Remove(kvp.Key);
+                        }
                     }
                 }
             }
@@ -272,7 +291,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountEUR = Account.CreateAccount(name, 10, "EUR", user);
                     Console.WriteLine("Konto skapat\n");
-                    Account.ShowAccount(accountEUR); 
+                    Account.ShowAccount(accountEUR);
                     break;
 
             }
