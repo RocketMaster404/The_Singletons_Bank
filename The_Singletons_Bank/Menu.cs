@@ -212,13 +212,13 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärende du vill bevilja:");
+                Console.WriteLine("Ange ärende du vill hantera:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = Admin.cases[(casechoice - 1)];
+                string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
 
-                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
+                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)//Loopar för att hitta rätt användare med keytoremove
                 {
-                    if (keyToRemove == kvp.Key.GetUsername())
+                    if (keyToRemove == kvp.Key.GetUsername())//om användaren finns i dictionaryn så hanterar man det caset
                     {
                         Admin.HandleLoanRequest(kvp.Key, kvp.Value);
 
