@@ -247,7 +247,7 @@ namespace The_Singletons_Bank
 
                             Customer owner = kvp.Key;
                             Admin.Sendinvoice(owner, msg);
-                            Console.WriteLine("Meddelande skickat.");
+                            Console.WriteLine("\nMeddelande skickat.");
 
                             Admin.Loantickets.Remove(kvp.Key);
                             Utilities.NoContentMsg();
@@ -314,6 +314,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("4.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 4);
 
+         
             switch (choice)
             {
                 case 1:
@@ -337,6 +338,8 @@ namespace The_Singletons_Bank
                     break;
 
                 case 2:
+
+
                     if (owner._inbox.Count() == 0 && !Admin.Loantickets.ContainsKey(owner))
                     {
                         Console.WriteLine("\nDu har inga ärenden att hantera just nu.");
@@ -348,11 +351,14 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle.");
                         Utilities.NoContentMsg();
                     }
-                    else if (!owner._inbox.Contains("Ränta:"))
+                    else if (Loan.IsLoanDeclined(owner)==true && !Admin.Loantickets.ContainsKey(owner))//Problem med inboxens villkor
                     {
+                        Console.Clear();
                         Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:");
                         owner.ShowInbox();
-                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn");
+                        Utilities.startColoring(ConsoleColor.Red);
+                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn\n");
+                        Utilities.stopColoring();
                         owner._inbox.Clear();
                         Utilities.NoContentMsg();
 
