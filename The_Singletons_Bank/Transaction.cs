@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -335,7 +336,15 @@ namespace The_Singletons_Bank
                 {
                     Console.WriteLine("Användaren hittades inte, försök igen");
                 }
+
+                
             }
+        }
+
+        public static Queue<string> GetQueue()
+        {
+            
+            return _transactionQueue;
         }
     }
 }
