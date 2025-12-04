@@ -14,31 +14,6 @@ namespace The_Singletons_Bank
             { "USD", 0.1m },
             { "EUR", 0.08m }
         };
-        public static bool AskIfToChangeCurrencyExchangeRate()
-        {
-            bool answer = false;
-            Console.WriteLine("Vill du ändra någon av valutornas växelkurs?");
-
-            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
-            Console.WriteLine("[1]: Ja");
-            Utilities.stopColoring();
-
-            Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
-            Console.WriteLine("[2]: Nej");
-            Utilities.stopColoring();
-
-            int stringAnswer = Utilities.GetUserNumberMinMax(1, 2);
-            if(stringAnswer == 1)
-            {
-                answer = true;
-            }
-            else
-            {
-                answer = false;
-                Console.Clear();
-            }
-                return answer;
-        }
 
         public static void ChangeCurrencyExchangeRate(string currencyCode, decimal newRate)
         {
