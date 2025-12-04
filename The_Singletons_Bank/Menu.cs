@@ -78,7 +78,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("Admin Meny\n");
             Console.WriteLine("1. Skapa användare");
             Console.WriteLine("2. Växelkurs");
-            Console.WriteLine("3. UnBlockAccount"); // I have added this choise [Simon, 2025-11-19]
+            Console.WriteLine("3. Avblockera"); // I have added this choise [Simon, 2025-11-19]
             Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
             Console.WriteLine("5. Logga ut");
         }
