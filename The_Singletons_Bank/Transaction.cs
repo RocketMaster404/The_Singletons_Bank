@@ -16,12 +16,12 @@ namespace The_Singletons_Bank
         public static void PrintInternalTransactions()
         {
             Console.Clear();
+            Console.WriteLine($"Intern Transaktioner");
             Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
             foreach (var transaction in _transactionQueue)
             {
 
                 Console.WriteLine();
-                Console.WriteLine("hi");
                 //Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
                 Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
                 Console.WriteLine();
@@ -30,6 +30,7 @@ namespace The_Singletons_Bank
         }
         public static void PrintExternalTransactions()
         {
+            Console.WriteLine($"Extern Transaktioner");
             Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
@@ -38,14 +39,27 @@ namespace The_Singletons_Bank
                 Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
                 Utilities.NoContentMsg();
             }
-            Utilities.NoContentMsg();
-            Console.Clear();
+        }
+        public static void PrintDeposits()
+        {
+            Console.WriteLine($"Insättningar");
+            Console.WriteLine($"{"Konto",-25} {"Valuta",-20} {"Pengarmängd",-10}");
+            Console.WriteLine();
+            foreach (var transaction in _transactionQueue)
+            {
+
+                Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10}");
+                Utilities.NoContentMsg();
+            }
         }
 
         public static void PrintTransactionLogs()
         {
             PrintInternalTransactions();
             PrintExternalTransactions();
+            PrintDeposits();
+            Utilities.NoContentMsg();
+            Console.Clear();
         }
         public static void TransactionLogger(int transferType, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
         {
