@@ -243,7 +243,7 @@ namespace The_Singletons_Bank
                         else
                         {
                             Console.WriteLine("Du har nekat låneförfrågan.\nVar god skriv ett meddelande till kund (valfritt):");
-                            string msg = Console.ReadLine() + $"\n\nInfo: Låneförfrågan gällande {kvp.Value}SEK avslås.";
+                            string msg = $"Meddelande från bank: Låneförfrågan gällande {kvp.Value}SEK avslås.\n\n" + " - " + Console.ReadLine() + "\nMvh Singletons bank";
 
                             Customer owner = kvp.Key;
                             Admin.Sendinvoice(owner, msg);
@@ -314,7 +314,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("4.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 4);
 
-         
+
             switch (choice)
             {
                 case 1:
@@ -351,13 +351,13 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Ditt ärende hanteras just nu av banken. Återkom vid ett senare tillfälle.");
                         Utilities.NoContentMsg();
                     }
-                    else if (Loan.IsLoanDeclined(owner)==true && !Admin.Loantickets.ContainsKey(owner))//Problem med inboxens villkor
+                    else if (Loan.IsLoanDeclinedMsg(owner) == true && !Admin.Loantickets.ContainsKey(owner))//Problem med inboxens villkor
                     {
                         Console.Clear();
                         Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:");
                         owner.ShowInbox();
                         Utilities.startColoring(ConsoleColor.Red);
-                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn\n");
+                        Console.WriteLine("\n\nMeddelande raderas när du återgår till menyn");
                         Utilities.stopColoring();
                         owner._inbox.Clear();
                         Utilities.NoContentMsg();
@@ -375,7 +375,7 @@ namespace The_Singletons_Bank
                         int userchoice = Utilities.GetUserNumberMinMax(1, 2);
                         if (userchoice == 1)
                         {
-                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 lån åt gången just nu. [Daniel-01/12}
+                            bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 låneförfrågan åt gången just nu. [Daniel-01/12}
                             break;
                         }
                         else

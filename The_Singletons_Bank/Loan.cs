@@ -79,7 +79,7 @@ namespace The_Singletons_Bank
                 return false;
         }
 
-      public static bool IsLoanDeclined(Customer owner)
+      public static bool IsLoanDeclinedMsg(Customer owner)
         {
             foreach (var msg in owner._inbox)
             {
