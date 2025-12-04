@@ -100,13 +100,9 @@ namespace The_Singletons_Bank
                   return user;
                }
 
-               else if (user.GetUsername() == userName)
+               else if (user.GetUsername() == userName && user.IsAdmin == false)
                {
-                        if(user.IsAdmin == true)
-                        {
-                            Console.WriteLine("Fel lösenord");
-                            break;
-                        }
+                       
                   if (user.LoginAttempts == 1)
                   {
                      user.UserIsBlocked = true;
