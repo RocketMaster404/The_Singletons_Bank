@@ -24,7 +24,7 @@ namespace The_Singletons_Bank
 
         }
 
-        public Admin(string username, string password, bool isADmin) : base(username, password)
+        public Admin(string username, string password, bool isadmin) : base(username, password, isadmin)
         {
 
         }
