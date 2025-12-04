@@ -91,14 +91,16 @@ namespace The_Singletons_Bank
                 {
                     decimal balance = accounts[i].GetBalance();
                     int accountNumber = accounts[i].GetAccountNumber();
-                    Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+                    string accountName = accounts[i].Name;
+                    Console.WriteLine($"{accountName}: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
                 }
 
                 for (int i = 0; i < savingAccounts.Count; i++)
                 {
                     decimal balance = savingAccounts[i].GetBalance();
                     int accountNumber = savingAccounts[i].GetAccountNumber();
-                    Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
+                    string accountName = savingAccounts[i].Name;
+                    Console.WriteLine($"{accountName}: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
                 }
 
                 //Ifall du inte har ett konto så kommer denna köras och annars så börjar transaktionen
@@ -269,6 +271,8 @@ namespace The_Singletons_Bank
 
                             TransactionLogger(user, TransferType.Internal, sendersAccountName, recipientAccountName, sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency, ConvertedAmmountToSend);
 
+                            //Osäker om vi vill ha detta eller inte, den visar en lista av alla ens konton efter transaktionen har gått igenom
+
                             ////Detta kommer skriva ut alla konton som användaren har
                             //for (int i = 0; i < accounts.Count; i++)
                             //{
@@ -324,7 +328,8 @@ namespace The_Singletons_Bank
                     {
                         decimal balance = accounts[i].GetBalance();
                         int accountNumber = accounts[i].GetAccountNumber();
-                        Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+                        string accountName = accounts[i].Name;
+                        Console.WriteLine($"{accountName}: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
                     }
                     if (accounts.Count <= 0)
                     {
@@ -376,7 +381,7 @@ namespace The_Singletons_Bank
                                 Thread.Sleep(2000);
                                 Console.Clear();
                                 currencyType = recipientAccounts[0].GetCurrency();
-                                transferInProgress = false;
+                                transferInProgress = false; 
                                 TransactionLogger(user, TransferType.External, accounts[accountPicked - 1].Name, customer.GetUsername(), accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber(), currencyType, ConvertedAmmountToSend);              
                             }
                             else
