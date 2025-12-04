@@ -210,8 +210,10 @@ namespace The_Singletons_Bank
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                Console.WriteLine("Kredittrovärdighet: "+ kvp.Key.CredibilityCalculator());
-                Console.WriteLine($"Ansökt belopp:{kvp.Value}SEK");
+                Console.Write("Kredittrovärdighet: ");
+                Console.WriteLine(kvp.Key.CredibilityCalculator());
+                Utilities.stopColoring();
+                Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
                 Utilities.DashDivide();
                 LoanHandlingCounter++;
             }

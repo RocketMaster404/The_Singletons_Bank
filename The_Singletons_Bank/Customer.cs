@@ -10,10 +10,10 @@ namespace The_Singletons_Bank
     internal class Customer : User
     {
         private List<Account> _accounts;
-        private List<SavingAccount> _savingAccounts;
+        private List<SavingAccount> _savingAccounts;  
         public List<Loan> _loans;
         public List<String> _inbox;
-        public string[] CreditCredibility = { "Låg", "Medel", "Hög" };
+        //public string[] CreditCredibility = { "Låg", "Medel", "Hög" };
         public int CreditCred { get; private set; } = 100;
 
         public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
@@ -166,15 +166,21 @@ namespace The_Singletons_Bank
             //Returnerar trovärdighet efter uträknad total:
             if (CreditCred >= 70)
             {
-                return CreditCredibility[2];
+                Utilities.startColoring(ConsoleColor.DarkGreen);
+                string high= "Hög";
+                return high;
             }
             else if (CreditCred > 40 && CreditCred < 70)
             {
-                return CreditCredibility[1];
+                Utilities.startColoring(ConsoleColor.DarkYellow);
+                string mid = "Medel";
+                return mid;
             }
             else
             {
-                return CreditCredibility[0];
+                Utilities.startColoring(ConsoleColor.DarkRed);
+                string low = "Låg";
+                return low;
             }
         }
 
