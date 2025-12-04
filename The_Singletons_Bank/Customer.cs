@@ -13,6 +13,8 @@ namespace The_Singletons_Bank
         private List<SavingAccount> _savingAccounts;
         public List<Loan> _loans;
         public List<String> _inbox;
+        public string[] CreditCredibility = { "Låg", "Medel", "Hög" };
+        public int CreditCred { get; set; } = 100;
 
         public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
         {
@@ -132,6 +134,32 @@ namespace The_Singletons_Bank
             {
                 SavingAccount.ShowSavingAccountInfo(account);
             }
+        }
+
+        public void CredibilityCalculator()
+        {
+            CreditCred = 100;
+
+            //Räknar först kredittrovärdighet baserat på lån
+            foreach (Loan loan in _loans)
+            {
+                if (loan.Loanamount > TotalFunds() * 5 || loan.Loanamount > TotalFunds() * 4)
+                {
+                    CreditCred = Math.Max(CreditCred -30, 0);
+                        //CreditCred - 30;
+                }
+                else
+                {
+                    CreditCred = Math.Max(CreditCred - 20, 0);
+                }
+            }
+            //Räknar sen på sparkonton. Har man ett sparkonto går trovärdigheten upp
+            if(_savingAccounts.Count>0)
+            {
+                CreditCred = Math.Min(CreditCred+20,100);
+            }
+
+
         }
 
 
