@@ -41,7 +41,7 @@ namespace The_Singletons_Bank
         public static void Sendinvoice(Customer owner, string msg)
         {
             string invoice = msg;
-            owner._inbox.Add(invoice); //Tagga denna med en bool så man vet vad som är lån och vad som är msg? 
+            owner._inbox.Add(invoice);  
         }
         public static void HandleLoanRequest(Customer owner, decimal loanrequest)
         {
