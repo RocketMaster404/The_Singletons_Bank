@@ -21,12 +21,13 @@ namespace The_Singletons_Bank
             Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
             foreach (var transaction in _transactionQueue)
             {
-
-                Console.WriteLine();
-                //Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
-                Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
-                Console.WriteLine();
-
+                if(transaction.transferType == 0)
+                {
+                    Console.WriteLine();
+                    //Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
+                    Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                    Console.WriteLine();
+                }
             }
         }
         public static void PrintExternalTransactions()
@@ -36,9 +37,12 @@ namespace The_Singletons_Bank
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
-
-                Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
-                Utilities.NoContentMsg();
+                if(transaction.transferType == 1)
+                {
+                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                    Utilities.NoContentMsg();
+                }
+                
             }
         }
         public static void PrintDeposits()
@@ -48,9 +52,12 @@ namespace The_Singletons_Bank
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
-
-                Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10}");
-                Utilities.NoContentMsg();
+                if(transaction.transferType == 2)
+                {
+                    Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10}");
+                    Utilities.NoContentMsg();
+                }
+                
             }
         }
 
@@ -62,10 +69,10 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
             Console.Clear();
         }
-        public static void TransactionLogger(int transferType, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
+        public static void TransactionLogger(int transferType,string senderName, string recipientName, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
         {
             string time = DateTime.Now.ToString();
-            TransactionHistory transactionToSave = new TransactionHistory(transferType, senderId, senderCurrency, recipientId, recipientCurrency, ammountSent, time);
+            TransactionHistory transactionToSave = new TransactionHistory(transferType, senderName, recipientName, senderId, senderCurrency, recipientId, recipientCurrency, ammountSent, time);
             _transactionQueue.Enqueue(transactionToSave);   
         }
         public static void InternalTransfer(Customer user)
@@ -243,7 +250,7 @@ namespace The_Singletons_Bank
                             recipientAccountNumber = savingAccounts[accountRecipitent - 1 - accounts.Count].GetAccountNumber();
                         }
 
-                        TransactionLogger(0, sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency,ConvertedAmmountToSend);
+                        TransactionLogger(0,"NoNameNeeded", "NoNameNeeded", sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency,ConvertedAmmountToSend);
 
                         //Detta kommer skriva ut alla konton som användaren har
                         for (int i = 0; i < accounts.Count; i++)
@@ -353,8 +360,7 @@ namespace The_Singletons_Bank
                                 Console.Clear();
                                 currencyType = recipientAccounts[0].GetCurrency();
                                 transferInProgress = false;
-                                TransactionLogger(1, accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber(), currencyType, ConvertedAmmountToSend);
-                                //TransactionLogger(ConvertedAmmountToSend, accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber());
+                                TransactionLogger(1, accounts[accountPicked - 1].Name, customer.GetUsername(), accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber(), currencyType, ConvertedAmmountToSend);              
                             }
                             else
                             {
@@ -381,7 +387,7 @@ namespace The_Singletons_Bank
             }
         }
 
-        public static Queue<string> GetQueue()
+        public static Queue<TransactionHistory> GetQueue()
         {
             
             return _transactionQueue;
