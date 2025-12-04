@@ -23,9 +23,11 @@ namespace The_Singletons_Bank
         public string recipientCurrency { get; set; }
         public decimal amount { get; set; }
         public string createdDate { get; set; }
-            
-        public TransactionHistory(TransferType transferType , string senderName1,string recipientName1, int senderId1, string senderCurrency1, int recipientId1, string recipientCurrency1, decimal amount1, string createdDate1)
+        public Customer AccountThatCreatedTheTransaction { get; set; }
+
+        public TransactionHistory(Customer AccountThatCreatedTheTransaction1, TransferType transferType, string senderName1,string recipientName1, int senderId1, string senderCurrency1, int recipientId1, string recipientCurrency1, decimal amount1, string createdDate1)
         {
+            AccountThatCreatedTheTransaction = AccountThatCreatedTheTransaction1;
             Type = transferType;
             senderId = senderId1;
             senderName = senderName1;

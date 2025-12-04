@@ -10,10 +10,9 @@ namespace The_Singletons_Bank
     internal class Customer : User
     {
         private List<Account> _accounts;
-        private List<SavingAccount> _savingAccounts;
+        private List<SavingAccount> _savingAccounts;  
         public List<Loan> _loans;
         public List<String> _inbox;
-        public string[] CreditCredibility = { "Låg", "Medel", "Hög" };
         public int CreditCred { get; private set; } = 100;
 
         public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
@@ -142,13 +141,25 @@ namespace The_Singletons_Bank
             //Räknar först kredittrovärdighet baserat på lån
             foreach (Loan loan in _loans)
             {
-                if (loan.Loanamount > TotalFunds() * 5 || loan.Loanamount > TotalFunds() * 4)
+                if (loan.Loanamount >= TotalFunds() * 5)
                 {
-                    CreditCred = Math.Max(CreditCred - 30, 0);//Tar det högsta värdet och returnerar så det aldrig kan gå under 0
+                    CreditCred = Math.Max(CreditCred - 40, 0);//Tar det högsta värdet och returnerar så det aldrig kan gå under 0
+                }
+                else if (loan.Loanamount >= TotalFunds() * 4)
+                {
+                    CreditCred = Math.Max(CreditCred - 30, 0);
+                }
+                else if (loan.Loanamount >= TotalFunds() * 3)
+                {
+                    CreditCred = Math.Max(CreditCred - 20, 0);
+                }
+                else if (loan.Loanamount >= TotalFunds() * 2)
+                {
+                    CreditCred = Math.Max(CreditCred - 30, 0);
                 }
                 else
                 {
-                    CreditCred = Math.Max(CreditCred - 20, 0);
+                    CreditCred = Math.Max(CreditCred - 10, 0);
                 }
             }
             //Räknar sen på sparkonton. Har man ett sparkonto går trovärdigheten upp
@@ -156,25 +167,38 @@ namespace The_Singletons_Bank
             {
                 CreditCred = Math.Min(CreditCred + 20, 100);
             }
-            //Räkna ut hur många uttag vs insättningar.
-            //foreach (string external in Transaction.GetQueue())
+            //Räkna ut hur många uttag.
+            foreach (TransactionHistory transaction in Transaction.GetQueue())
+            {
+                if (transaction.transferType == 1)
+                {
+                    CreditCred = Math.Max(CreditCred - 10, 0);
+                }
+            }
+            //Räkna på antal insättingar:
+            //foreach ()
             //{
-            //   if (external.Contains())
-
+            //Här läggs insättningar in efter dom har blivit en transaction-type i queue
             //}
 
             //Returnerar trovärdighet efter uträknad total:
             if (CreditCred >= 70)
             {
-                return CreditCredibility[2];
+                Utilities.startColoring(ConsoleColor.DarkGreen);
+                string high= "Hög";
+                return high;
             }
             else if (CreditCred > 40 && CreditCred < 70)
             {
-                return CreditCredibility[1];
+                Utilities.startColoring(ConsoleColor.DarkYellow);
+                string mid = "Medel";
+                return mid;
             }
             else
             {
-                return CreditCredibility[0];
+                Utilities.startColoring(ConsoleColor.DarkRed);
+                string low = "Låg";
+                return low;
             }
         }
 
