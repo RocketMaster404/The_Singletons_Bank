@@ -29,13 +29,14 @@ namespace The_Singletons_Bank
             Console.WriteLine("2. Överföring"); // gör undermeny
             Console.WriteLine("3. Skapa konto"); // Gör undermeny
             Console.WriteLine("4. Lån"); // gör under meny
-            Console.WriteLine("5. Logga ut");
+            Console.WriteLine("5. Insättning");
+            Console.WriteLine("6. Logga ut");
             Console.Write("Ange val: ");
         }
 
         public static bool CustomerMainMenuChoice(Customer user)
         {
-            int input = Utilities.GetUserNumberMinMax(1, 5);
+            int input = Utilities.GetUserNumberMinMax(1, 6);
             switch (input)
             {
                 case 1:
@@ -64,6 +65,11 @@ namespace The_Singletons_Bank
                     ShowLoanMenu(user);
                     return true;
                 case 5:
+                    Console.Clear();
+                    DepositMenu(user);
+                    Console.Clear();
+                    return true;
+                case 6:
                     Console.WriteLine("Loggar ut...");
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -391,6 +397,44 @@ namespace The_Singletons_Bank
                     Console.Clear();
                     break;
             }
+
+        }
+
+        public static void DepositMenu(Customer user)
+        {
+            int count = 0;
+
+            Console.WriteLine("Insättning");
+
+
+            if (user.GetAccountList().Count == 0)
+            {
+                Console.WriteLine("Du har inga aktiva konton");
+            }
+            else
+            {
+                Console.WriteLine($"{"Nr",-5} {"Konto",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10}");
+               
+                foreach (var account in user.GetAccountList())
+                {
+                    count++;
+                    Console.WriteLine($"{count,-5} {account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account.GetCurrency(),-10}");
+                    
+                }
+                Console.Write("välj konto:");
+                int input = Utilities.GetUserNumberMinMax(1, count);
+                Account userChoice = user.GetAccountList()[input - 1];
+                Console.Write($"Ange insättningsbelopp({userChoice.GetCurrency()}): ");
+                decimal deposit = Utilities.GetUserDecimal();
+                userChoice.Deposit(deposit);
+                Console.WriteLine($"Lyckad insättning: {deposit} {userChoice.GetCurrency()} till konto {userChoice.Name}");
+                Console.ReadKey();
+
+
+
+            }
+
+            
 
         }
 

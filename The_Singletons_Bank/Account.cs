@@ -92,6 +92,19 @@ namespace The_Singletons_Bank
             return account;
         }
 
+        public void Deposit(decimal deposit)
+        {
+            if(deposit <= 0)
+            {
+                Console.WriteLine("Du måste ange ett positivt belopp");
+            }
+            else
+            {
+                _balance += deposit;
+            }
+            
+        }
+
 
 
 
