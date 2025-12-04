@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using static The_Singletons_Bank.TransactionHistory;
 
 //Kommer nog behöva ändra allting som har med transactions och valutor till decimals tror inte ints kommer fungerar för detta
 
@@ -21,7 +23,7 @@ namespace The_Singletons_Bank
             Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
             foreach (var transaction in _transactionQueue)
             {
-                if(transaction.transferType == 0)
+                if(transaction.Type == TransferType.Internal)
                 {
                     Console.WriteLine();
                     //Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
@@ -37,7 +39,7 @@ namespace The_Singletons_Bank
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
-                if(transaction.transferType == 1)
+                if(transaction.Type == TransferType.External)
                 {
                     Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
                     Utilities.NoContentMsg();
@@ -52,7 +54,7 @@ namespace The_Singletons_Bank
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
-                if(transaction.transferType == 2)
+                if(transaction.Type == TransferType.Deposit)
                 {
                     Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10}");
                     Utilities.NoContentMsg();
@@ -69,7 +71,7 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
             Console.Clear();
         }
-        public static void TransactionLogger(int transferType,string senderName, string recipientName, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
+        public static void TransactionLogger(TransferType transferType, string senderName, string recipientName, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
         {
             string time = DateTime.Now.ToString();
             TransactionHistory transactionToSave = new TransactionHistory(transferType, senderName, recipientName, senderId, senderCurrency, recipientId, recipientCurrency, ammountSent, time);
@@ -250,7 +252,7 @@ namespace The_Singletons_Bank
                             recipientAccountNumber = savingAccounts[accountRecipitent - 1 - accounts.Count].GetAccountNumber();
                         }
 
-                        TransactionLogger(0,"NoNameNeeded", "NoNameNeeded", sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency,ConvertedAmmountToSend);
+                        TransactionLogger(TransferType.Internal, "NoNameNeeded", "NoNameNeeded", sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency,ConvertedAmmountToSend);
 
                         //Detta kommer skriva ut alla konton som användaren har
                         for (int i = 0; i < accounts.Count; i++)
@@ -360,7 +362,7 @@ namespace The_Singletons_Bank
                                 Console.Clear();
                                 currencyType = recipientAccounts[0].GetCurrency();
                                 transferInProgress = false;
-                                TransactionLogger(1, accounts[accountPicked - 1].Name, customer.GetUsername(), accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber(), currencyType, ConvertedAmmountToSend);              
+                                TransactionLogger(TransferType.External, accounts[accountPicked - 1].Name, customer.GetUsername(), accounts[accountPicked - 1].GetAccountNumber(), currencyType, recipientAccounts[0].GetAccountNumber(), currencyType, ConvertedAmmountToSend);              
                             }
                             else
                             {

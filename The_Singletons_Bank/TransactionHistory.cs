@@ -8,7 +8,13 @@ namespace The_Singletons_Bank
 {
     internal class TransactionHistory
     {
-        public int transferType {  get; set; } // 0 för intern överföring // 1 för extern överföring // 2 för insättning
+        public enum TransferType
+        {
+            Internal = 0, // Represents an internal transfer
+            External = 1, // Represents an external transfer
+            Deposit = 2   // Represents a deposit
+        }
+        public TransferType Type { get; private set; }
         public int senderId { get; set; }
         public string senderName { get; set; }
         public int recipientId { get; set; }
@@ -18,9 +24,9 @@ namespace The_Singletons_Bank
         public decimal amount { get; set; }
         public string createdDate { get; set; }
             
-        public TransactionHistory(int isAInternalTransfer1, string senderName1,string recipientName1, int senderId1, string senderCurrency1, int recipientId1, string recipientCurrency1, decimal amount1, string createdDate1)
+        public TransactionHistory(TransferType transferType , string senderName1,string recipientName1, int senderId1, string senderCurrency1, int recipientId1, string recipientCurrency1, decimal amount1, string createdDate1)
         {
-            transferType = isAInternalTransfer1;
+            Type = transferType;
             senderId = senderId1;
             senderName = senderName1;
             recipientName = recipientName1;
