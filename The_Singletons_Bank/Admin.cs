@@ -12,12 +12,9 @@ namespace The_Singletons_Bank
     internal class Admin : User
     {
 
-
         public static Dictionary<Customer, decimal> Loantickets = new Dictionary<Customer, decimal>();
 
         public static List<string> cases { get; set; }
-
-
 
         public Admin(string username, string password) : base(username, password)
         {
@@ -28,8 +25,6 @@ namespace The_Singletons_Bank
         {
 
         }
-
-
 
         public static void Sendinvoice(Customer owner, Loan loan)
         {
@@ -65,7 +60,6 @@ namespace The_Singletons_Bank
             string password = Console.ReadLine();
 
         }
-
 
       public static void AvBlockeraAnvändare()
       {
