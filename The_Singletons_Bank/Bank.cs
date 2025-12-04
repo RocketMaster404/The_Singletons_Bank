@@ -64,7 +64,7 @@ namespace The_Singletons_Bank
          return false;
       }
 
-      public static User? LogIn()
+        public static User? LogIn()
       {
          User? currentUser = null;
          while (currentUser == null)

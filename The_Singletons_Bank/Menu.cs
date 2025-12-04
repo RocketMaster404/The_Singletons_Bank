@@ -88,6 +88,31 @@ namespace The_Singletons_Bank
             Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
             Console.WriteLine("5. Logga ut");
         }
+        public static bool AskIfToChangeCurrencyExchangeRate()
+        {
+            bool answer = false;
+            Console.WriteLine("Vill du ändra någon av valutornas växelkurs?");
+
+            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
+            Console.WriteLine("[1]: Ja");
+            Utilities.stopColoring();
+
+            Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
+            Console.WriteLine("[2]: Nej");
+            Utilities.stopColoring();
+
+            int stringAnswer = Utilities.GetUserNumberMinMax(1, 2);
+            if (stringAnswer == 1)
+            {
+                answer = true;
+            }
+            else
+            {
+                answer = false;
+                Console.Clear();
+            }
+            return answer;
+        }
 
         public static bool AdminMainMenuChoice(Admin admin)
         {
@@ -114,7 +139,7 @@ namespace The_Singletons_Bank
                     Console.Clear();
                     Console.WriteLine("2. Växelkurs");
                     Currency.DisplayExchangeRates();
-                    bool changeCurrency = Currency.AskIfToChangeCurrencyExchangeRate();
+                    bool changeCurrency = AskIfToChangeCurrencyExchangeRate();
                     if (changeCurrency)
                     {
                         Currency.ChangeCurrencyExchangeRateMenu();
@@ -172,7 +197,7 @@ namespace The_Singletons_Bank
                     Transaction.ExternalTransfer(user);
                     break;
                 case 3:
-                    Transaction.PrintTransactionLogs();
+                    Transaction.PrintTransactionLogs(user);
                     break;
             }
         }
