@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static The_Singletons_Bank.TransactionHistory;
 
 namespace The_Singletons_Bank
 {
@@ -170,7 +171,7 @@ namespace The_Singletons_Bank
             //Räkna ut hur många uttag.
             foreach (TransactionHistory transaction in Transaction.GetQueue())
             {
-                if (transaction.transferType == 1)
+                if (transaction.Type == TransferType.Deposit)
                 {
                     CreditCred = Math.Max(CreditCred - 10, 0);
                 }

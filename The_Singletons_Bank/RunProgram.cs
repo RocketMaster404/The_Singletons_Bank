@@ -19,14 +19,8 @@ namespace The_Singletons_Bank
          {
             User? user = null;
             
-
             Console.Clear();
             Utilities.AsciiArtPrinter(true);
-
-
-
-
-
             Menu.PrintLogInMenu();
             int input = Utilities.GetUserNumberMinMax(1, 2);
 
