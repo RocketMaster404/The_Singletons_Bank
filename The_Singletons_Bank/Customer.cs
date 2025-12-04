@@ -13,6 +13,8 @@ namespace The_Singletons_Bank
         private List<SavingAccount> _savingAccounts;
         public List<Loan> _loans;
         public List<String> _inbox;
+        public string[] CreditCredibility = { "Låg", "Medel", "Hög" };
+        public int CreditCred { get; private set; } = 100;
 
         public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
         {
@@ -131,6 +133,48 @@ namespace The_Singletons_Bank
             foreach (var account in user._savingAccounts)
             {
                 SavingAccount.ShowSavingAccountInfo(account);
+            }
+        }
+
+        public string CredibilityCalculator()
+        {
+
+            //Räknar först kredittrovärdighet baserat på lån
+            foreach (Loan loan in _loans)
+            {
+                if (loan.Loanamount > TotalFunds() * 5 || loan.Loanamount > TotalFunds() * 4)
+                {
+                    CreditCred = Math.Max(CreditCred - 30, 0);//Tar det högsta värdet och returnerar så det aldrig kan gå under 0
+                }
+                else
+                {
+                    CreditCred = Math.Max(CreditCred - 20, 0);
+                }
+            }
+            //Räknar sen på sparkonton. Har man ett sparkonto går trovärdigheten upp
+            if (_savingAccounts.Count > 0)
+            {
+                CreditCred = Math.Min(CreditCred + 20, 100);
+            }
+            //Räkna ut hur många uttag vs insättningar.
+            //foreach (string external in Transaction.GetQueue())
+            //{
+            //   if (external.Contains())
+
+            //}
+
+            //Returnerar trovärdighet efter uträknad total:
+            if (CreditCred >= 70)
+            {
+                return CreditCredibility[2];
+            }
+            else if (CreditCred > 40 && CreditCred < 70)
+            {
+                return CreditCredibility[1];
+            }
+            else
+            {
+                return CreditCredibility[0];
             }
         }
 

@@ -11,7 +11,7 @@ namespace The_Singletons_Bank
         public static decimal GetUserDecimal()
         {
             decimal input;
-            while (!Decimal.TryParse(Console.ReadLine(), out input)|| input<0)
+            while (!Decimal.TryParse(Console.ReadLine(), out input) || input < 0)
             {
                 Console.WriteLine("Du måste ange ett giltigt tal!");
             }
@@ -34,10 +34,10 @@ namespace The_Singletons_Bank
 
             return answer;
         }
-                public static void DashDivide()
-                {
-                    Console.WriteLine("_________________________________________________________________________________________");
-                }
+        public static void DashDivide()
+        {
+            Console.WriteLine("_________________________________________________________________________________________");
+        }
         public static string GetUserChoiceYN()
         {
             while (true)
@@ -93,7 +93,7 @@ namespace The_Singletons_Bank
             {
                 Console.WriteLine("Du måste ange ett decimaltal.");
             }
-            return input; 
+            return input;
         }
 
         public static int GetUserNumbermsg(string msg)
@@ -159,11 +159,11 @@ namespace The_Singletons_Bank
             {
                 foreach (string line in art)
                 {
-                    
+
                     Console.WriteLine(line.Substring(0, maxWidth));
                 }
             }
-            
+
         }
     }
 }

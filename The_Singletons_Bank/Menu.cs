@@ -210,7 +210,7 @@ namespace The_Singletons_Bank
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                //Lägg till kredittrovärdighet?
+                Console.WriteLine("Kredittrovärdighet: "+ kvp.Key.CredibilityCalculator());
                 Console.WriteLine($"Ansökt belopp:{kvp.Value}SEK");
                 Utilities.DashDivide();
                 LoanHandlingCounter++;
@@ -249,7 +249,7 @@ namespace The_Singletons_Bank
                         else
                         {
                             Console.WriteLine("Du har nekat låneförfrågan.\nVar god skriv ett meddelande till kund (valfritt):");
-                            string msg = $"Meddelande från bank: Låneförfrågan gällande {kvp.Value}SEK avslås.\n\n" + " - " + Console.ReadLine() + "\nMvh Singletons bank";
+                            string msg = $"Meddelande från bank: Låneförfrågan gällande {kvp.Value}SEK avslås.\n\n" + " - " + Console.ReadLine() + "\n Mvh Singletons bank";
 
                             Customer owner = kvp.Key;
                             Admin.Sendinvoice(owner, msg);
