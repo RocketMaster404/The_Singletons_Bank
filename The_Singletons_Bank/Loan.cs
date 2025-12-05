@@ -35,7 +35,7 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserDecimal();
+            decimal loanamount = Utilities.GetUserNumberMinMax(1,999999999);
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
@@ -86,7 +86,6 @@ namespace The_Singletons_Bank
                 if (msg.Contains("Ränta:"))
                 {
                     return false;
-
                 }
                 else
                 {
@@ -95,8 +94,6 @@ namespace The_Singletons_Bank
             }
             return false;
         }
-
-
     }
 }
 
