@@ -340,10 +340,10 @@ namespace The_Singletons_Bank
 
         public static void ShowLoanMenu(Customer owner)
         {
-            Console.Clear();
+            LoanMenuHeader();
             Console.WriteLine("1.Visa mina lån");
-            Console.WriteLine("2.Mina ärenden");
-            Console.WriteLine("3.Ta nytt lån");
+            Console.WriteLine("2.Ta nytt lån");
+            Console.WriteLine("3.Mina ärenden");
             Console.WriteLine("4.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 4);
 
@@ -359,6 +359,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
+                        LoanMenuHeader();
                         Console.WriteLine("Mina lån\n");
                         foreach (Loan loan in owner._loans)
                         {
@@ -371,6 +372,13 @@ namespace The_Singletons_Bank
                     break;
 
                 case 2:
+                    LoanMenuHeader();
+                    Console.WriteLine("Ansök om nytt lån");
+                    Console.Write("Ange önskat lånebelopp:");
+                    Loan.CreateLoan(owner);
+                    break;
+
+                case 3:
 
 
                     if (owner._inbox.Count() == 0 && !Admin.Loantickets.ContainsKey(owner))
@@ -386,8 +394,8 @@ namespace The_Singletons_Bank
                     }
                     else if (Loan.IsLoanDeclinedMsg(owner) == true && !Admin.Loantickets.ContainsKey(owner))//Problem med inboxens villkor
                     {
-                        Console.Clear();
-                        Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:");
+                        LoanMenuHeader();
+                        Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:\n");
                         owner.ShowInbox();
                         Utilities.startColoring(ConsoleColor.Red);
                         Console.WriteLine("\n\nMeddelande raderas när du återgår till menyn");
@@ -398,7 +406,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
-                        Console.Clear();
+                        LoanMenuHeader();
                         Console.WriteLine("Dina ärenden:\n");
                         owner.ShowInbox();
                         Console.WriteLine("\n Vad vill du göra?\n");
@@ -414,10 +422,6 @@ namespace The_Singletons_Bank
                         else
                             break;
                     }
-                    break;
-                case 3:
-                    Console.WriteLine("Ange önskat lånebelopp:");
-                    Loan.CreateLoan(owner);
                     break;
 
                 default:
@@ -465,7 +469,15 @@ namespace The_Singletons_Bank
 
         }
 
-
+        public static void LoanMenuHeader()
+        {
+            Console.Clear();
+            Utilities.startColoring(ConsoleColor.Yellow);
+            Console.WriteLine("Lånemeny");
+            Utilities.stopColoring();
+            Utilities.DashDivide();
+            Console.WriteLine();
+        }
 
 
 
