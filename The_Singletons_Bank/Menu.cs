@@ -394,11 +394,11 @@ namespace The_Singletons_Bank
                     }
                     else if (Loan.IsLoanDeclinedMsg(owner) == true && !Admin.Loantickets.ContainsKey(owner))//Problem med inboxens villkor
                     {
-                        LoanMenuHeader();
+                        Console.Clear();
                         Console.WriteLine("Du har ett nytt meddelande angående din låneansökan:\n");
                         owner.ShowInbox();
                         Utilities.startColoring(ConsoleColor.Red);
-                        Console.WriteLine("\n\nMeddelande raderas när du återgår till menyn");
+                        Console.WriteLine("\nMeddelande raderas när du återgår till menyn\n\n");
                         Utilities.stopColoring();
                         owner._inbox.Clear();
                         Utilities.NoContentMsg();
