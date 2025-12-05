@@ -42,7 +42,7 @@ namespace The_Singletons_Bank
             if (limitOk && hasActiveTicket == false)
             {
 
-                Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
+                Console.WriteLine($"\nDin låneförfrågan på {loanamount} SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
                 Admin.Loantickets.Add(owner, loanamount);//Om en låneförfrågan redan finns så kan man inte göra en ny PGA samma key redan finns.
                 Utilities.NoContentMsg();
 

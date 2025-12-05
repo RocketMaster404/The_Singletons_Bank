@@ -373,7 +373,7 @@ namespace The_Singletons_Bank
 
                 case 2:
                     LoanMenuHeader();
-                    Console.WriteLine("Ansök om nytt lån");
+                    Console.WriteLine("-- Ansök om nytt lån --");
                     Console.Write("Ange önskat lånebelopp:");
                     Loan.CreateLoan(owner);
                     break;
