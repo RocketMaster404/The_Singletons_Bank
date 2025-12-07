@@ -177,10 +177,10 @@ namespace The_Singletons_Bank
                 }
             }
             //Räkna på antal insättingar:
-            //foreach ()
-            //{
-            //Här läggs insättningar in efter dom har blivit en transaction-type i queue
-            //}
+            foreach (Account account in _accounts)
+            {
+                CreditCred = Math.Min((CreditCred + 10)*account.Depositcounter, 0);
+            }
 
             //Returnerar trovärdighet efter uträknad total:
             if (CreditCred >= 70)

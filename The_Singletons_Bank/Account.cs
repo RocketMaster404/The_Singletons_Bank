@@ -14,6 +14,8 @@ namespace The_Singletons_Bank
         private decimal _balance { get; set; }
         private string _currency { get; set; } = "SEK";
 
+        public int Depositcounter = 0;
+
         public Account(string name, decimal balance, string currency)
         {
             Name = name;
@@ -101,6 +103,7 @@ namespace The_Singletons_Bank
             else
             {
                 _balance += deposit;
+                Depositcounter++;
             }
             
         }

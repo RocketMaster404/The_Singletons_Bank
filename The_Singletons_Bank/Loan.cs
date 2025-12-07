@@ -35,14 +35,14 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserDecimal();
+            decimal loanamount = Utilities.GetUserNumberMinMax(1,999999999);
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
             if (limitOk && hasActiveTicket == false)
             {
 
-                Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
+                Console.WriteLine($"\nDin låneförfrågan på {loanamount} SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
                 Admin.Loantickets.Add(owner, loanamount);//Om en låneförfrågan redan finns så kan man inte göra en ny PGA samma key redan finns.
                 Utilities.NoContentMsg();
 
@@ -86,7 +86,6 @@ namespace The_Singletons_Bank
                 if (msg.Contains("Ränta:"))
                 {
                     return false;
-
                 }
                 else
                 {
@@ -95,8 +94,6 @@ namespace The_Singletons_Bank
             }
             return false;
         }
-
-
     }
 }
 
