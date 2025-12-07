@@ -173,8 +173,12 @@ namespace The_Singletons_Bank
                 //Ifall du inte har ett konto så kommer denna köras och annars så börjar transaktionen
                 if (accounts.Count <= 0)
                 {
+                    Utilities.startColoring(ConsoleColor.Red);
                     Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
+                    Thread.Sleep(2000);
+                    Utilities.stopColoring();
                     transferInProgress = false;
+                    Console.Clear();
 
                 }
                 else
