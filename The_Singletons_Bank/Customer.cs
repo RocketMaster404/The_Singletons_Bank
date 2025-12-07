@@ -11,7 +11,7 @@ namespace The_Singletons_Bank
     internal class Customer : User
     {
         private List<Account> _accounts;
-        private List<SavingAccount> _savingAccounts;  
+        private List<SavingAccount> _savingAccounts;
         public List<Loan> _loans;
         public List<String> _inbox;
         public int CreditCred { get; private set; } = 100;
@@ -179,14 +179,17 @@ namespace The_Singletons_Bank
             //Räkna på antal insättingar:
             foreach (Account account in _accounts)
             {
-                CreditCred = Math.Min((CreditCred + 10)*account.Depositcounter, 0);
+                if (account.Depositcounter != 0)
+                {
+                    CreditCred = Math.Min((CreditCred + 10) * account.Depositcounter, 100);
+                }
             }
 
             //Returnerar trovärdighet efter uträknad total:
             if (CreditCred >= 70)
             {
                 Utilities.startColoring(ConsoleColor.DarkGreen);
-                string high= "Hög";
+                string high = "Hög";
                 return high;
             }
             else if (CreditCred > 40 && CreditCred < 70)
