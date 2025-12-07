@@ -197,9 +197,35 @@ namespace The_Singletons_Bank
                     Transaction.ExternalTransfer(user);
                     break;
                 case 3:
-                    Transaction.PrintTransactionLogs(user);
+                    PrintAccountHistoryPicker(user);
+                    
                     break;
             }
+        }
+
+        public static void PrintAccountHistoryPicker(Customer user)
+        {
+            Console.WriteLine("Välj Ett konto eller alla att see historiken över");
+            Console.WriteLine("1, Alla konton");
+            Transaction.printOutAccounts(user);
+            PrintAccountHistoryOutput(user);
+        }
+        public static void PrintAccountHistoryOutput(Customer user)
+        {
+            int input = Utilities.GetUserNumberMinMax(1, user.GetAccountList().Count + user.GetSavingAccountList().Count+1);
+            if(input == 1)
+            {
+                Transaction.PrintAllTransactionLogs(user);
+            }
+            else
+            {
+                string answerName = Transaction.returnSpecificAccountName(user, input);
+                Console.WriteLine(answerName);
+                Transaction.PrintOutSpecificAccount(user, answerName);
+                Utilities.DashDivide();
+                Console.ReadKey();
+            }           
+            Console.Clear();
         }
 
         public static void PrintCreateBankAccountMenu()

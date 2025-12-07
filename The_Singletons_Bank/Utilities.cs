@@ -91,7 +91,10 @@ namespace The_Singletons_Bank
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
+                startColoring(ConsoleColor.Red);
                 Console.WriteLine("Du måste ange ett decimaltal.");
+                Console.WriteLine("Observera: Använd komma (,) istället för punkt (.)");
+                stopColoring();
             }
             return input;
         }
