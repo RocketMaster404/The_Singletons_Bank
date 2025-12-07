@@ -58,8 +58,28 @@ namespace The_Singletons_Bank
                 }              
             }
         }
+        public static string returnSpecificAccountName(Customer user, int j)
+        {
+            List<Account> accounts = user.GetAccountList();
+            List<SavingAccount> savingAccounts = user.GetSavingAccountList();
 
-        public static void PrintTransactionLogs(Customer user)
+            // Check if 'j' is valid for accounts list
+            if (j >= 2 && j < accounts.Count + 2)
+            {
+                return accounts[j - 2].Name;  // Return the account name
+            }
+
+            // Check if 'j' is valid for savings accounts list
+            if (j >= accounts.Count + 2 && j < accounts.Count + savingAccounts.Count + 2)
+            {
+                return savingAccounts[j - accounts.Count - 2].Name;  // Return the saving account name
+            }
+
+            // If 'j' is out of range for both lists
+            return "NoName";
+
+        }
+        public static void PrintAllTransactionLogs(Customer user)
         {
             PrintInternalTransactions(user);
             Console.WriteLine();
@@ -67,6 +87,53 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
             Console.Clear();
         }
+        public static void printOutAccounts(Customer user)
+        {
+            List<Account> accounts = user.GetAccountList();
+            List<SavingAccount> savingAccounts = user.GetSavingAccountList();
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                decimal balance = accounts[i].GetBalance();
+                int accountNumber = accounts[i].GetAccountNumber();
+                string accountName = accounts[i].Name;
+                Console.WriteLine($"{i + 2}, {accountName} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+            }
+
+            for (int i = 0; i < savingAccounts.Count; i++)
+            {
+                decimal balance = savingAccounts[i].GetBalance();
+                int accountNumber = savingAccounts[i].GetAccountNumber();
+                string accountName = savingAccounts[i].Name;
+                Console.WriteLine($"{i + 2 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
+            }
+        }
+
+        public static void PrintOutSpecificAccount(Customer user, string pickedAccountName)
+        {
+            Console.Clear();
+            Console.WriteLine($"Intern Transaktioner");
+            Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
+            Console.WriteLine();
+            foreach (var transaction in _transactionQueue)
+            {
+                if (transaction.Type == TransferType.Internal && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.senderName || transaction.Type == TransferType.Internal && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.recipientName)
+                {
+                    Console.WriteLine($"{transaction.senderId,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Extern Transaktioner");
+            Console.WriteLine($"{"Skickaren",-25} {"Mottagaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
+            Console.WriteLine();
+            foreach (var transaction in _transactionQueue)
+            {
+                if (transaction.Type == TransferType.External && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.senderName || transaction.Type == TransferType.External && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.recipientName)
+                {
+                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                }
+            }
+        }
+
         public static void TransactionLogger(Customer user, TransferType transferType, string senderName, string recipientName, int senderId,string senderCurrency, int recipientId, string recipientCurrency, decimal ammountSent)
         {
             string time = DateTime.Now.ToString();
@@ -92,7 +159,7 @@ namespace The_Singletons_Bank
                     decimal balance = accounts[i].GetBalance();
                     int accountNumber = accounts[i].GetAccountNumber();
                     string accountName = accounts[i].Name;
-                    Console.WriteLine($"{accountName}: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+                    Console.WriteLine($"{i + 1}, {accountName} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
                 }
 
                 for (int i = 0; i < savingAccounts.Count; i++)
@@ -100,7 +167,7 @@ namespace The_Singletons_Bank
                     decimal balance = savingAccounts[i].GetBalance();
                     int accountNumber = savingAccounts[i].GetAccountNumber();
                     string accountName = savingAccounts[i].Name;
-                    Console.WriteLine($"{accountName}: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
+                    Console.WriteLine($"{i + 1 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
                 }
 
                 //Ifall du inte har ett konto så kommer denna köras och annars så börjar transaktionen
