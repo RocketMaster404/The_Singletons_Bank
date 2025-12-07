@@ -8,7 +8,7 @@ namespace The_Singletons_Bank
 {
     public abstract class User
     {
-        private string _username; //Gjorde username privat
+        private string _username;
 
         private string _password { get; set; } 
 
@@ -17,10 +17,6 @@ namespace The_Singletons_Bank
         public bool UserIsBlocked { get; set; } = false;
 
         public bool IsAdmin { get; set; } = false;
-        
-
-        
-
 
 
         public User(string username, string password)
@@ -59,22 +55,10 @@ namespace The_Singletons_Bank
         public string GetUsername() // En metod för att se vad username innehåller
         {
             return _username;
-        }                     
-        public void ShowBankAccounts()
+        } 
+        public string GetPassword()
         {
-
+            return _password;
         }
-        public void CreateNewBankAcc()
-        {
-
-        }
-       
-        public void TakeLoan()
-        {
-           
-
-        }
-
-
     }
 }

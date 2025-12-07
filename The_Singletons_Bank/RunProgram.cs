@@ -14,18 +14,14 @@ namespace The_Singletons_Bank
          bool runProgram = true;
          Bank.MonthlyInterest();
          Bank.CreateTestUsers();
+         Database.WriteToFile(Bank.GetUsers());
 
          while (runProgram)
          {
             User? user = null;
             
-
             Console.Clear();
             Utilities.AsciiArtPrinter(true);
-
-
-
-
 
             Menu.PrintLogInMenu();
             int input = Utilities.GetUserNumberMinMax(1, 2);
