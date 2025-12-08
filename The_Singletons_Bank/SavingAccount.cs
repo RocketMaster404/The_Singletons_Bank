@@ -37,35 +37,39 @@ namespace The_Singletons_Bank
             decimal interest3 = 2.0m;
             string name;
 
-            Console.WriteLine("Vilken sparkonto typ önska du öpppna");
+            Console.WriteLine("Sparkonto");
             Console.WriteLine($"1. Singelton standard: {interest1}");
             Console.WriteLine($"2. Singelton medel: {interest2}");
             Console.WriteLine($"3. Singelton långsiktigt: {interest3}");
+            Console.Write("Val: ");
             int input = Utilities.GetUserNumberMinMax(1, 3);
 
             switch (input)
             {
                 case 1:
                     Console.WriteLine("Ange namnet på ditt konto: ");
-                    name = Console.ReadLine();
+                    name = Utilities.GetUserString();
                     var savingAccount1 = new SavingAccount(name, 0, interest1);
-                    Console.WriteLine($"Du har skapat ett sparkonto");
+                    Console.WriteLine($"Du har skapat sparkonto: ");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"Ränta",4} ");
                     ShowAccount(savingAccount1);
                     user.AddToSavingAccountList(savingAccount1);
                     break;
                 case 2:
                     Console.WriteLine("Ange namnet på ditt konto: ");
-                    name = Console.ReadLine();
+                    name = Utilities.GetUserString();
                     var savingAccount2 = new SavingAccount(name, 0, interest2);
-                    Console.WriteLine($"Du har skapat ett sparkonto");
+                    Console.WriteLine($"Du har skapat sparkonto: ");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"Ränta",4} ");
                     ShowAccount(savingAccount2);
                     user.AddToSavingAccountList(savingAccount2);
                     break;
                 case 3:
                     Console.WriteLine("Ange namnet på ditt konto: ");
-                    name = Console.ReadLine();
+                    name = Utilities.GetUserString();
                     var savingAccount3 = new SavingAccount(name, 0, interest3);
-                    Console.WriteLine($"Du har skapat ett sparkonto");
+                    Console.WriteLine($"Du har skapat sparkonto: ");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"Ränta",4} ");
                     ShowAccount(savingAccount3);
                     user.AddToSavingAccountList(savingAccount3);
                     break;
