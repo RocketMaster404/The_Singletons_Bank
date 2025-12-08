@@ -137,6 +137,7 @@ namespace The_Singletons_Bank
         }
 
         public string CredibilityCalculator()
+
         {
 
             //Räknar först kredittrovärdighet baserat på lån
