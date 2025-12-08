@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 using System.Transactions;
 using static The_Singletons_Bank.TransactionHistory;
 
-//Kommer nog behöva ändra allting som har med transactions och valutor till decimals tror inte ints kommer fungerar för detta
-
 namespace The_Singletons_Bank
 {
     internal class Transaction
     {
         private static Queue<TransactionHistory> _transactionQueue = new Queue<TransactionHistory>();
+        //Denna kommer skriva ut alla ens interna översättningar
         public static void PrintInternalTransactions(Customer user)
         {
             Console.Clear();
@@ -32,6 +31,7 @@ namespace The_Singletons_Bank
             }
             Console.WriteLine();
         }
+        //Denna kommer skriva ut alla ens externa översättningar
         public static void PrintExternalTransactions(Customer user)
         {
             Console.WriteLine($"Extern Transaktioner");
@@ -45,6 +45,7 @@ namespace The_Singletons_Bank
                 }             
             }
         }
+        //Detta kommer skriva ut alla ens insättningar
         public static void PrintDeposits(Customer user)
         {
             Console.WriteLine($"Insättningar");
@@ -58,24 +59,25 @@ namespace The_Singletons_Bank
                 }              
             }
         }
+        //Detta kommer hitta vilket namn i konto listan som är kopplad till en int
         public static string returnSpecificAccountName(Customer user, int j)
         {
             List<Account> accounts = user.GetAccountList();
             List<SavingAccount> savingAccounts = user.GetSavingAccountList();
 
-            // Check if 'j' is valid for accounts list
+            
             if (j >= 2 && j < accounts.Count + 2)
             {
-                return accounts[j - 2].Name;  // Return the account name
+                return accounts[j - 2].Name;  
             }
 
             // Check if 'j' is valid for savings accounts list
             if (j >= accounts.Count + 2 && j < accounts.Count + savingAccounts.Count + 2)
             {
-                return savingAccounts[j - accounts.Count - 2].Name;  // Return the saving account name
+                return savingAccounts[j - accounts.Count - 2].Name; 
             }
 
-            // If 'j' is out of range for both lists
+            
             return "NoName";
 
         }
@@ -87,6 +89,8 @@ namespace The_Singletons_Bank
             Utilities.NoContentMsg();
             Console.Clear();
         }
+
+        //Detta kommer skriva ut alla konton en har och information om kontona
         public static void printOutAccounts(Customer user)
         {
             List<Account> accounts = user.GetAccountList();
@@ -107,7 +111,7 @@ namespace The_Singletons_Bank
                 Console.WriteLine($"{i + 2 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
             }
         }
-
+        //Detta kommer skriva ut vad ett specifikt konto beroende på namn har gjort interna och externa överföringar
         public static void PrintOutSpecificAccount(Customer user, string pickedAccountName)
         {
             Console.Clear();
@@ -271,9 +275,9 @@ namespace The_Singletons_Bank
 
                     if(transferInProgress == true)
                     {
+                        //Detta kommer fråga hur mycket du vill skicka sen ändra hur mycket pengar som läggs till eller tar bort om det är olika valutor
                         Console.WriteLine("Hur mycket will du skicka?");
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
-                        //Console.Clear();
                         decimal ConvertedAmmountToSend = ammountToSend;
                         string sendersCurrency = "TEMP";
 
@@ -307,6 +311,7 @@ namespace The_Singletons_Bank
 
                         ConvertedAmmountToSend = Currency.ConvertCurrency(sendersCurrency, recipientCurrency, Convert.ToDecimal(ammountToSend));
 
+                        //Det här kommer lägga till och ta bort pengar från kontona sen spara det i historiken
                         if (canSendMoney)
                         {
                             int sendersAccountNumber = 0;
@@ -342,23 +347,6 @@ namespace The_Singletons_Bank
 
                             TransactionLogger(user, TransferType.Internal, sendersAccountName, recipientAccountName, sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency, ConvertedAmmountToSend);
 
-                            //Osäker om vi vill ha detta eller inte, den visar en lista av alla ens konton efter transaktionen har gått igenom
-
-                            ////Detta kommer skriva ut alla konton som användaren har
-                            //for (int i = 0; i < accounts.Count; i++)
-                            //{
-                            //    decimal balance = accounts[i].GetBalance();
-                            //    int accountNumber = accounts[i].GetAccountNumber();
-                            //    Console.WriteLine($"Konto: {i + 1} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
-
-                            //}
-                            //for (int i = 0; i < savingAccounts.Count; i++)
-                            //{
-                            //    decimal balance = savingAccounts[i].GetBalance();
-                            //    int accountNumber = savingAccounts[i].GetAccountNumber();
-                            //    Console.WriteLine($"SparKonto: {i + 1 + accounts.Count} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
-
-                            //}
                             Utilities.startColoring(ConsoleColor.Green);
                             Console.WriteLine($"{ConvertedAmmountToSend}{recipientCurrency} har skickat från {sendersAccountName} till {recipientAccountName}");
                             Utilities.stopColoring();
@@ -377,7 +365,7 @@ namespace The_Singletons_Bank
 
         public static void ExternalTransfer(Customer user)
         {
-            //As long as this is true the loop will continue
+            //Så länge denna boolen är san så kommer denna loopen fortsätta
             bool transferInProgress = true;
             while (transferInProgress)
             {
@@ -386,7 +374,7 @@ namespace The_Singletons_Bank
 
                 string recipient = Console.ReadLine();
 
-                //This will check if the user exist
+                //Detta kommer kolla om användaren finns
                 if (Bank.userExists(recipient))
                 {
                     List<Account> accounts = user.GetAccountList();
@@ -435,7 +423,7 @@ namespace The_Singletons_Bank
                                 }
                             }
                         }
-
+                        //Här väljer du hur mycket du vill skicka
                         Console.WriteLine("Hur mycket will du skicka?");
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
@@ -446,6 +434,7 @@ namespace The_Singletons_Bank
 
                             if (recipientAccounts != null && recipientAccounts.Count > 0)
                             {
+                                //Detta kommer lägga till och ta bort pengar sen spara det till historiken
                                 recipientAccounts[0].AddMoney(ConvertedAmmountToSend);
                                 accounts[accountPicked - 1].RemoveMoney(ConvertedAmmountToSend);
                                 Console.WriteLine($"Du har skickat {ConvertedAmmountToSend} till {recipient}");

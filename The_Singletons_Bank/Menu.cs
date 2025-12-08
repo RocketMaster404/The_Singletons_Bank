@@ -221,7 +221,6 @@ namespace The_Singletons_Bank
             else
             {
                 string answerName = Transaction.returnSpecificAccountName(user, input);
-                Console.WriteLine(answerName);
                 Transaction.PrintOutSpecificAccount(user, answerName);
                 Utilities.DashDivide();
                 Console.ReadKey();
