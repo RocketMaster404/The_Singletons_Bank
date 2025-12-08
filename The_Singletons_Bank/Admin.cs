@@ -68,6 +68,7 @@ namespace The_Singletons_Bank
             List<User> _users = Bank.GetUsers();
             Console.WriteLine("Blockerade konton:");
             int i = 0;
+            bool wasUserFound = false;
             foreach (User user in _users)
             {
 
@@ -114,11 +115,22 @@ namespace The_Singletons_Bank
                         Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
                         Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
                         Utilities.stopColoring();
+                        wasUserFound = true;
+                        Thread.Sleep(2000);
+                        Console.Clear();
                     }
                     else
                     {
-                        Console.WriteLine("Användare hittad inte");
+                        
                     }
+                }
+                if (!wasUserFound)
+                {
+                    Utilities.startColoring(ConsoleColor.Red);
+                    Console.WriteLine("Användare hittad inte");
+                    Utilities.stopColoring();
+                    Thread.Sleep(2000);
+                    Console.Clear();
                 }
 
             }
