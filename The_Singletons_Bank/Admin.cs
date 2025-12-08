@@ -55,9 +55,9 @@ namespace The_Singletons_Bank
         {
             Console.Clear();
             Console.WriteLine("Ange användarnamn: ");
-            string userName = Console.ReadLine();
+            string userName = Utilities.GetUserString();
             Console.WriteLine("Ange Lösenord: ");
-            string password = Console.ReadLine();
+            string password = Utilities.GetUserString();
 
         }
 
@@ -80,7 +80,7 @@ namespace The_Singletons_Bank
                 }
             }
             i = 0;
-            string userInput = Console.ReadLine();
+            string userInput = Utilities.GetUserString();
             if (int.TryParse(userInput, out int number))
             {
                 // Om svaret är en int

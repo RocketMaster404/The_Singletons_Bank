@@ -58,6 +58,7 @@ namespace The_Singletons_Bank
                     TransferMenuChoice(user);
                     return true;
                 case 3:
+                    Console.Clear();
                     PrintCreateBankAccountMenu();
                     CreateBankAccountMenuChoice(user);
                     return true;
@@ -341,6 +342,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountSEK = Account.CreateAccount(name, 1000, "SEK", user);
                     Console.WriteLine("Konto skapat\n");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"",6}");
                     Account.ShowAccount(accountSEK);
                     break;
 
@@ -349,6 +351,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountUSD = Account.CreateAccount(name, 10, "USD", user);
                     Console.WriteLine("Konto skapat\n");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"",6}");
                     Account.ShowAccount(accountUSD);
                     break;
 
@@ -357,6 +360,7 @@ namespace The_Singletons_Bank
                     name = Console.ReadLine();
                     Account accountEUR = Account.CreateAccount(name, 10, "EUR", user);
                     Console.WriteLine("Konto skapat\n");
+                    Console.WriteLine($"{"Kontonamn",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10} {"",6}");
                     Account.ShowAccount(accountEUR);
                     break;
 
