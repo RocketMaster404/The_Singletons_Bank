@@ -411,7 +411,7 @@ namespace The_Singletons_Bank
                 case 2:
                     UnderMenuHeader("--Lånemeny--");
                     Console.WriteLine("-- Ansök om nytt lån --");
-                    Console.Write("Ange önskat lånebelopp:");
+                    Console.Write($"Ditt maximala lånebelopp är {owner.TotalFunds()*5} SEK\nAnge önskat lånebelopp:");
                     Loan.CreateLoan(owner);
                     break;
 
