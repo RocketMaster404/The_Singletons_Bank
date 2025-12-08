@@ -121,8 +121,8 @@ namespace The_Singletons_Bank
             switch (input)
             {
                 case 1:
-                    Console.Clear();
-                    Console.WriteLine("1. Skapa användare");
+                    UnderMenuHeader("--Skapa ny användare--");
+                    Console.WriteLine("1. Skapa Kund");
                     Console.WriteLine("2. Skapa Admin");
                     int choice = Utilities.GetUserNumberMinMax(1, 2);
                     if (choice == 1)
@@ -136,8 +136,7 @@ namespace The_Singletons_Bank
 
                     return true;
                 case 2:
-                    Console.Clear();
-                    Console.WriteLine("2. Växelkurs");
+                    UnderMenuHeader("--Valutakurser--");
                     Currency.DisplayExchangeRates();
                     bool changeCurrency = AskIfToChangeCurrencyExchangeRate();
                     if (changeCurrency)
@@ -147,14 +146,13 @@ namespace The_Singletons_Bank
 
                     return true;
                 case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
-                    Console.Clear();
-                    Console.WriteLine("3. UnBlockAccount");
+                    UnderMenuHeader("--Avblockera användare--");
                     Admin.AvBlockeraAnvändare();
 
                     return true;
 
                 case 4:
-                    Console.Clear();
+                    UnderMenuHeader("--Inkomna låneförfrågningar--");
                     if (Admin.Loantickets.Count == 0)
                     {
                         Console.WriteLine("Du har inga inkomna ärenden");
@@ -181,12 +179,7 @@ namespace The_Singletons_Bank
 
         public static void PrintTransferMenu()
         {
-            Console.Clear();
-            Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine("--Överföringsmeny--");
-            Utilities.stopColoring();
-            Utilities.DashDivide();
-            Console.WriteLine();
+            UnderMenuHeader("--Överföringsmeny--");
             Console.WriteLine("1. Intern Överföring");
             Console.WriteLine("2. Extern Överföring");
             Console.WriteLine("3. Se historiken");
@@ -205,7 +198,7 @@ namespace The_Singletons_Bank
                     break;
                 case 3:
                     PrintAccountHistoryPicker(user);
-                    
+
                     break;
                 case 4:
                     Console.Clear();
@@ -222,8 +215,8 @@ namespace The_Singletons_Bank
         }
         public static void PrintAccountHistoryOutput(Customer user)
         {
-            int input = Utilities.GetUserNumberMinMax(1, user.GetAccountList().Count + user.GetSavingAccountList().Count+1);
-            if(input == 1)
+            int input = Utilities.GetUserNumberMinMax(1, user.GetAccountList().Count + user.GetSavingAccountList().Count + 1);
+            if (input == 1)
             {
                 Transaction.PrintAllTransactionLogs(user);
             }
@@ -234,25 +227,21 @@ namespace The_Singletons_Bank
                 Transaction.PrintOutSpecificAccount(user, answerName);
                 Utilities.DashDivide();
                 Console.ReadKey();
-            }           
+            }
             Console.Clear();
         }
 
         public static void PrintCreateBankAccountMenu()
         {
-            Console.Clear();
-            Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine("--Kontomeny--");
-            Utilities.stopColoring();
-            Utilities.DashDivide();
-            Console.WriteLine();
+            UnderMenuHeader("--Öppna konto--");
             Console.WriteLine("1. Skapa konto");
             Console.WriteLine("2. Skapa sparkonto");
+            Console.WriteLine("3. Gå tillbaka");
         }
         public static void CreateBankAccountMenuChoice(Customer user)
         {
 
-            int input = Utilities.GetUserNumberMinMax(1, 2);
+            int input = Utilities.GetUserNumberMinMax(1, 3);
             switch (input)
             {
                 case 1:
@@ -261,6 +250,9 @@ namespace The_Singletons_Bank
                     break;
                 case 2:
                     SavingAccount.CreateSavingAccount(user);
+                    break;
+                case 3:
+                    Console.Clear();
                     break;
             }
         }
@@ -382,7 +374,7 @@ namespace The_Singletons_Bank
 
         public static void ShowLoanMenu(Customer owner)
         {
-            LoanMenuHeader();
+            UnderMenuHeader("--Lånemeny--");
             Console.WriteLine("1.Visa mina lån");
             Console.WriteLine("2.Ta nytt lån");
             Console.WriteLine("3.Mina ärenden");
@@ -401,7 +393,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
-                        LoanMenuHeader();
+                        UnderMenuHeader("--Lånemeny--");
                         Console.WriteLine("Mina lån\n");
                         foreach (Loan loan in owner._loans)
                         {
@@ -414,7 +406,7 @@ namespace The_Singletons_Bank
                     break;
 
                 case 2:
-                    LoanMenuHeader();
+                    UnderMenuHeader("--Lånemeny--");
                     Console.WriteLine("-- Ansök om nytt lån --");
                     Console.Write("Ange önskat lånebelopp:");
                     Loan.CreateLoan(owner);
@@ -448,7 +440,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
-                        LoanMenuHeader();
+                        UnderMenuHeader("--Lånemeny--");
                         Console.WriteLine("Dina ärenden:\n");
                         owner.ShowInbox();
                         Console.WriteLine("\n Vad vill du göra?\n");
@@ -477,8 +469,7 @@ namespace The_Singletons_Bank
         {
             int count = 0;
 
-            Console.WriteLine("Insättning");
-
+            UnderMenuHeader("--Insättning--");
 
             if (user.GetAccountList().Count == 0)
             {
@@ -487,35 +478,40 @@ namespace The_Singletons_Bank
             else
             {
                 Console.WriteLine($"{"Nr",-5} {"Konto",-25} {"Kontonummer",-20} {"Saldo",-10} {"Valuta",-10}");
-               
+
                 foreach (var account in user.GetAccountList())
                 {
                     count++;
                     Console.WriteLine($"{count,-5} {account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account.GetCurrency(),-10}");
-                    
                 }
-                Console.Write("välj konto:");
-                int input = Utilities.GetUserNumberMinMax(1, count);
-                Account userChoice = user.GetAccountList()[input - 1];
-                Console.Write($"Ange insättningsbelopp({userChoice.GetCurrency()}): ");
-                decimal deposit = Utilities.GetUserDecimal();
-                userChoice.Deposit(deposit);
-                Console.WriteLine($"Lyckad insättning: {deposit} {userChoice.GetCurrency()} till konto {userChoice.Name}");
-                Console.ReadKey();
+                Console.WriteLine("\nVad vill du göra?");
+                Console.WriteLine("1.Gör en insättning");
+                Console.WriteLine("2.Gå tillbaka");
+                int choice = Utilities.GetUserNumberMinMax(1, 2);
 
-
-
+                if (choice == 1)
+                {
+                    Console.Write("\nVälj konto för insättning:");
+                    int input = Utilities.GetUserNumberMinMax(1, count);
+                    Account userChoice = user.GetAccountList()[input - 1];
+                    Console.Write($"Ange insättningsbelopp({userChoice.GetCurrency()}): ");
+                    decimal deposit = Utilities.GetUserDecimal();
+                    userChoice.Deposit(deposit);
+                    Console.WriteLine($"Lyckad insättning: {deposit} {userChoice.GetCurrency()} till konto {userChoice.Name}");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.Clear();
+                }
             }
-
-            
-
         }
 
-        public static void LoanMenuHeader()
+        public static void UnderMenuHeader(string header)
         {
             Console.Clear();
             Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine("Lånemeny");
+            Console.WriteLine(header);
             Utilities.stopColoring();
             Utilities.DashDivide();
             Console.WriteLine();
