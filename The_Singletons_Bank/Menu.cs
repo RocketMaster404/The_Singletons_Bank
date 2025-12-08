@@ -181,13 +181,20 @@ namespace The_Singletons_Bank
 
         public static void PrintTransferMenu()
         {
+            Console.Clear();
+            Utilities.startColoring(ConsoleColor.Yellow);
+            Console.WriteLine("--Överföringsmeny--");
+            Utilities.stopColoring();
+            Utilities.DashDivide();
+            Console.WriteLine();
             Console.WriteLine("1. Intern Överföring");
             Console.WriteLine("2. Extern Överföring");
             Console.WriteLine("3. Se historiken");
+            Console.WriteLine("4. Gå tillbaka");
         }
         public static void TransferMenuChoice(Customer user)
         {
-            int input = Utilities.GetUserNumberMinMax(1, 3);
+            int input = Utilities.GetUserNumberMinMax(1, 4);
             switch (input)
             {
                 case 1:
@@ -200,12 +207,15 @@ namespace The_Singletons_Bank
                     PrintAccountHistoryPicker(user);
                     
                     break;
+                case 4:
+                    Console.Clear();
+                    break;
             }
         }
 
         public static void PrintAccountHistoryPicker(Customer user)
         {
-            Console.WriteLine("Välj Ett konto eller alla att see historiken över");
+            Console.WriteLine("Välj konton för att se historik");
             Console.WriteLine("1, Alla konton");
             Transaction.printOutAccounts(user);
             PrintAccountHistoryOutput(user);
@@ -230,6 +240,12 @@ namespace The_Singletons_Bank
 
         public static void PrintCreateBankAccountMenu()
         {
+            Console.Clear();
+            Utilities.startColoring(ConsoleColor.Yellow);
+            Console.WriteLine("--Kontomeny--");
+            Utilities.stopColoring();
+            Utilities.DashDivide();
+            Console.WriteLine();
             Console.WriteLine("1. Skapa konto");
             Console.WriteLine("2. Skapa sparkonto");
         }
