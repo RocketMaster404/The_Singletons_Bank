@@ -51,6 +51,7 @@ namespace The_Singletons_Bank
             decimal newValue = Utilities.GetUserDecimalInput();
 
             //Inte direkt det bästa sätet att göra detta men det får bli så denna behöver expandera om det läggs till nya valutor
+            //Inte direkt dynamiskt men de e va de e
             if (answer == 1)
             {
                 currencyToChange = "USD";
