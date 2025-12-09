@@ -25,6 +25,7 @@ namespace The_Singletons_Bank
 
         public static void PrintCustomerMainMenu()
         {
+            
             Console.WriteLine("Meny");
             Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
             Console.WriteLine("2. Överföring"); // gör undermeny

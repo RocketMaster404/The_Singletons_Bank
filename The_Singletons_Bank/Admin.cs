@@ -80,60 +80,82 @@ namespace The_Singletons_Bank
                     Utilities.stopColoring();
                 }
             }
-            i = 0;
-            string userInput = Utilities.GetUserString();
-            if (int.TryParse(userInput, out int number))
+            if(i == 0)
             {
-                // Om svaret är en int
-                foreach (User user in _users)
+                Utilities.startColoring(ConsoleColor.Red);
+                Console.WriteLine("Det fanns inget konto att avblockera");
+                Thread.Sleep(1500);
+                Console.Clear();
+                Utilities.stopColoring();
+            }
+            
+            if(i != 0)
+            {
+                i = 0;
+                string userInput = Utilities.GetUserString();
+                if (int.TryParse(userInput, out int number))
                 {
-
-                    if (user.UserIsBlocked == true)
+                    // Om svaret är en int
+                    foreach (User user in _users)
                     {
-                        i++;
-                        if (i == Convert.ToInt32(userInput))
+
+                        if (user.UserIsBlocked == true)
                         {
-                            user.UserIsBlocked = false;
-                            user.LoginAttempts = 3;
-                            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
-                            Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
-                            Thread.Sleep(2000);
-                            Console.Clear();
-                            Utilities.stopColoring();
+                            i++;
+                            if (i == Convert.ToInt32(userInput))
+                            {
+                                user.UserIsBlocked = false;
+                                user.LoginAttempts = 3;
+                                Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
+                                Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                                wasUserFound = true;
+                                Thread.Sleep(1500);
+                                Console.Clear();
+                                Utilities.stopColoring();
+                            }
                         }
                     }
-                }
-            }
-            else
-            {
-                // Om svaret är en string
-                foreach (User user in _users)
-                {
-                    if (user.GetUsername() == userInput)
+                    if (wasUserFound == false)
                     {
-                        user.UserIsBlocked = false;
-                        Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
-                        Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                        Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
+                        Console.WriteLine("Du måste välja ett konto");
                         Utilities.stopColoring();
-                        wasUserFound = true;
+                        Thread.Sleep(1500);
+                        Console.Clear();
+                    }
+                }
+                else
+                {
+                    // Om svaret är en string
+                    foreach (User user in _users)
+                    {
+                        if (user.GetUsername() == userInput)
+                        {
+                            user.UserIsBlocked = false;
+                            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
+                            Console.WriteLine($"Användaren : {user.GetUsername()} har nu tillgång till bankens system igen");
+                            Utilities.stopColoring();
+                            wasUserFound = true;
+                            Thread.Sleep(2000);
+                            Console.Clear();
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    if (!wasUserFound)
+                    {
+                        Utilities.startColoring(ConsoleColor.Red);
+                        Console.WriteLine("Användare hittad inte");
+                        Utilities.stopColoring();
                         Thread.Sleep(2000);
                         Console.Clear();
                     }
-                    else
-                    {
-                        
-                    }
-                }
-                if (!wasUserFound)
-                {
-                    Utilities.startColoring(ConsoleColor.Red);
-                    Console.WriteLine("Användare hittad inte");
-                    Utilities.stopColoring();
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                }
 
+                }
             }
+            
 
         }
     }
