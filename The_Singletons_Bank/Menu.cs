@@ -211,8 +211,15 @@ namespace The_Singletons_Bank
 
         public static void PrintAccountHistoryPicker(Customer user)
         {
-            Console.WriteLine("Välj konton för att se historik");
-            Console.WriteLine("1, Alla konton");
+            Console.Clear();
+            Utilities.startColoring(ConsoleColor.Yellow);
+            Console.WriteLine($"--Transaktion Historik--");
+            Utilities.stopColoring();
+            Utilities.DashDivide();
+            Console.WriteLine("");
+            Console.WriteLine($"{"#",-3} {"Konto",-20} {"Saldo",-15} {"Valuta",-10}");
+            Console.WriteLine("");
+            Console.WriteLine("1 Alla konton");
             Transaction.printOutAccounts(user);
             PrintAccountHistoryOutput(user);
         }
