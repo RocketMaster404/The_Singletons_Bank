@@ -32,7 +32,7 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
+            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}  ");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -52,7 +52,7 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Pengarmängd",-10} {"Valuta",-10}  ");
+            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}  ");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -66,7 +66,7 @@ namespace The_Singletons_Bank
         public static void PrintDeposits(Customer user)
         {
             Console.WriteLine($"Insättningar");
-            Console.WriteLine($"{"Konto",-25} {"Valuta",-20} {"Pengarmängd",-10}");
+            Console.WriteLine($"{"Konto",-25} {"Valuta",-20} {"Belopp",-10}");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -104,7 +104,6 @@ namespace The_Singletons_Bank
             Utilities.startColoring(ConsoleColor.Yellow);
             Console.WriteLine($"--Transaktion Historik--");
             Utilities.stopColoring();
-            Utilities.DashDivide();
             Console.WriteLine();
             PrintInternalTransactions(user);
             Console.WriteLine();
@@ -117,13 +116,14 @@ namespace The_Singletons_Bank
         public static void printOutAccounts(Customer user)
         {
             List<Account> accounts = user.GetAccountList();
-            List<SavingAccount> savingAccounts = user.GetSavingAccountList();
+            List<SavingAccount> savingAccounts = user.GetSavingAccountList();           
             for (int i = 0; i < accounts.Count; i++)
             {
                 decimal balance = accounts[i].GetBalance();
                 int accountNumber = accounts[i].GetAccountNumber();
                 string accountName = accounts[i].Name;
-                Console.WriteLine($"{i + 2}, {accountName} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
+                Console.WriteLine($"{i + 2,-3} {accountName,-20} {balance,-15} {accounts[i].GetCurrency(),-10}");
+                //Console.WriteLine($"{i + 2}, {accountName} Har ett saldo av: {balance}{accounts[i].GetCurrency()}");
             }
 
             for (int i = 0; i < savingAccounts.Count; i++)
@@ -131,7 +131,8 @@ namespace The_Singletons_Bank
                 decimal balance = savingAccounts[i].GetBalance();
                 int accountNumber = savingAccounts[i].GetAccountNumber();
                 string accountName = savingAccounts[i].Name;
-                Console.WriteLine($"{i + 2 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
+                Console.WriteLine($"{i + 2 + accounts.Count,-3} {accountName,-20} {balance,-15} {accounts[i].GetCurrency(),-10}");
+                //Console.WriteLine($"{i + 2 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
             }
         }
         //Detta kommer skriva ut vad ett specifikt konto beroende på namn har gjort interna och externa överföringar
@@ -145,13 +146,13 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Pengarmängd",-10} {"Valuta",-10}");
+            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
                 if (transaction.Type == TransferType.Internal && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.senderName || transaction.Type == TransferType.Internal && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.recipientName)
                 {
-                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
                 }
             }
             Console.WriteLine();
@@ -162,13 +163,13 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Pengarmängd",-10} {"Valuta",-10}");
+            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
                 if (transaction.Type == TransferType.External && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.senderName || transaction.Type == TransferType.External && user == transaction.AccountThatCreatedTheTransaction && pickedAccountName == transaction.recipientName)
                 {
-                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
+                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientId,-20} {transaction.amount,-10} {transaction.recipientCurrency,-10}");
                 }
             }
         }
@@ -194,7 +195,7 @@ namespace The_Singletons_Bank
 
                 //Detta kommer skriva ut alla konton som användaren har
                 //Console.WriteLine($"Intern Transaktioner");
-                Console.WriteLine($"{"Avsändaren",-25} {"Saldo",-20} {"Valuta",-10} {"Valuta",-10}  ");
+                Console.WriteLine($"{"Avsändaren",-25} {"Saldo",-20} {"Valuta",-10}");
                 Console.WriteLine();
                 for (int i = 0; i < accounts.Count; i++)
                 {
@@ -220,7 +221,7 @@ namespace The_Singletons_Bank
                 {
                     Utilities.startColoring(ConsoleColor.Red);
                     Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1500);
                     Utilities.stopColoring();
                     transferInProgress = false;
                     Console.Clear();
@@ -335,11 +336,12 @@ namespace The_Singletons_Bank
                         }
                         else
                         {
+                            Utilities.DashDivide();
                             Utilities.startColoring(ConsoleColor.Red);
                             Console.WriteLine("Du måste ha mer än ett konto");
                             Utilities.stopColoring();
 
-                            Thread.Sleep(2000);
+                            Thread.Sleep(1500);
                             Console.Clear();
                             transferInProgress = false;
                             validAnswer = true;
@@ -409,14 +411,14 @@ namespace The_Singletons_Bank
 
                             if (accountRecipitent < 1 + accounts.Count)
                             {
-                                //accounts[accountRecipitent - 1].AddMoney(ConvertedAmmountToSend);
+                                accounts[accountRecipitent - 1].AddMoney(ConvertedAmmountToSend);
                                 recipientAccountName = accounts[accountRecipitent - 1].Name;
                                 recipientAccount = accounts[accountRecipitent - 1];
                                 recipientAccountNumber = accounts[accountRecipitent - 1].GetAccountNumber();
                             }
                             else
                             {
-                                // savingAccounts[accountRecipitent - 1 - accounts.Count].AddMoney(ConvertedAmmountToSend);
+                                savingAccounts[accountRecipitent - 1 - accounts.Count].AddMoney(ConvertedAmmountToSend);
                                 recipientAccountName = savingAccounts[accountRecipitent - 1 - accounts.Count].Name;
                                 recipientAccount = accounts[accountRecipitent - 1 - accounts.Count];
                                 recipientAccountNumber = savingAccounts[accountRecipitent - 1 - accounts.Count].GetAccountNumber();
@@ -428,7 +430,7 @@ namespace The_Singletons_Bank
                             Utilities.startColoring(ConsoleColor.Green);
                             Console.WriteLine($"{ConvertedAmmountToSend}{recipientCurrency} har skickat från {sendersAccountName} till {recipientAccountName}");
                             Utilities.stopColoring();
-                            Thread.Sleep(2000);
+                            Thread.Sleep(1500);
                             Console.Clear();
                             transferInProgress = false;
                         }
@@ -479,106 +481,117 @@ namespace The_Singletons_Bank
         {
             Console.Clear();
             Menu.UnderMenuHeader("--Extern Överföring--");
-
+            bool validNumber = true;
             while (true)
             {
+
                 Console.WriteLine("Skriv in kontonumret du vill skicka pengar till:");
                 int recipientNumber = Utilities.GetUserNumber();
 
                 if (!TryFindRecipientAccount(recipientNumber, out Customer recipientCustomer, out Account recipientAccount))
                 {
                     Utilities.startColoring(ConsoleColor.Red);
-                    Console.WriteLine("Mottagarkonto hittades inte. Försök igen.\n");
+                    Console.WriteLine("Mottagarkonto hittades inte.\n");
+                    Thread.Sleep(1500);
+                    validNumber = false;
                     Utilities.stopColoring();
-                    continue;
-                }
-
-                Utilities.startColoring(ConsoleColor.Green);
-                Console.WriteLine("Mottagare hittad!");
-                Utilities.stopColoring();
-                Thread.Sleep(1000);
-
-                Console.Clear();
-                Menu.UnderMenuHeader("--Extern Överföring--");
-
-                var senderAccounts = user.GetAccountList();
-
-                if (senderAccounts.Count == 0)
-                {
-                    Console.WriteLine("Du har inga konton att skicka pengar från.");
-                    return;
-                }
-
-                Console.WriteLine($"{"#",-3} {"Konto",-20} {"Saldo",-15} {"Valuta",-10}");
-                for (int i = 0; i < senderAccounts.Count; i++)
-                {
-                    var acc = senderAccounts[i];
-                    Console.WriteLine($"{i + 1,-3} {acc.Name,-20} {acc.GetBalance(),-15} {acc.GetCurrency(),-10}");
-                }
-
-                int index;
-                while (true)
-                {
-                    Console.WriteLine("\nVälj konto att skicka pengar från:");
-                    index = Utilities.GetUserNumber() - 1;
-
-                    if (index < 0 || index >= senderAccounts.Count)
-                    {
-                        Console.WriteLine("Ogiltigt val. Försök igen.");
-                        continue;
-                    }
-
-                    if (senderAccounts[index].GetBalance() <= 0)
-                    {
-                        Utilities.startColoring(ConsoleColor.Red);
-                        Console.WriteLine("Det valda kontot saknar pengar.");
-                        Utilities.stopColoring();
-                        continue;
-                    }
-
+                    Console.Clear();
                     break;
                 }
 
-                Account senderAccount = senderAccounts[index];
 
-                Console.WriteLine("Hur mycket vill du skicka?");
-                decimal amount = Utilities.GetUserDecimalInput();
 
-                if (amount <= 0)
+                if (validNumber == true)
                 {
-                    Console.WriteLine("Beloppet måste vara större än 0.");
-                    return;
-                }
-                if (amount > senderAccount.GetBalance())
-                {
-                    Utilities.startColoring(ConsoleColor.Red);
-                    Console.WriteLine("Du har inte tillräckligt med pengar.");
+                    Utilities.startColoring(ConsoleColor.Green);
+                    Console.WriteLine("Mottagare hittad!");
                     Utilities.stopColoring();
+                    Thread.Sleep(1000);
+
+                    Console.Clear();
+                    Menu.UnderMenuHeader("--Extern Överföring--");
+
+                    var senderAccounts = user.GetAccountList();
+
+                    if (senderAccounts.Count == 0)
+                    {
+                        Console.WriteLine("Du har inga konton att skicka pengar från.");
+                        return;
+                    }
+
+                    Console.WriteLine($"{"#",-3} {"Konto",-20} {"Saldo",-15} {"Valuta",-10}");
+                    for (int i = 0; i < senderAccounts.Count; i++)
+                    {
+                        var acc = senderAccounts[i];
+                        Console.WriteLine($"{i + 1,-3} {acc.Name,-20} {acc.GetBalance(),-15} {acc.GetCurrency(),-10}");
+                    }
+
+                    int index;
+                    while (true)
+                    {
+                        Console.WriteLine("\nVälj konto att skicka pengar från:");
+                        index = Utilities.GetUserNumber() - 1;
+
+                        if (index < 0 || index >= senderAccounts.Count)
+                        {
+                            Console.WriteLine("Ogiltigt val. Försök igen.");
+                            continue;
+                        }
+
+                        if (senderAccounts[index].GetBalance() <= 0)
+                        {
+                            Utilities.startColoring(ConsoleColor.Red);
+                            Console.WriteLine("Det valda kontot saknar pengar.");
+                            Utilities.stopColoring();
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    Account senderAccount = senderAccounts[index];
+
+                    Console.WriteLine("Hur mycket vill du skicka?");
+                    decimal amount = Utilities.GetUserDecimalInput();
+
+                    if (amount <= 0)
+                    {
+                        Console.WriteLine("Beloppet måste vara större än 0.");
+                        return;
+                    }
+                    if (amount > senderAccount.GetBalance())
+                    {
+                        Utilities.startColoring(ConsoleColor.Red);
+                        Console.WriteLine("Du har inte tillräckligt med pengar.");
+                        Utilities.stopColoring();
+                        return;
+                    }
+
+                    senderAccount.RemoveMoney(amount);
+                    //recipientAccount.AddMoney(amount);
+                    Utilities.startColoring(ConsoleColor.Green);
+                    Console.WriteLine($"\nDu har skickat {amount} {senderAccount.GetCurrency()} till konto {recipientAccount.GetAccountNumber()}.");
+                    Utilities.stopColoring();
+                    Thread.Sleep(1500);
+                    Console.Clear();
+
+                    // Spara till historiken
+                    TransactionLogger(user, TransferType.External, senderAccount.Name, "none", senderAccount.GetAccountNumber(), senderAccount.GetCurrency(), recipientAccount.GetAccountNumber(), recipientAccount.GetCurrency(), amount);
+
+                    TransactionQueue.CreateQuedTransaction(user, recipientCustomer, senderAccount.GetAccountNumber(), recipientAccount.GetAccountNumber(), amount);
+
+
+
+
+
+
+
                     return;
                 }
-
-                senderAccount.RemoveMoney(amount);
-                //recipientAccount.AddMoney(amount);
-                Utilities.startColoring(ConsoleColor.Green);
-                Console.WriteLine($"\nDu har skickat {amount} {senderAccount.GetCurrency()} till konto {recipientAccount.GetAccountNumber()}.");
-                Utilities.stopColoring();
-                Thread.Sleep(1500);
-                Console.Clear();
-
-                // Spara till historiken
-                TransactionLogger(user,TransferType.External,senderAccount.Name,"none",senderAccount.GetAccountNumber(),senderAccount.GetCurrency(),recipientAccount.GetAccountNumber(),recipientAccount.GetCurrency(),amount);
-
-                TransactionQueue.CreateQuedTransaction(user, recipientCustomer, senderAccount.GetAccountNumber(), recipientAccount.GetAccountNumber(), amount);
-
-
-
-
-
-
-
-                return;
             }
         }
+
+
 
 
 
