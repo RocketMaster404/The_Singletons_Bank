@@ -29,8 +29,8 @@ namespace The_Singletons_Bank
           string currency,
           int recieverAccountnumber,
           string receiverCurrency,
-          decimal amount,
-          DateTime createdAt)
+          decimal amount
+          )
         {
             Customer = customer;
             Type = type;
