@@ -6,77 +6,77 @@ using System.Threading.Tasks;
 
 namespace The_Singletons_Bank
 {
-   internal class RunProgram
-   {
-      
-      public static void Run()
-      {
-         bool runProgram = true;
-         Bank.MonthlyInterest();
-         Bank.CreateTestUsers();
-         Database.WriteToFile(Bank.GetUsers());
+    internal class RunProgram
+    {
 
-         while (runProgram)
-         {
-            User? user = null;
-            
-            Console.Clear();
-            Utilities.AsciiArtPrinter(true);
+        public static void Run()
+        {
+            bool runProgram = true;
+            Bank.MonthlyInterest();
+            Bank.CreateTestUsers();
+            Database.WriteToFile(Bank.GetUsers());
 
-            Menu.PrintLogInMenu();
-            int input = Utilities.GetUserNumberMinMax(1, 2);
-
-            switch (input)
+            while (runProgram)
             {
-               case 1:
-                  user = Bank.LogIn();
-                  if (user == null || user.UserIsBlocked)
-                  {
-                     Utilities.NoContentMsg();
-                     break;
-                  }
+                User? user = null;
 
-                  if (user is Customer customer)
-                  {
-                     
-                     RunCustomerProgram(customer);
-                  }
-                  else if (user is Admin admin)
-                  {
-                     RunAdminProgram(admin);
-                  }
-                  break;
+                Console.Clear();
+                Utilities.AsciiArtPrinter(true);
 
-               case 2:
-                  Console.WriteLine("Programmet avslutas!");
-                  runProgram = false;
-                  break;
+                Menu.PrintLogInMenu();
+                int input = Utilities.GetUserNumberMinMax(1, 2);
+
+                switch (input)
+                {
+                    case 1:
+                        user = Bank.LogIn();
+                        if (user == null || user.UserIsBlocked)
+                        {
+                            Utilities.NoContentMsg();
+                            break;
+                        }
+
+                        if (user is Customer customer)
+                        {
+
+                            RunCustomerProgram(customer);
+                        }
+                        else if (user is Admin admin)
+                        {
+                            RunAdminProgram(admin);
+                        }
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Programmet avslutas!");
+                        runProgram = false;
+                        break;
+                }
             }
-         }
-      }
+        }
 
 
-      public static void RunCustomerProgram(Customer customer)
-      {
-         bool loggedIn = true;
-         while (loggedIn)
-         {
-            Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
-            Menu.PrintCustomerMainMenu();
-            loggedIn = Menu.CustomerMainMenuChoice(customer);
-         }
+        public static void RunCustomerProgram(Customer customer)
+        {
+            bool loggedIn = true;
+            while (loggedIn)
+            {
+                Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
+                Menu.PrintCustomerMainMenu();
+                loggedIn = Menu.CustomerMainMenuChoice(customer);
+            }
 
-      }
+        }
 
-      public static void RunAdminProgram(Admin admin)
-      {
-         bool loggedIn = true;
-         while (loggedIn)
-         {
-            Menu.PrintAdminMainMenu();
-            loggedIn = Menu.AdminMainMenuChoice(admin);
+        public static void RunAdminProgram(Admin admin)
+        {
+            bool loggedIn = true;
+            while (loggedIn)
+            {
+                Menu.PrintAdminMainMenu();
+                loggedIn = Menu.AdminMainMenuChoice(admin);
 
-         }
-      }
-   }
+            }
+        }
+    }
 }

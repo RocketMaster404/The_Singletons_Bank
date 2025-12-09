@@ -101,7 +101,7 @@ namespace The_Singletons_Bank
                     else if (choice == 2)
                     {
                         Bank.AddAdminAccount();
-                    }
+                    }                    
 
                     return true;
                 case 2:
