@@ -17,10 +17,7 @@ namespace The_Singletons_Bank
 
         public static void RunQueue()
         {
-            if(_que.Count == 0)
-            {
-                return;
-            }
+            
 
             while(_que.Count > 0)
             {
