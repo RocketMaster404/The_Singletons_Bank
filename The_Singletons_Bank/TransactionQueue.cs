@@ -17,21 +17,15 @@ namespace The_Singletons_Bank
             _que.Enqueue(transaction);
         }
 
-        public static void CreateQuedTransaction(Customer customer, TransferType type, Account sender, Account reciver, decimal amount)
+        public static void CreateQuedTransaction(
+          Customer sender,
+          Customer reciver,
+          int senderAccountNumber,
+          int reciverAccountNumber,
+          decimal amount)
         {
-            var transaction = new PendingTransaction(customer,
-        type,
-        sender.Name,
-        reciver.Name,
-        sender.GetAccountNumber(),
-        sender.GetCurrency(),
-        reciver.GetAccountNumber(),
-        reciver.GetCurrency(),
-        amount);
+            var transaction = new PendingTransaction(sender, reciver, senderAccountNumber, reciverAccountNumber, amount);
             _que.Enqueue(transaction);
-
-
-
         }
 
         public static void RunQueue()
@@ -42,39 +36,42 @@ namespace The_Singletons_Bank
             {
                 PendingTransaction transaction = _que.Dequeue();
 
-                var accounts = transaction.Customer.GetAccountList();
-
-
+                List<Account> senderLists = transaction.Sender.GetAccountList();
+                List<Account> reciverLists = transaction.Reciver.GetAccountList();
 
                 Account sender = null;
-                foreach (var account in accounts)
+                Account reciver = null;
+
+                foreach (var account in senderLists)
                 {
                     if (account.GetAccountNumber() == transaction.SenderAccountNumber)
                     {
                         sender = account;
                         break;
+
                     }
                 }
 
-
-
-                Account reciver = null;
-                foreach (var account in accounts)
+                foreach (var account in reciverLists)
                 {
-                    if (account.GetAccountNumber() == transaction.ReicerverAccountNUmber)
+                    if (account.GetAccountNumber() == transaction.ReciverAccountNumber)
                     {
                         reciver = account;
-                        break;
                     }
                 }
 
                 if (sender != null && reciver != null)
                 {
-                    //sender.RemoveMoney(transaction.Amount);
                     reciver.AddMoney(transaction.Amount);
 
-                    // Historik
+
                 }
+
+
+
+
+
+
 
             }
         }
