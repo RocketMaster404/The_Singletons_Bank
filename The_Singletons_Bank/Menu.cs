@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Principal;
@@ -162,7 +163,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
-                        Console.WriteLine("Inkomna ärenden:");
+                        Console.WriteLine("Nya ärenden:");
                         PrintAdminLoanHandlingMenu();
                         AdminLoanHandlingMenuChoice();
                         return true;
@@ -286,7 +287,7 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärende du vill hantera:");
+                Console.WriteLine("Ange ärendenummer från listan:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
                 string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
 
@@ -381,8 +382,9 @@ namespace The_Singletons_Bank
             Console.WriteLine("1.Visa mina lån");
             Console.WriteLine("2.Ta nytt lån");
             Console.WriteLine("3.Mina ärenden");
-            Console.WriteLine("4.Gå tillbaka");
-            int choice = Utilities.GetUserNumberMinMax(1, 4);
+            Console.WriteLine("4.Gör avbetalning");
+            Console.WriteLine("5.Gå tillbaka");
+            int choice = Utilities.GetUserNumberMinMax(1, 5);
 
 
             switch (choice)
@@ -401,7 +403,7 @@ namespace The_Singletons_Bank
                         foreach (Loan loan in owner._loans)
                         {
                             Utilities.DashDivide();
-                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
                             Utilities.DashDivide();
                         }
                         Utilities.NoContentMsg();
@@ -411,7 +413,7 @@ namespace The_Singletons_Bank
                 case 2:
                     UnderMenuHeader("--Lånemeny--");
                     Console.WriteLine("-- Ansök om nytt lån --");
-                    Console.Write($"Ditt maximala lånebelopp är {owner.TotalFunds()*5} SEK\nAnge önskat lånebelopp:");
+                    Console.Write($"Ditt maximala lånebelopp är {owner.TotalFunds() * 5} SEK\nAnge önskat lånebelopp:");
                     Loan.CreateLoan(owner);
                     break;
 
@@ -460,6 +462,83 @@ namespace The_Singletons_Bank
                             break;
                     }
                     break;
+
+                case 4:
+                    UnderMenuHeader("--Avbetalningar--");
+                    Console.WriteLine("Här kan du göra amorteringar på dina lån.\nVälj ett lån i listan att amortera, eller avbryt för att återgå till huvudmenyn\n");
+                    if (owner._loans.Count() == 0)
+                    {
+
+                        Console.WriteLine("Du har inga lån");
+                        Utilities.NoContentMsg();
+                        break;
+                    }
+                    else if (owner.TotalFunds() < 1)
+                    {
+                        Utilities.startColoring(ConsoleColor.DarkRed);
+                        Console.WriteLine("Du har för lite tillgångar för att göra en amortering!");
+                        Utilities.stopColoring();
+                        Utilities.NoContentMsg();
+                        break;
+                    }
+                    else
+                    {
+                        foreach (Loan loan in owner._loans)
+                        {
+                            int counter = 1;
+                            Utilities.DashDivide();
+                            Console.WriteLine(counter + ".");
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                            Utilities.DashDivide();
+                            counter++;
+                        }
+                        Console.Write("Välj lån:");
+                        int loanselect = Utilities.GetUserNumberMinMax(1, owner._loans.Count());
+                        loanselect = loanselect - 1;
+                        Console.Clear();
+                        UnderMenuHeader("--Avbetalningar--");
+                        Utilities.DashDivide();
+                        Console.WriteLine($"Lån: {owner._loans[loanselect].Loanamount}Kr\nRäntesats: {owner._loans[loanselect].ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(owner._loans[loanselect].ShowLoanInterestrate() / 100) * owner._loans[loanselect].Loanamount}Kr ");
+                        Utilities.DashDivide();
+                        Console.Write("Vill du betala från ett sparkonto(1) eller ett vanligt konto?(2)");
+                        int accounttypechoice = Utilities.GetUserNumberMinMax(1, 2);
+
+                        if (accounttypechoice == 1)
+                        {
+                            Console.WriteLine();
+                            Customer.ShowCustomerSavingAccounts(owner);
+                            Console.WriteLine();
+                            Console.Write($"Välj vilket konto du vill betala ifrån (1-{(owner.GetSavingAccountList().Count())}):");
+                            int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetSavingAccountList().Count());
+                            Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp är just nu {owner.ShowSavingAccountsFunds(accountchoice)*0.2m}SEK per betalning.");
+                            Console.Write("\nAnge amorteringsumma(SEK):");
+                            decimal payment = Utilities.GetUserDecimalMinMax(1, (owner.TotalFunds() * 0.2m));
+                            var acctofiddlewith = owner.GetSavingAccountList();
+                            acctofiddlewith[accountchoice].RemoveMoney(payment);
+                            owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
+                            Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
+                            Utilities.NoContentMsg();
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Customer.ShowCustomerAccounts(owner);
+                            Console.WriteLine();
+                            Console.Write($"Välj vilket konto du vill betala ifrån (1-{(owner.GetSavingAccountList().Count())}):");
+                            int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetAccountList().Count());
+                            Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp är just nu {owner.ShowAccountsFunds(accountchoice) * 0.2m}SEK per betalning.");
+                            Console.Write("\nAnge amorteringsumma(SEK):");
+                            decimal payment = Utilities.GetUserDecimalMinMax(1, (owner.TotalFunds() * 0.2m));
+                            var acctofiddlewith = owner.GetAccountList();
+                            acctofiddlewith[accountchoice-1].RemoveMoney(payment);
+                            owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
+                            Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
+                            Utilities.NoContentMsg();
+                        }
+
+                        
+                        break;
+                    }
 
                 default:
                     Console.Clear();

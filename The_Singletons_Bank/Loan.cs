@@ -23,7 +23,7 @@ namespace The_Singletons_Bank
 
         public string ShowLoandetails()
         {
-            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nKostnad för lån: {Loanamount*(Interestrate / 100)}SEK");
+            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nÅrlig räntekostnad: {Loanamount*(Interestrate / 100)}SEK");
             return loandetails;
 
         }
@@ -49,7 +49,7 @@ namespace The_Singletons_Bank
             }
             else if (limitOk == false && hasActiveTicket == false)
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.TotalFunds() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns.\nSänk ditt belopp för att göra en ny förfrågan.");
                 Utilities.NoContentMsg();
             }
             else
