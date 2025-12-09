@@ -65,7 +65,7 @@ namespace The_Singletons_Bank
                 loggedIn = Menu.CustomerMainMenuChoice(customer);
                 DateTime end = DateTime.Now;
                 TimeSpan diff = end - start;
-                if(diff.TotalMinutes >= 15)
+                if(diff.TotalMinutes >= 2)
                 {
                     TransactionQueue.RunQueue();
                     start = DateTime.Now;
