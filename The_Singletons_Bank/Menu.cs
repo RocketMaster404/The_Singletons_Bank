@@ -162,7 +162,7 @@ namespace The_Singletons_Bank
                     }
                     else
                     {
-                        Console.WriteLine("Inkomna ärenden:");
+                        Console.WriteLine("Nya ärenden:");
                         PrintAdminLoanHandlingMenu();
                         AdminLoanHandlingMenuChoice();
                         return true;
@@ -286,7 +286,7 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärende du vill hantera:");
+                Console.WriteLine("Ange ärendenummer från listan:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
                 string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
 
@@ -401,7 +401,7 @@ namespace The_Singletons_Bank
                         foreach (Loan loan in owner._loans)
                         {
                             Utilities.DashDivide();
-                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nLånekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
+                            Console.WriteLine($"Lån: {loan.Loanamount}Kr\nRäntesats: {loan.ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(loan.ShowLoanInterestrate() / 100) * loan.Loanamount}Kr ");
                             Utilities.DashDivide();
                         }
                         Utilities.NoContentMsg();
