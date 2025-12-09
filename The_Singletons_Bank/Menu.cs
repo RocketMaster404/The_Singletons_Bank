@@ -219,7 +219,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("");
             Console.WriteLine($"{"#",-3} {"Konto",-20} {"Saldo",-15} {"Valuta",-10}");
             Console.WriteLine("");
-            Console.WriteLine("1 Alla konton");
+            Console.WriteLine("1   Alla konton");
             Transaction.printOutAccounts(user);
             PrintAccountHistoryOutput(user);
         }
