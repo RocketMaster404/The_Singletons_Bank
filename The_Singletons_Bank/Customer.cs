@@ -90,6 +90,18 @@ namespace The_Singletons_Bank
             return total;
         }
 
+        public decimal ShowSavingAccountsFunds(int choice)
+        {
+            decimal balance = _savingAccounts[choice-1].GetBalance();
+            return balance;
+        }
+
+        public decimal ShowAccountsFunds(int choice)
+        {
+            decimal balance = _accounts[choice-1].GetBalance();
+            return balance;
+        }
+
         public List<Account> GetAccountList()
         {
             return _accounts;

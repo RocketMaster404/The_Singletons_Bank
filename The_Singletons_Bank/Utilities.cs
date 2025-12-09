@@ -18,6 +18,16 @@ namespace The_Singletons_Bank
             return input;
         }
 
+        public static decimal GetUserDecimalMinMax(decimal min, decimal max)
+        {
+            decimal input;
+            while (!Decimal.TryParse(Console.ReadLine(), out input) || input < 0 || input < min || input > max)
+            {
+                Console.WriteLine("Du måste ange ett giltigt tal!");
+            }
+            return input;
+        }
+
         public static string GetUserString()
         {
             string answer = null;
@@ -59,10 +69,12 @@ namespace The_Singletons_Bank
         }
         public static void NoContentMsg()
         {
+            startColoring(ConsoleColor.DarkGray);
             DashDivide();
             Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
             Console.ReadKey();
             Console.Clear();
+            stopColoring();
         }
 
         public static int GetUserNumberMinMax(int min, int max)
