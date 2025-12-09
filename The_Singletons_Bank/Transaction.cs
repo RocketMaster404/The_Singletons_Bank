@@ -422,7 +422,7 @@ namespace The_Singletons_Bank
                                 recipientAccountNumber = savingAccounts[accountRecipitent - 1 - accounts.Count].GetAccountNumber();
                             }
                             //PendingTransaction pendTransaction = new PendingTransaction(user, TransferType.Internal, sendersAccountName, recipientAccountName, sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency, ConvertedAmmountToSend, DateTime.Now);
-                            TransactionQueue.CreateQuedTransaction(user, TransferType.External, senderAccount, recipientAccount, ConvertedAmmountToSend);
+                            //TransactionQueue.CreateQuedTransaction(user,accountRecipitent); <----------------***
                             TransactionLogger(user, TransferType.Internal, sendersAccountName, recipientAccountName, sendersAccountNumber, sendersCurrency, recipientAccountNumber, recipientCurrency, ConvertedAmmountToSend);
 
                             Utilities.startColoring(ConsoleColor.Green);
@@ -567,8 +567,15 @@ namespace The_Singletons_Bank
 
                 // Spara till historiken
                 TransactionLogger(user,TransferType.External,senderAccount.Name,"none",senderAccount.GetAccountNumber(),senderAccount.GetCurrency(),recipientAccount.GetAccountNumber(),recipientAccount.GetCurrency(),amount);
-                
-                TransactionQueue.CreateQuedTransaction(user,TransferType.External,senderAccount,recipientAccount,amount);
+
+                TransactionQueue.CreateQuedTransaction(user, recipientCustomer, senderAccount.GetAccountNumber(), recipientAccount.GetAccountNumber(), amount);
+
+
+
+
+
+
+
                 return;
             }
         }

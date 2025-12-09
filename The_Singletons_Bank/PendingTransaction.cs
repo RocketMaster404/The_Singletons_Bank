@@ -9,39 +9,23 @@ namespace The_Singletons_Bank
 {
     internal class PendingTransaction
     {
-        public Customer Customer { get; set; }
-        public TransferType Type { get; set; }
-        public string Sender { get; set; }
-        public string Reciever { get; set; }
+        public Customer Sender { get; set; }
+        public Customer Reciver { get; set; }
         public int SenderAccountNumber { get; set; }
-        public string Currency { get; set; }
-        public int ReicerverAccountNUmber { get; set; }
-        public string ReceiverCurrency { get; set; }
+        public int ReciverAccountNumber { get; set; }
         public decimal Amount { get; set; }
 
-
-        public PendingTransaction(
-          Customer customer,
-          TransferType type,
-          string sender,
-          string reciever,
-          int senderAccountNumber,
-          string currency,
-          int recieverAccountnumber,
-          string receiverCurrency,
-          decimal amount
-          )
+        public PendingTransaction(Customer sender, Customer reciver,int senderAccountNumber,int reciverAccountNumber,decimal amount)
         {
-            Customer = customer;
-            Type = type;
             Sender = sender;
-            Reciever = reciever;
+            Reciver = reciver;
             SenderAccountNumber = senderAccountNumber;
-            Currency = currency;
-            ReicerverAccountNUmber = recieverAccountnumber;
-            ReceiverCurrency = receiverCurrency;
+            ReciverAccountNumber = reciverAccountNumber;
             Amount = amount;
             
         }
+
+
+
     }
 }
