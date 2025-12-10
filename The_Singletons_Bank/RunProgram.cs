@@ -14,7 +14,8 @@ namespace The_Singletons_Bank
             bool runProgram = true;
             Bank.MonthlyInterest();
             Bank.CreateTestUsers();
-            Database.WriteToFile(Bank.GetUsers());
+            Database.AddAllAccounts(Bank.GetUsers());
+            Database.UpdateUserList(Bank.GetUsers());
 
             while (runProgram)
             {

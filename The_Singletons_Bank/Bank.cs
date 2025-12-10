@@ -16,7 +16,10 @@ namespace The_Singletons_Bank
         {
             return _users;
         }
-
+        public static void AddUser(User user)
+        {
+            _users.Add(user);
+        }
         public static void CreateTestUsers()
         {
 
@@ -154,8 +157,8 @@ namespace The_Singletons_Bank
 
             var customer = new Customer(userName, password);
             _users.Add(customer);
-            string userString = Database.GetUserString(customer);
-            Database.AddAccountCheck(userString);
+            Database.AddAllAccounts(_users);
+            Database.UpdateUserList(_users);
             Console.WriteLine($"Användare: {userName} har skapats");
             Utilities.NoContentMsg();
         }
@@ -181,16 +184,7 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Användarnamn upptaget");
                         userNameUnique = false;
                     }
-                }
-
-                foreach (var user in _users)
-                {
-                    if (user.GetUsername() == userName)
-                    {
-                        Console.WriteLine("Användarnamn upptaget");
-                        userNameUnique = false;
-                    }
-                }
+                }                
 
             } while (!userNameUnique);
 
@@ -199,6 +193,8 @@ namespace The_Singletons_Bank
 
             var admin = new Admin(userName, password, true);
             _users.Add(admin);
+            Database.AddAllAccounts(_users);
+            Database.UpdateUserList(_users);
             Console.WriteLine($"Admin: {userName} har skapats");
             Utilities.NoContentMsg();
 
