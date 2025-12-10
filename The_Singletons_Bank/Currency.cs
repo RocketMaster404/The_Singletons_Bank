@@ -11,8 +11,8 @@ namespace The_Singletons_Bank
         private static Dictionary<string, decimal> _currencies = new Dictionary<string, decimal>()
         {
             { "SEK", 1m },
-            { "USD", 0.1m },
-            { "EUR", 0.08m }
+            { "USD", 10m },
+            { "EUR", 8m }
         };
 
         public static void ChangeCurrencyExchangeRate(string currencyCode, decimal newRate)
@@ -89,7 +89,8 @@ namespace The_Singletons_Bank
                 decimal rateTo = _currencies[currencyCode2];
 
                 // Omvandlar pengarna
-                decimal convertedAmount = (amountToConvert / rateFrom) * rateTo;
+                decimal convertedAmount = amountToConvert * (rateFrom / rateTo);
+
 
                 return convertedAmount;
             }
