@@ -71,7 +71,7 @@ namespace The_Singletons_Bank
         {
             startColoring(ConsoleColor.DarkGray);
             DashDivide();
-            Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
+            Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn...");
             Console.ReadKey();
             Console.Clear();
             stopColoring();

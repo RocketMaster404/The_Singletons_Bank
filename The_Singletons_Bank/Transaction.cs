@@ -392,7 +392,7 @@ namespace The_Singletons_Bank
                     }
                     if (accounts.Count <= 0)
                     {
-                        Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
+                        Console.WriteLine("Du behöver skapa ett konto först");
                         transferInProgress = false;
                     }
                     else
@@ -401,7 +401,7 @@ namespace The_Singletons_Bank
                         int accountPicked = 0;
                         while (!validAnswer)
                         {
-                            Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
+                            Console.WriteLine("Skriv in numret av kontot du vill skicka ifrån");
                             accountPicked = Utilities.GetUserNumber();
                             if (accountPicked <= accounts.Count && accountPicked >= 1)
                             {
@@ -424,10 +424,10 @@ namespace The_Singletons_Bank
                             }
                         }
                         //Här väljer du hur mycket du vill skicka
-                        Console.WriteLine("Hur mycket will du skicka?");
+                        Console.WriteLine("Hur mycket vill du skicka?");
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
-                        string currencyType = "Sek";
+                        string currencyType = "SEK";
 
                         if (ammountToSend <= accounts[accountPicked - 1].GetBalance() && ammountToSend >= 0)
                         {
