@@ -482,7 +482,8 @@ namespace The_Singletons_Bank
             Console.Clear();
             Menu.UnderMenuHeader("--Extern Överföring--");
             bool validNumber = true;
-            while (true)
+            bool True = true;
+            while (True)
             {
 
                 Console.WriteLine("Skriv in kontonumret du vill skicka pengar till:");
