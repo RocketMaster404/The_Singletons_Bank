@@ -1,4 +1,7 @@
-olof;1234;3;False;False
-stig;2345;3;False;False
-Admin;4321;3;False;True
-2;2;3;False;False
+ACCOUNT;olof;Lönekonto;System.Func`1[System.Int32];5000;SEK
+ACCOUNT;olof;Sparkonto;System.Func`1[System.Int32];12000;SEK
+ACCOUNT;olof;USA konto;System.Func`1[System.Int32];120;USD
+SAVING;olof;Standard Spar;System.Func`1[System.Int32];100;SEK;1.5
+SAVING;olof;Medel Spar;System.Func`1[System.Int32];100;SEK;1.7
+SAVING;olof;Långsiktigt Spar;System.Func`1[System.Int32];100;SEK;2.0
+ACCOUNT;stig;Konto 1;System.Func`1[System.Int32];2000;SEK

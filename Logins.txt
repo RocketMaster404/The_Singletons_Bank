@@ -1,0 +1,4 @@
+olof;1234;3;False;False
+stig;2345;3;False;False
+Admin;4321;3;False;True
+2;2;3;False;True

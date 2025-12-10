@@ -14,8 +14,9 @@ namespace The_Singletons_Bank
             bool runProgram = true;
             Bank.MonthlyInterest();
             Bank.CreateTestUsers();
-            Database.AddAllAccounts(Bank.GetUsers());
-            Database.UpdateUserList(Bank.GetUsers());
+            DatabaseLogins.AddAllLogins(Bank.GetUsers());
+            DatabaseLogins.UpdateLogins(Bank.GetUsers());
+            DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
 
             while (runProgram)
             {
@@ -39,7 +40,6 @@ namespace The_Singletons_Bank
 
                         if (user is Customer customer)
                         {
-
                             RunCustomerProgram(customer);
                         }
                         else if (user is Admin admin)

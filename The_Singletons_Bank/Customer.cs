@@ -21,7 +21,7 @@ namespace The_Singletons_Bank
             _loans = new List<Loan>();
             _inbox = new List<string>();
 
-        }
+        }      
 
         public void ShowInbox()
         {
@@ -106,6 +106,10 @@ namespace The_Singletons_Bank
         public void AddToSavingAccountList(SavingAccount account)
         {
             _savingAccounts.Add(account);
+        }
+        public List<Loan> GetLoansList()
+        {
+            return _loans;
         }
 
         public static void ShowCustomerAccounts(Customer user)

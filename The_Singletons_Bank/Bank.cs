@@ -40,7 +40,7 @@ namespace The_Singletons_Bank
             _users.Add(admin);
 
             //Ta bort detta
-            var test = new Admin("2", "2");            
+            var test = new Admin("2", "2", true);            
             _users.Add(test);
 
         }
@@ -108,7 +108,6 @@ namespace The_Singletons_Bank
 
                     else if (user.GetUsername() == userName && user.IsAdmin == false)
                     {
-
                         if (user.LoginAttempts == 1)
                         {
                             user.UserIsBlocked = true;
@@ -157,8 +156,8 @@ namespace The_Singletons_Bank
 
             var customer = new Customer(userName, password);
             _users.Add(customer);
-            Database.AddAllAccounts(_users);
-            Database.UpdateUserList(_users);
+            DatabaseLogins.AddAllLogins(_users);
+            DatabaseLogins.UpdateLogins(_users);
             Console.WriteLine($"Användare: {userName} har skapats");
             Utilities.NoContentMsg();
         }
@@ -193,8 +192,8 @@ namespace The_Singletons_Bank
 
             var admin = new Admin(userName, password, true);
             _users.Add(admin);
-            Database.AddAllAccounts(_users);
-            Database.UpdateUserList(_users);
+            DatabaseLogins.AddAllLogins(_users);
+            DatabaseLogins.UpdateLogins(_users);
             Console.WriteLine($"Admin: {userName} har skapats");
             Utilities.NoContentMsg();
 

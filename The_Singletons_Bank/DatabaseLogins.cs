@@ -2,11 +2,11 @@
 
 namespace The_Singletons_Bank
 {
-    internal class Database
+    internal class DatabaseLogins
     {
-        static string path = "C:\\Users\\liamb\\Desktop\\Shared Code\\Accounts.txt";
+        static string path = "C:\\Users\\liamb\\Desktop\\Shared Code\\Logins.txt";
 
-        public static void AddAllAccounts(List<User> users)
+        public static void AddAllLogins(List<User> users)
         {
             List<string> accounts = ReadFile();
             List<string> newAccounts = NewAccounts(users);
@@ -27,32 +27,7 @@ namespace The_Singletons_Bank
                 }
             }
         }
-        public static void AddAccount(User user)
-        {
-            List<string> accounts = ReadFile();
-            string newAccount = GetUserString(user);
-            bool isNew = false;
-
-            foreach (string account in accounts)
-            {
-                if (!account.Contains(newAccount))
-                {
-                    isNew = true;
-                }
-            }
-            if (isNew == true)
-            {
-                using (StreamWriter writer = new StreamWriter(path, true))
-                {
-                    writer.WriteLine(newAccount);
-                }
-            }
-            else if (isNew == false)
-            {
-                Console.WriteLine();
-            }
-        }
-        public static void UpdateUserList(List<User> users)
+        public static void UpdateLogins(List<User> users)
         {
             string line = "";
 
@@ -79,7 +54,7 @@ namespace The_Singletons_Bank
                     }
                     else if (isAdmin == "True")
                     {
-                        var acc = new Admin(username, password);
+                        var acc = new Admin(username, password, true);
 
                         if (!Bank.userExists(acc.GetUsername()))
                         {
