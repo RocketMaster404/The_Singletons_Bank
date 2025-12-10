@@ -23,7 +23,7 @@ namespace The_Singletons_Bank
 
         public string ShowLoandetails()
         {
-            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nÅrlig räntekostnad: {Loanamount*(Interestrate / 100)}SEK");
+            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nÅrlig räntekostnad: {Loanamount * (Interestrate / 100)}SEK");
             return loandetails;
 
         }
@@ -35,7 +35,7 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserNumberMinMax(1,999999999);
+            decimal loanamount = Utilities.GetUserNumberMinMax(1, 999999999);
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
@@ -71,7 +71,7 @@ namespace The_Singletons_Bank
 
         public static bool HasActiveTicket(Customer owner)
         {
-            if (Admin.Loantickets.ContainsKey(owner)||owner._inbox.Count()!=0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]
+            if (Admin.Loantickets.ContainsKey(owner) || owner._inbox.Count() != 0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]
             {
                 return true;
             }
@@ -79,7 +79,7 @@ namespace The_Singletons_Bank
                 return false;
         }
 
-      public static bool IsLoanDeclinedMsg(Customer owner)
+        public static bool IsLoanDeclinedMsg(Customer owner)
         {
             foreach (var msg in owner._inbox)
             {

@@ -24,15 +24,9 @@ namespace The_Singletons_Bank
         public static void PrintInternalTransactions(Customer user)
         {
             //Console.Clear();
+            Menu.UnderMenuHeader("--Interna Tansaktioner--");
 
-
-            Utilities.startColoring(ConsoleColor.Yellow);
-            //Console.WriteLine($"--Intern Transaktioner--");
-            Utilities.stopColoring();
-            Utilities.DashDivide();
-            Console.WriteLine();
-
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}  ");
+            Console.WriteLine($"{"Avsändare",-25} {"Mottagare",-20} {"Belopp",-10} {"Valuta",-10}  ");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -52,7 +46,7 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}  ");
+            Console.WriteLine($"{"Avsändare",-25} {"Mottagare",-20} {"Belopp",-10} {"Valuta",-10}  ");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -101,9 +95,7 @@ namespace The_Singletons_Bank
         public static void PrintAllTransactionLogs(Customer user)
         {
             Console.Clear();
-            Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine($"--Transaktion Historik--");
-            Utilities.stopColoring();
+            Menu.UnderMenuHeader("--Transaktionshistorik--");
             Console.WriteLine();
             PrintInternalTransactions(user);
             Console.WriteLine();
@@ -139,14 +131,10 @@ namespace The_Singletons_Bank
         public static void PrintOutSpecificAccount(Customer user, string pickedAccountName)
         {
             Console.Clear();
-            //Console.WriteLine($"Intern Transaktioner");
-            Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine($"--Intern Transaktioner--");
-            Utilities.stopColoring();
-            Utilities.DashDivide();
+            Menu.UnderMenuHeader("--Interna Transaktioner--");
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}");
+            Console.WriteLine($"{"Avsändare",-25} {"Mottagare",-20} {"Belopp",-10} {"Valuta",-10}");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -156,14 +144,10 @@ namespace The_Singletons_Bank
                 }
             }
             Console.WriteLine();
-            //Console.WriteLine($"Extern Transaktioner");
-            Utilities.startColoring(ConsoleColor.Yellow);
-            Console.WriteLine($"--Extern Transaktioner--");
-            Utilities.stopColoring();
-            Utilities.DashDivide();
+            Menu.UnderMenuHeader("--Externa Transaktioner--");
             Console.WriteLine();
 
-            Console.WriteLine($"{"Avsändaren",-25} {"Insändaren",-20} {"Belopp",-10} {"Valuta",-10}");
+            Console.WriteLine($"{"Avsändare",-25} {"Mottagare",-20} {"Belopp",-10} {"Valuta",-10}");
             Console.WriteLine();
             foreach (var transaction in _transactionQueue)
             {
@@ -195,7 +179,7 @@ namespace The_Singletons_Bank
 
                 //Detta kommer skriva ut alla konton som användaren har
                 //Console.WriteLine($"Intern Transaktioner");
-                Console.WriteLine($"{"Avsändaren",-25} {"Saldo",-20} {"Valuta",-10}");
+                Console.WriteLine($"{"Avsändare",-25} {"Saldo",-20} {"Valuta",-10}");
                 Console.WriteLine();
                 for (int i = 0; i < accounts.Count; i++)
                 {
@@ -220,7 +204,7 @@ namespace The_Singletons_Bank
                 if (accounts.Count <= 0)
                 {
                     Utilities.startColoring(ConsoleColor.Red);
-                    Console.WriteLine("Du behöver skapa ett konto för du har inga just nu");
+                    Console.WriteLine("Du behöver skapa ett konto först!");
                     Thread.Sleep(1500);
                     Utilities.stopColoring();
                     transferInProgress = false;
@@ -242,7 +226,7 @@ namespace The_Singletons_Bank
                         {
                             Utilities.DashDivide();
                             Console.WriteLine("");
-                            Console.WriteLine("Skriv in numret av kontot du vill skicka pengar från");
+                            Console.WriteLine("Skriv in numret av kontot som du vill skicka ifrån");
                             accountSender = Utilities.GetUserNumber();
                             if (accountSender <= accounts.Count + savingAccounts.Count && accountSender >= 1)
                             {
@@ -251,7 +235,7 @@ namespace The_Singletons_Bank
                                     if (accounts[accountSender - 1].GetBalance()! <= 0)
                                     {
                                         Utilities.startColoring(ConsoleColor.Red);
-                                        Console.WriteLine("Kan inte skicka från ett konto utan pengar");
+                                        Console.WriteLine("Det valda kontot har otillräckligt saldo.");
                                         Utilities.stopColoring();
                                     }
                                     else
@@ -265,7 +249,7 @@ namespace The_Singletons_Bank
                                     if (savingAccounts[accountSender - 1 - accounts.Count].GetBalance()! <= 0)
                                     {
                                         Utilities.startColoring(ConsoleColor.Red);
-                                        Console.WriteLine("Kan inte skicka från ett konto utan pengar");
+                                        Console.WriteLine("Det valda kontot har otillräckligt saldo.");
                                         Utilities.stopColoring();
                                     }
                                     else
@@ -290,13 +274,13 @@ namespace The_Singletons_Bank
                                 }
                                 else if (accounts[accountSender].GetBalance()! <= 0)
                                 {
-                                    Console.WriteLine("kan inte skicka från ett konto utan pengar");
+                                    Console.WriteLine("Det valda kontot har otillräckligt saldo.");
                                 }
 
                             }
                             if (senderValid)
                             {
-                                Console.WriteLine("Skriv in numret av kontot du vill skicka pengar till?");
+                                Console.Write("Skriv in mottagarens kontonummer:");
                                 validAnswer = false;
                                 accountRecipitent = Utilities.GetUserNumber();
                                 if (accountRecipitent <= accounts.Count + savingAccounts.Count && accountRecipitent >= 1)
@@ -338,7 +322,7 @@ namespace The_Singletons_Bank
                         {
                             Utilities.DashDivide();
                             Utilities.startColoring(ConsoleColor.Red);
-                            Console.WriteLine("Du måste ha mer än ett konto");
+                            Console.WriteLine("Du måste ha fler än ett konto");
                             Utilities.stopColoring();
 
                             Thread.Sleep(1500);
@@ -351,7 +335,7 @@ namespace The_Singletons_Bank
                     if (transferInProgress == true)
                     {
                         //Detta kommer fråga hur mycket du vill skicka sen ändra hur mycket pengar som läggs till eller tar bort om det är olika valutor
-                        Console.WriteLine("Hur mycket will du skicka?");
+                        Console.WriteLine("Hur mycket vill du skicka?");
                         decimal ammountToSend = Utilities.GetUserDecimalInput();
                         decimal ConvertedAmmountToSend = ammountToSend;
                         string sendersCurrency = "TEMP";
@@ -436,7 +420,7 @@ namespace The_Singletons_Bank
                         }
                         else
                         {
-                            Console.WriteLine("Du kan inte skicka en ogiltig mängd pengar");
+                            Console.WriteLine("Ogiltig summa!");
                         }
                     }
                 }
@@ -485,7 +469,7 @@ namespace The_Singletons_Bank
             while (true)
             {
 
-                Console.WriteLine("Skriv in kontonumret du vill skicka pengar till:");
+                Console.WriteLine("Skriv in kontonumret som du vill skicka till:");
                 int recipientNumber = Utilities.GetUserNumber();
 
                 if (!TryFindRecipientAccount(recipientNumber, out Customer recipientCustomer, out Account recipientAccount))
@@ -529,7 +513,7 @@ namespace The_Singletons_Bank
                     int index;
                     while (true)
                     {
-                        Console.WriteLine("\nVälj konto att skicka pengar från:");
+                        Console.WriteLine("\nVälj konto att skicka ifrån:");
                         index = Utilities.GetUserNumber() - 1;
 
                         if (index < 0 || index >= senderAccounts.Count)
@@ -541,7 +525,7 @@ namespace The_Singletons_Bank
                         if (senderAccounts[index].GetBalance() <= 0)
                         {
                             Utilities.startColoring(ConsoleColor.Red);
-                            Console.WriteLine("Det valda kontot saknar pengar.");
+                            Console.WriteLine("Det valda kontot har otillräckligt saldo.");
                             Utilities.stopColoring();
                             continue;
                         }
@@ -551,7 +535,7 @@ namespace The_Singletons_Bank
 
                     Account senderAccount = senderAccounts[index];
 
-                    Console.WriteLine("Hur mycket vill du skicka?");
+                    Console.Write("Ange överföringsbelopp:");
                     decimal amount = Utilities.GetUserDecimalInput();
 
                     if (amount <= 0)
@@ -562,7 +546,7 @@ namespace The_Singletons_Bank
                     if (amount > senderAccount.GetBalance())
                     {
                         Utilities.startColoring(ConsoleColor.Red);
-                        Console.WriteLine("Du har inte tillräckligt med pengar.");
+                        Console.WriteLine("Otillräckligt saldo.");
                         Utilities.stopColoring();
                         return;
                     }

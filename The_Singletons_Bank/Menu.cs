@@ -18,14 +18,14 @@ namespace The_Singletons_Bank
             Console.WriteLine("Singletons Bank - since 1807\n");
             Console.WriteLine("1. Logga in");
             Console.WriteLine("2. Avsluta");
-            Console.Write("Ange val: ");
+            Console.Write("\nAnge val: ");
         }
 
 
 
         public static void PrintCustomerMainMenu()
         {
-            
+
             Console.WriteLine("Meny");
             Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
             Console.WriteLine("2. Överföring"); // gör undermeny
@@ -33,7 +33,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("4. Lån"); // gör under meny
             Console.WriteLine("5. Insättning");
             Console.WriteLine("6. Logga ut");
-            Console.Write("Ange val: ");
+            Console.Write("\nAnge val: ");
         }
 
         public static bool CustomerMainMenuChoice(Customer user)
@@ -295,7 +295,7 @@ namespace The_Singletons_Bank
             int choice = Utilities.GetUserNumberMinMax(1, 2);
             if (choice == 1)
             {
-                Console.WriteLine("Ange ärendenummer från listan:");
+                Console.Write("Ange ärendenummer från listan:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
                 string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
 
@@ -303,8 +303,17 @@ namespace The_Singletons_Bank
                 {
                     if (keyToRemove == kvp.Key.GetUsername())//om användaren finns i dictionaryn så hanterar man det caset
                     {
+                        Console.Clear();
+                        UnderMenuHeader("--Inkomna låneförfrågningar--");
                         Utilities.DashDivide();
-                        Console.WriteLine("1.Godkänn låneansökan\n2.Avslå låneansökan");
+                        Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
+                        Console.Write("Kredittrovärdighet: ");
+                        Console.WriteLine(kvp.Key.CredibilityCalculator());
+                        Utilities.stopColoring();
+                        Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
+                        Utilities.DashDivide();
+                        Console.WriteLine("\n1.Godkänn låneansökan\n2.Avslå låneansökan");
+                        Console.Write("");
                         int handlingchoice = Utilities.GetUserNumberMinMax(1, 2);
 
                         if (handlingchoice == 1)
@@ -313,7 +322,7 @@ namespace The_Singletons_Bank
 
                             Admin.Loantickets.Remove(kvp.Key);
 
-                            Console.WriteLine($"Förslag skickat till {kvp.Key.GetUsername()}");
+                            Console.WriteLine($"\nFörslag skickat till {kvp.Key.GetUsername()}");
                             Utilities.NoContentMsg();
                         }
                         else
@@ -476,7 +485,7 @@ namespace The_Singletons_Bank
 
                 case 4:
                     UnderMenuHeader("--Avbetalningar--");
-                    Console.WriteLine("Här kan du göra amorteringar på dina lån.\nVälj ett lån i listan att amortera, eller avbryt för att återgå till huvudmenyn\n");
+                    Console.WriteLine("Här kan du göra amorteringar på dina lån.");
                     if (owner._loans.Count() == 0)
                     {
 
@@ -484,7 +493,7 @@ namespace The_Singletons_Bank
                         Utilities.NoContentMsg();
                         break;
                     }
-                    else if (owner.TotalFunds() < 1)
+                    else if (owner.TotalFunds() < 100)
                     {
                         Utilities.startColoring(ConsoleColor.DarkRed);
                         Console.WriteLine("Du har för lite tillgångar för att göra en amortering!");
@@ -503,54 +512,91 @@ namespace The_Singletons_Bank
                             Utilities.DashDivide();
                             counter++;
                         }
-                        Console.Write("Välj lån:");
-                        int loanselect = Utilities.GetUserNumberMinMax(1, owner._loans.Count());
-                        loanselect = loanselect - 1;
-                        Console.Clear();
-                        UnderMenuHeader("--Avbetalningar--");
-                        Utilities.DashDivide();
-                        Console.WriteLine($"Lån: {owner._loans[loanselect].Loanamount}Kr\nRäntesats: {owner._loans[loanselect].ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(owner._loans[loanselect].ShowLoanInterestrate() / 100) * owner._loans[loanselect].Loanamount}Kr ");
-                        Utilities.DashDivide();
-                        Console.Write("\nVill du betala från ett sparkonto(1) eller ett vanligt konto?(2):");
-                        int accounttypechoice = Utilities.GetUserNumberMinMax(1, 2);
-
-                        if (accounttypechoice == 1)
+                        Console.WriteLine("\nVälj ett lån i listan att amortera eller ange siffra \"0\" för att avbryta för att återgå till huvudmenyn.\n");
+                        Console.Write("Val:");
+                        int loanselect = Utilities.GetUserNumberMinMax(0, owner._loans.Count());
+                        if (loanselect == 0)
                         {
-                            Console.WriteLine();
-                            Customer.ShowCustomerSavingAccounts(owner);
-                            Console.WriteLine();
-                            Console.Write($"Välj vilket konto du vill betala ifrån (1-{owner.GetSavingAccountList().Count()}):");
-                            int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetSavingAccountList().Count());
-                            var acctofiddlewith = owner.GetSavingAccountList();
-                            decimal convertedcash = Currency.ConvertCurrency(acctofiddlewith[accountchoice - 1].GetCurrency(), "SEK", owner.ShowSavingAccountsFunds(accountchoice));
-
-                            Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp för valt konto är just nu {convertedcash * 0.2m}SEK");
-                            Console.Write("\nAnge amorteringsumma(SEK):");
-                            decimal payment = Utilities.GetUserDecimalMinMax(1, (convertedcash * 0.2m));
-                            owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
-                            Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
-                            payment = Currency.ConvertCurrency("SEK", acctofiddlewith[accountchoice - 1].GetCurrency(), payment);
-                            acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
-                            Utilities.NoContentMsg();
+                            Console.Clear();
+                            break;
                         }
                         else
                         {
-                            Console.WriteLine();
-                            Customer.ShowCustomerAccounts(owner);
-                            Console.WriteLine();
-                            Console.Write($"Välj vilket konto du vill betala ifrån (1-{owner.GetAccountList().Count()}):");
-                            int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetAccountList().Count());
-                            var acctofiddlewith = owner.GetAccountList();
-                            decimal convertedcash = Currency.ConvertCurrency(acctofiddlewith[accountchoice - 1].GetCurrency(), "SEK", owner.ShowAccountsFunds(accountchoice));
+                            loanselect = loanselect - 1;
+                            Console.Clear();
+                            UnderMenuHeader("--Avbetalningar--");
+                            Utilities.DashDivide();
+                            Console.WriteLine($"Lån: {owner._loans[loanselect].Loanamount}Kr\nRäntesats: {owner._loans[loanselect].ShowLoanInterestrate()}%\nÅrlig räntekostnad: {(owner._loans[loanselect].ShowLoanInterestrate() / 100) * owner._loans[loanselect].Loanamount}Kr ");
+                            Utilities.DashDivide();
+                            Console.Write("\nVill du betala från ett sparkonto(1) eller ett vanligt konto?(2):");
+                            int accounttypechoice = Utilities.GetUserNumberMinMax(1, 2);
 
-                            Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp för valt konto är just nu {convertedcash * 0.2m}SEK");
-                            Console.Write("\nAnge amorteringsumma(SEK):");
-                            decimal payment = Utilities.GetUserDecimalMinMax(1, (convertedcash * 0.2m));
-                            owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
-                            Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
-                            payment = Currency.ConvertCurrency("SEK", acctofiddlewith[accountchoice - 1].GetCurrency(), payment);
-                            acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
-                            Utilities.NoContentMsg();
+                            if (accounttypechoice == 1)
+                            {
+                                Console.WriteLine();
+                                Customer.ShowCustomerSavingAccounts(owner);
+                                Console.WriteLine();
+                                Console.Write($"Välj vilket konto du vill betala ifrån (1-{owner.GetSavingAccountList().Count()}):");
+                                int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetSavingAccountList().Count());
+                                var acctofiddlewith = owner.GetSavingAccountList();
+                                decimal convertedcash = Currency.ConvertCurrency(acctofiddlewith[accountchoice - 1].GetCurrency(), "SEK", owner.ShowSavingAccountsFunds(accountchoice));
+
+                                Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp för valt konto är just nu {convertedcash * 0.2m}SEK");
+                                Console.Write("\nAnge amorteringsumma(SEK):");
+                                decimal payment = Utilities.GetUserDecimalMinMax(1, (convertedcash * 0.2m));
+                                decimal maxPayment = owner._loans[loanselect].Loanamount;
+                                payment = Math.Min(payment, maxPayment);
+                                owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
+                                if (owner._loans[loanselect].Loanamount <= 0)
+                                {
+                                    owner._loans.RemoveAt(loanselect);
+                                    Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nLånet är nu avbetalt och kommer försvinna ur din översikt.");
+                                    acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
+                                    Utilities.NoContentMsg();
+                                }
+                                else
+                                {
+
+
+                                    Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
+                                    payment = Currency.ConvertCurrency("SEK", acctofiddlewith[accountchoice - 1].GetCurrency(), payment);
+                                    acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
+                                    Utilities.NoContentMsg();
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                                Customer.ShowCustomerAccounts(owner);
+                                Console.WriteLine();
+                                Console.Write($"Välj vilket konto du vill betala ifrån (1-{owner.GetAccountList().Count()}):");
+                                int accountchoice = Utilities.GetUserNumberMinMax(1, owner.GetAccountList().Count());
+                                var acctofiddlewith = owner.GetAccountList();
+                                decimal convertedcash = Currency.ConvertCurrency(acctofiddlewith[accountchoice - 1].GetCurrency(), "SEK", owner.ShowAccountsFunds(accountchoice));
+
+                                Console.WriteLine($"\nTänk på att du inte kan ammortera mer än 20% av ditt kontoinnehav åt gången.\nDitt maxbelopp för valt konto är just nu {convertedcash * 0.2m}SEK");
+                                Console.Write("\nAnge amorteringsumma(SEK):");
+                                decimal payment = Utilities.GetUserDecimalMinMax(1, (convertedcash * 0.2m));
+                                decimal maxPayment = owner._loans[loanselect].Loanamount;
+                                payment = Math.Min(payment, maxPayment);
+                                owner._loans[loanselect].Loanamount = owner._loans[loanselect].Loanamount - payment;
+                                if (owner._loans[loanselect].Loanamount <= 0)
+                                {
+                                    owner._loans.RemoveAt(loanselect);
+                                    Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nLånet är nu avbetalt och kommer försvinna ur din översikt.");
+                                    acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
+                                    Utilities.NoContentMsg();
+                                }
+                                else
+                                {
+
+
+                                    Console.WriteLine($"Du har gjort en avbetalning på {payment}SEK.\nKvarvarande summa på lån: {owner._loans[loanselect].Loanamount}SEK");
+                                    payment = Currency.ConvertCurrency("SEK", acctofiddlewith[accountchoice - 1].GetCurrency(), payment);
+                                    acctofiddlewith[accountchoice - 1].RemoveMoney(payment);
+                                    Utilities.NoContentMsg();
+                                }
+                            }
                         }
                         break;
                     }
