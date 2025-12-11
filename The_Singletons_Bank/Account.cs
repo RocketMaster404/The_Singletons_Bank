@@ -24,6 +24,14 @@ namespace The_Singletons_Bank
             _currency = currency;
 
         }
+        public Account(string name, decimal balance, string currency, int accountNumber)
+        {
+            Name = name;
+            _accountNumber = accountNumber;
+            _balance = balance;
+            _currency = currency;
+
+        }
 
         public int GetAccountNumber()
         {

@@ -88,7 +88,15 @@ namespace The_Singletons_Bank
             Console.WriteLine("1. Skapa användare");
             Console.WriteLine("2. Växelkurs");
             Console.WriteLine("3. Avblockera Användare"); // I have added this choise [Simon, 2025-11-19]
-            Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
+            if (Admin.Loantickets.Count > 0)
+            {
+                Console.WriteLine($"4. Hantera låneförfrågan[{Admin.Loantickets.Count}]");
+            }
+            else
+            {
+
+                Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
+            }
             Console.WriteLine("5. Logga ut");
         }
         public static bool AskIfToChangeCurrencyExchangeRate()
@@ -398,7 +406,15 @@ namespace The_Singletons_Bank
             UnderMenuHeader("--Lånemeny--");
             Console.WriteLine("1.Visa mina lån");
             Console.WriteLine("2.Ta nytt lån");
-            Console.WriteLine("3.Mina ärenden");
+            if (owner._inbox.Count > 0)
+            {
+                Console.WriteLine($"3.Mina ärenden[{owner._inbox.Count}]");
+            }
+            else
+            {
+                Console.WriteLine("3.Mina ärenden");
+            }
+
             Console.WriteLine("4.Gör avbetalning");
             Console.WriteLine("5.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 5);

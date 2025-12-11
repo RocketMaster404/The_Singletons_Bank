@@ -22,7 +22,7 @@ namespace The_Singletons_Bank
 
             var olof = new Customer("olof", "1234");
             olof.AddToAccountList(new Account("Lönekonto", 5000, "SEK"));
-            olof.AddToAccountList(new Account("Sparkonto", 12000, "SEK"));
+            olof.AddToAccountList(new Account("Privat konto", 12000, "SEK",12345678));
             olof.AddToAccountList(new Account("USA konto", 120, "USD"));
             olof.AddToSavingAccountList(new SavingAccount("Standard Spar", 100, 1.5m));
             olof.AddToSavingAccountList(new SavingAccount("Medel Spar", 100, 1.7m));
@@ -31,6 +31,7 @@ namespace The_Singletons_Bank
 
             var stig = new Customer("stig", "2345");
             stig.AddToAccountList(new Account("Konto 1", 2000, "SEK"));
+            stig.AddToAccountList(new Account("Konto 2", 2400, "SEK",87654321));
             _users.Add(stig);
 
             var admin = new Admin("Admin", "4321", true);
