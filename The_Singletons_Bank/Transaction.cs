@@ -108,7 +108,7 @@ namespace The_Singletons_Bank
         public static void printOutAccounts(Customer user)
         {
             List<Account> accounts = user.GetAccountList();
-            List<SavingAccount> savingAccounts = user.GetSavingAccountList();           
+            List<SavingAccount> savingAccounts = user.GetSavingAccountList();
             for (int i = 0; i < accounts.Count; i++)
             {
                 decimal balance = accounts[i].GetBalance();
@@ -179,7 +179,7 @@ namespace The_Singletons_Bank
 
                 //Detta kommer skriva ut alla konton som användaren har
                 //Console.WriteLine($"Intern Transaktioner");
-                Console.WriteLine($"{"Avsändare",-25} {"Saldo",-20} {"Valuta",-10}");
+                Console.WriteLine($"{"Dina konton",-25} {"Saldo",-20} {"Valuta",-10}");
                 Console.WriteLine();
                 for (int i = 0; i < accounts.Count; i++)
                 {
@@ -280,7 +280,7 @@ namespace The_Singletons_Bank
                             }
                             if (senderValid)
                             {
-                                Console.Write("Skriv in mottagarens kontonummer:");
+                                Console.Write("Skriv in nummret för det konto du vill skicka till:");
                                 validAnswer = false;
                                 accountRecipitent = Utilities.GetUserNumber();
                                 if (accountRecipitent <= accounts.Count + savingAccounts.Count && accountRecipitent >= 1)
