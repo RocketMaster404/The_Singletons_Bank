@@ -60,20 +60,9 @@ namespace The_Singletons_Bank
         {
             return _username;
         }                     
-        public void ShowBankAccounts()
-        {
-
-        }
-        public void CreateNewBankAcc()
-        {
-
-        }
+        
        
-        public void TakeLoan()
-        {
-           
-
-        }
+    
 
 
     }
