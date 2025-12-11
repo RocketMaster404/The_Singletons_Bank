@@ -17,6 +17,7 @@ namespace The_Singletons_Bank
             DatabaseLogins.AddAllLogins(Bank.GetUsers());
             DatabaseLogins.UpdateLogins(Bank.GetUsers());
             DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+            DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
 
             while (runProgram)
             {

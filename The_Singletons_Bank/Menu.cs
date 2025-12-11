@@ -185,9 +185,13 @@ namespace The_Singletons_Bank
                 case 1:
                     PrintCreateCurrencyAccountMenu();
                     CreateCurrencyAccountChoice(user);
+                    DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                    DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                     break;
                 case 2:
                     SavingAccount.CreateSavingAccount(user);
+                    DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                    DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                     break;
             }
         }
@@ -385,6 +389,8 @@ namespace The_Singletons_Bank
                 case 3:
                     Console.WriteLine("Ange önskat lånebelopp:");
                     Loan.CreateLoan(owner);
+                    DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                    DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                     break;
 
                 default:

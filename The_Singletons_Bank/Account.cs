@@ -20,7 +20,6 @@ namespace The_Singletons_Bank
             _accountNumber = GenerateAccountNumber();
             _balance = balance;
             _currency = currency;
-
         }
 
         public int GetAccountNumber()

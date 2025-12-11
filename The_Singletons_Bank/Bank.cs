@@ -39,7 +39,7 @@ namespace The_Singletons_Bank
             var admin = new Admin("Admin", "4321", true);
             _users.Add(admin);
 
-            //Ta bort detta
+            //Ta bort detta  *****************************************************************************************************************
             var test = new Admin("2", "2", true);            
             _users.Add(test);
 
