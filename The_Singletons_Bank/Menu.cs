@@ -16,9 +16,9 @@ namespace The_Singletons_Bank
         public static void PrintLogInMenu()
         {
             Console.WriteLine("Singletons Bank - since 1807\n");
-            Console.WriteLine("1. Logga in");
-            Console.WriteLine("2. Avsluta");
-            Console.Write("\nAnge val: ");
+            Console.WriteLine($"1. Logga in",-25);
+            Console.WriteLine($"2. Avsluta",-25);
+            Console.Write($"\nAnge val: ",-25);
         }
 
 
@@ -27,6 +27,7 @@ namespace The_Singletons_Bank
         {
 
             Console.WriteLine("Meny");
+            UnderMenuHeader("--Huvudmeny--");
             Console.WriteLine("1. Kontoöversikt"); // Undermeny (Transaktions historik)
             Console.WriteLine("2. Överföring"); // gör undermeny
             Console.WriteLine("3. Skapa konto"); // Gör undermeny
@@ -84,7 +85,8 @@ namespace The_Singletons_Bank
 
         public static void PrintAdminMainMenu()
         {
-            Console.WriteLine("Admin Meny\n");
+            UnderMenuHeader("--Admin Huvudmeny--");
+            //Console.WriteLine("Admin Meny\n");
             Console.WriteLine("1. Skapa användare");
             Console.WriteLine("2. Växelkurs");
             Console.WriteLine("3. Avblockera Användare"); // I have added this choise [Simon, 2025-11-19]
@@ -95,7 +97,7 @@ namespace The_Singletons_Bank
             else
             {
 
-                Console.WriteLine("4. Hantera låneförfrågan");// I have added this choise [Daniel, 2025-11-25]
+                Console.WriteLine("4. Hantera låneförfrågan");
             }
             Console.WriteLine("5. Logga ut");
         }
@@ -277,7 +279,6 @@ namespace The_Singletons_Bank
         public static void PrintAdminLoanHandlingMenu()
         {
             int LoanHandlingCounter = 1;
-
             Admin.cases = new List<string>();
 
             foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)
@@ -286,8 +287,7 @@ namespace The_Singletons_Bank
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                Console.Write("Kredittrovärdighet: ");
-                Console.WriteLine(kvp.Key.CredibilityCalculator());
+                Console.Write("Kredittrovärdighet: " + kvp.Key.CredibilityCalculator());
                 Utilities.stopColoring();
                 Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
                 Utilities.DashDivide();
@@ -315,8 +315,7 @@ namespace The_Singletons_Bank
                         UnderMenuHeader("--Inkomna låneförfrågningar--");
                         Utilities.DashDivide();
                         Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                        Console.Write("Kredittrovärdighet: ");
-                        Console.WriteLine(kvp.Key.CredibilityCalculator());
+                        Console.Write("Kredittrovärdighet: " + kvp.Key.CredibilityCalculator());
                         Utilities.stopColoring();
                         Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
                         Utilities.DashDivide();

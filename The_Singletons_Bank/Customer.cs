@@ -181,10 +181,10 @@ namespace The_Singletons_Bank
             {
                 CreditCred = Math.Min(CreditCred + 20, 100);
             }
-            //Räkna ut hur många uttag.
+            //Räkna ut hur många externa överföringar.
             foreach (TransactionHistory transaction in Transaction.GetQueue())
             {
-                if (transaction.Type == TransferType.Deposit)
+                if (transaction.Type == TransferType.External)
                 {
                     CreditCred = Math.Max(CreditCred - 10, 0);
                 }
