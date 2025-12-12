@@ -22,7 +22,6 @@ namespace The_Singletons_Bank
             _accountNumber = GenerateAccountNumber();
             _balance = balance;
             _currency = currency;
-
         }
         public Account(string name, decimal balance, string currency, int accountNumber)
         {

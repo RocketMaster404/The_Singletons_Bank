@@ -16,19 +16,10 @@ namespace The_Singletons_Bank
             _interestRate = interest;
         }
 
-
-
-
-
-
-
-
         public decimal GetInterest()
         {
             return _interestRate;
         }
-
-
 
         public static void CreateSavingAccount(Customer user) // Måste adderas till users listan
         {

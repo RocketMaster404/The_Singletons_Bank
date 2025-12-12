@@ -17,22 +17,25 @@ namespace The_Singletons_Bank
         {
             return _users;
         }
-
+        public static void AddUser(User user)
+        {
+            _users.Add(user);
+        }
         public static void CreateTestUsers()
         {
 
             var olof = new Customer("olof", "1234");
             olof.AddToAccountList(new Account("Lönekonto", 5000, "SEK"));
-            olof.AddToAccountList(new Account("Privat konto", 12000, "SEK",12345678));
+            olof.AddToAccountList(new Account("Sparkonto", 12000, "SEK"));
             olof.AddToAccountList(new Account("USA konto", 120, "USD"));
             olof.AddToSavingAccountList(new SavingAccount("Standard Spar", 100, 1.5m));
             olof.AddToSavingAccountList(new SavingAccount("Medel Spar", 100, 1.7m));
             olof.AddToSavingAccountList(new SavingAccount("Långsiktigt Spar", 100, 2.0m));
+            olof.AddToLoanList(new Loan(olof,2.65m,10000m));
             _users.Add(olof);
 
             var stig = new Customer("stig", "2345");
             stig.AddToAccountList(new Account("Konto 1", 2000, "SEK"));
-            stig.AddToAccountList(new Account("Konto 2", 2400, "SEK",87654321));
             _users.Add(stig);
 
             var admin = new Admin("Admin", "4321", true);
@@ -178,6 +181,8 @@ namespace The_Singletons_Bank
 
             var customer = new Customer(userName, password);
             _users.Add(customer);
+            DatabaseLogins.AddAllLogins(_users);
+            DatabaseLogins.UpdateLogins(_users);
             Console.WriteLine($"Användare: {userName} har skapats");
             Utilities.NoContentMsg();
         }
@@ -221,6 +226,8 @@ namespace The_Singletons_Bank
 
             var admin = new Admin(userName, password, true);
             _users.Add(admin);
+            DatabaseLogins.AddAllLogins(_users);
+            DatabaseLogins.UpdateLogins(_users);
             Console.WriteLine($"Admin: {userName} har skapats");
             Utilities.NoContentMsg();
 

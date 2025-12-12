@@ -145,7 +145,7 @@ namespace The_Singletons_Bank
                     else if (choice == 2)
                     {
                         Bank.AddAdminAccount();
-                    }
+                    }                    
 
                     return true;
                 case 2:
@@ -266,9 +266,13 @@ namespace The_Singletons_Bank
                 case 1:
                     PrintCreateCurrencyAccountMenu();
                     CreateCurrencyAccountChoice(user);
+                    DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                    DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                     break;
                 case 2:
                     SavingAccount.CreateSavingAccount(user);
+                    DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                    DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                     break;
                 case 3:
                     Console.Clear();

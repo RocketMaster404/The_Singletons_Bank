@@ -14,6 +14,10 @@ namespace The_Singletons_Bank
             bool runProgram = true;
             Bank.MonthlyInterest();
             Bank.CreateTestUsers();
+            DatabaseLogins.AddAllLogins(Bank.GetUsers());
+            DatabaseLogins.UpdateLogins(Bank.GetUsers());
+            DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+            DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
 
             while (runProgram)
             {
