@@ -580,6 +580,7 @@ namespace The_Singletons_Bank
 
 
 
+
         public static Queue<TransactionHistory> GetQueue() { return _transactionQueue; }
     }
 }
