@@ -17,12 +17,7 @@ namespace The_Singletons_Bank
             _que.Enqueue(transaction);
         }
 
-        public static void CreateQuedTransaction(
-          Customer sender,
-          Customer reciver,
-          int senderAccountNumber,
-          int reciverAccountNumber,
-          decimal amount)
+        public static void CreateQuedTransaction(Customer sender, Customer reciver, int senderAccountNumber, int reciverAccountNumber, decimal amount)
         {
             var transaction = new PendingTransaction(sender, reciver, senderAccountNumber, reciverAccountNumber, amount);
             _que.Enqueue(transaction);
@@ -66,11 +61,6 @@ namespace The_Singletons_Bank
 
 
                 }
-
-
-
-
-
 
 
             }

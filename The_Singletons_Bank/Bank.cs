@@ -10,6 +10,7 @@ namespace The_Singletons_Bank
     internal class Bank
     {
         private static List<User> _users = new List<User>();
+        public static DateTime LastTransaction = DateTime.Now;
 
 
         public static List<User> GetUsers()

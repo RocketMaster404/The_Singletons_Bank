@@ -57,18 +57,18 @@ namespace The_Singletons_Bank
         public static void RunCustomerProgram(Customer customer)
         {
             bool loggedIn = true;
-            DateTime start = DateTime.Now;
+            
             while (loggedIn)
             {
                 Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
                 Menu.PrintCustomerMainMenu();
                 loggedIn = Menu.CustomerMainMenuChoice(customer);
-                DateTime end = DateTime.Now;
-                TimeSpan diff = end - start;
+                
+                TimeSpan diff = DateTime.Now - Bank.LastTransaction;
                 if(diff.TotalMinutes >= 1)
                 {
                     TransactionQueue.RunQueue();
-                    start = DateTime.Now;
+                    Bank.LastTransaction = DateTime.Now;
                 }
             }
 
