@@ -35,13 +35,12 @@ namespace The_Singletons_Bank
         {
             string invoice = loan.ShowLoandetails();
             owner._inbox.Add(invoice);
-
         }
 
         public static void Sendinvoice(Customer owner, string msg)
         {
             string invoice = msg;
-            owner._inbox.Add(invoice);  
+            owner._inbox.Add(invoice);
         }
         public static void HandleLoanRequest(Customer owner, decimal loanrequest)
         {
