@@ -1,4 +1,7 @@
-﻿using System.Security.Principal;
+﻿using Microsoft.VisualBasic;
+using System;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 
 namespace The_Singletons_Bank
 {
@@ -8,48 +11,103 @@ namespace The_Singletons_Bank
 
         public static void AddAllAccounts(List<User> users)
         {
-            List<string> accounts = new List<string>();
-
-
+            List<string> existingAccounts = new List<string>();
+            List<string> compareAccounts = new List<string>();
+            List<string> addAccounts = new List<string>();
 
             using (StreamReader reader = new StreamReader(path))
             {
                 while (!reader.EndOfStream)
                 {
-                    accounts.Add(reader.ReadLine());
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split(';');
+                    string type = parts[0];
+
+                    string completeString = "";
+
+                    switch (type)
+                    {
+                        case "ACCOUNT":
+                            completeString = $"{parts[0]};{parts[1]};{parts[2]};{parts[4]};{parts[5]}";
+                            break;
+
+                        case "SAVING":
+                            completeString = $"{parts[0]};{parts[1]};{parts[2]};{parts[4]};{parts[5]};{parts[6]}";
+                            break;
+
+                        case "LOAN":
+                            completeString = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
+                            break;
+
+                        case "INBOX":
+                            completeString = $"{parts[0]};{parts[1]};{parts[2]}";
+                            break;
+                    }
+
+                    existingAccounts.Add(completeString);
                 }
             }
 
-            foreach (string account in accounts)
+            foreach (User user in users)
             {
-                if (account == )
-            }
+                if (user is Customer customer)
+                {
+                    foreach (Account rawAccount in customer.GetAccountList())
+                    {
+                        string line = GetAccountString(rawAccount, customer);                       
+                        string[] parts = line.Split(';');
 
+                        string add = $"{parts[0]};{parts[1]};{parts[2]};{parts[4]};{parts[5]}";
+                        string addFile = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]};{parts[4]};{parts[5]}";
+                        compareAccounts.Add(add);
+                        addAccounts.Add(addFile);
+                    }
+                    
+                    foreach (SavingAccount rawSaveAccount in customer.GetSavingAccountList())
+                    {
+                        string line = GetSavingString(rawSaveAccount, customer);
+                        string[] parts = line.Split(';');
+
+                        string add = $"{parts[0]};{parts[1]};{parts[2]};{parts[4]};{parts[5]};{parts[6]}";
+                        string addFile = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]};{parts[4]};{parts[5]};{parts[6]}";
+                        compareAccounts.Add(add);
+                        addAccounts.Add(addFile);
+                    }
+                    
+                    foreach (Loan rawLoan in customer.GetLoansList())
+                    {
+                        string line = GetLoanString(rawLoan, customer);
+                        string[] parts = line.Split(';');
+
+                        string add = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
+                        string addFile = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
+                        compareAccounts.Add(add);
+                        addAccounts.Add(addFile);
+                    }
+                    
+                    foreach (string msg in customer.GetInboxList())
+                    {
+                        string line = GetInboxString(msg, customer);
+                        string[] parts = line.Split(';');
+
+                        string add = $"{parts[0]};{parts[1]};{parts[2]}";
+                        string addFile = $"{parts[0]};{parts[1]};{parts[2]}";
+                        compareAccounts.Add(add);
+                        addAccounts.Add(addFile);
+                    }
+                }
+            }
+            
             using (StreamWriter writer = new StreamWriter(path, true))
             {
-                foreach (User user in users)
+                for (int i = 0; i < compareAccounts.Count; i++)
                 {
-                    if (user is Customer customer)
+                    string compare = compareAccounts[i];
+
+                    if (!existingAccounts.Contains(compare))
                     {
-                        foreach (Account account in customer.GetAccountList())
-                        {
-                            writer.WriteLine($"ACCOUNT;{customer.GetUsername()};{account.Name};{account.GetAccountNumber()};{account.GetBalance()};{account.GetCurrency()}");
-                        }
-
-                        foreach (SavingAccount savings in customer.GetSavingAccountList())
-                        {
-                            writer.WriteLine($"SAVING;{customer.GetUsername()};{savings.Name};{savings.GetAccountNumber()};{savings.GetBalance()};{savings.GetCurrency()};{savings.GetInterest()}");
-                        }
-
-                        foreach (Loan loan in customer.GetLoansList())
-                        {
-                            writer.WriteLine($"LOAN;{customer.GetUsername()};{loan.Loanamount};{loan.ShowLoanInterestrate()}");
-                        }
-
-                        foreach (String inbox in customer.GetInboxList())
-                        {
-                            writer.WriteLine($"INBOX;{customer.GetUsername()};{inbox}");
-                        }
+                        string fullLine = addAccounts[i];
+                        writer.WriteLine(fullLine);
                     }
                 }
             }
@@ -109,29 +167,21 @@ namespace The_Singletons_Bank
                 }
             }
         }
-        public static string GetAccountString(User user)
+        public static string GetAccountString(Account account, Customer customer)
         {
-            string line = "";
-            return "";
-            if (user is Customer customer)
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        line = reader.ReadLine();
-
-                        string[] parts = line.Split(';');
-
-                        string type = parts[0];
-
-                        foreach (Account account in customer.GetAccountList())
-                        {
-                            return $"ACCOUNT;{customer.GetUsername()};{account.Name};{account.GetAccountNumber()};{account.GetBalance()};{account.GetCurrency()}";
-                        }
-                    }
-                }
-            }
-        }        
+            return $"ACCOUNT;{customer.GetUsername()};{account.Name};{account.GetAccountNumber()};{account.GetBalance()};{account.GetCurrency()}";
+        }
+        public static string GetSavingString(SavingAccount savings, Customer customer)
+        {
+            return $"SAVING;{customer.GetUsername()};{savings.Name};{savings.GetAccountNumber()};{savings.GetBalance()};{savings.GetCurrency()};{savings.GetInterest()}";
+        }
+        public static string GetLoanString(Loan loan, Customer customer)
+        {
+            return $"LOAN;{customer.GetUsername()};{loan.Loanamount};{loan.ShowLoanInterestrate()}";
+        }
+        public static string GetInboxString(string inbox, Customer customer)
+        {
+            return $"INBOX;{customer.GetUsername()};{inbox}";
+        }
     }
 }
