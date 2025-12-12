@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static The_Singletons_Bank.TransactionHistory;
 
 namespace The_Singletons_Bank
 {
@@ -13,6 +14,7 @@ namespace The_Singletons_Bank
         private List<SavingAccount> _savingAccounts;
         public List<Loan> _loans;
         public List<String> _inbox;
+        public int CreditCred { get; private set; } = 100;
 
         public Customer(string username, string password) : base(username, password)//Ska listorna va med i konstruktorn?
         {
@@ -88,6 +90,18 @@ namespace The_Singletons_Bank
             return total;
         }
 
+        public decimal ShowSavingAccountsFunds(int choice)
+        {
+            decimal balance = _savingAccounts[choice-1].GetBalance();
+            return balance;
+        }
+
+        public decimal ShowAccountsFunds(int choice)
+        {
+            decimal balance = _accounts[choice-1].GetBalance();
+            return balance;
+        }
+
         public List<Account> GetAccountList()
         {
             return _accounts;
@@ -147,6 +161,77 @@ namespace The_Singletons_Bank
             foreach (var account in user._savingAccounts)
             {
                 SavingAccount.ShowSavingAccountInfo(account);
+            }
+        }
+
+        public string CredibilityCalculator()
+
+        {
+
+            //Räknar först kredittrovärdighet baserat på lån
+            foreach (Loan loan in _loans)
+            {
+                if (loan.Loanamount >= TotalFunds() * 5)
+                {
+                    CreditCred = Math.Max(CreditCred - 40, 0);//Tar det högsta värdet och returnerar så det aldrig kan gå under 0
+                }
+                else if (loan.Loanamount >= TotalFunds() * 4)
+                {
+                    CreditCred = Math.Max(CreditCred - 30, 0);
+                }
+                else if (loan.Loanamount >= TotalFunds() * 3)
+                {
+                    CreditCred = Math.Max(CreditCred - 20, 0);
+                }
+                else if (loan.Loanamount >= TotalFunds() * 2)
+                {
+                    CreditCred = Math.Max(CreditCred - 30, 0);
+                }
+                else
+                {
+                    CreditCred = Math.Max(CreditCred - 10, 0);
+                }
+            }
+            //Räknar sen på sparkonton. Har man ett sparkonto går trovärdigheten upp
+            if (_savingAccounts.Count > 0)
+            {
+                CreditCred = Math.Min(CreditCred + 20, 100);
+            }
+            //Räkna ut hur många externa överföringar.
+            foreach (TransactionHistory transaction in Transaction.GetQueue())
+            {
+                if (transaction.Type == TransferType.External)
+                {
+                    CreditCred = Math.Max(CreditCred - 10, 0);
+                }
+            }
+            //Räkna på antal insättingar:
+            foreach (Account account in _accounts)
+            {
+                if (account.Depositcounter != 0)
+                {
+                    CreditCred = Math.Min((CreditCred + 10) * account.Depositcounter, 100);
+                }
+            }
+
+            //Returnerar trovärdighet efter uträknad total:
+            if (CreditCred >= 70)
+            {
+                Utilities.startColoring(ConsoleColor.DarkGreen);
+                string high = "Hög";
+                return high;
+            }
+            else if (CreditCred > 40 && CreditCred < 70)
+            {
+                Utilities.startColoring(ConsoleColor.DarkYellow);
+                string mid = "Medel";
+                return mid;
+            }
+            else
+            {
+                Utilities.startColoring(ConsoleColor.DarkRed);
+                string low = "Låg";
+                return low;
             }
         }
 

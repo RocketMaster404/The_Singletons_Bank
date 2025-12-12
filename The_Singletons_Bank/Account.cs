@@ -14,12 +14,22 @@ namespace The_Singletons_Bank
         private decimal _balance { get; set; }
         private string _currency { get; set; } = "SEK";
 
+        public int Depositcounter = 0;
+
         public Account(string name, decimal balance, string currency)
         {
             Name = name;
             _accountNumber = GenerateAccountNumber();
             _balance = balance;
             _currency = currency;
+        }
+        public Account(string name, decimal balance, string currency, int accountNumber)
+        {
+            Name = name;
+            _accountNumber = accountNumber;
+            _balance = balance;
+            _currency = currency;
+
         }
 
         public int GetAccountNumber()
@@ -89,6 +99,20 @@ namespace The_Singletons_Bank
             var account = new Account(name, balance, currency);
             user.AddToAccountList(account);
             return account;
+        }
+
+        public void Deposit(decimal deposit)
+        {
+            if(deposit <= 0)
+            {
+                Console.WriteLine("Du måste ange ett positivt belopp");
+            }
+            else
+            {
+                _balance += deposit;
+                Depositcounter++;
+            }
+            
         }
 
 

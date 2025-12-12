@@ -11,7 +11,17 @@ namespace The_Singletons_Bank
         public static decimal GetUserDecimal()
         {
             decimal input;
-            while (!Decimal.TryParse(Console.ReadLine(), out input)|| input<0)
+            while (!Decimal.TryParse(Console.ReadLine(), out input) || input < 0)
+            {
+                Console.WriteLine("Du måste ange ett giltigt tal!");
+            }
+            return input;
+        }
+
+        public static decimal GetUserDecimalMinMax(decimal min, decimal max)
+        {
+            decimal input;
+            while (!Decimal.TryParse(Console.ReadLine(), out input) || input < 0 || input < min || input > max)
             {
                 Console.WriteLine("Du måste ange ett giltigt tal!");
             }
@@ -34,10 +44,10 @@ namespace The_Singletons_Bank
 
             return answer;
         }
-                public static void DashDivide()
-                {
-                    Console.WriteLine("_________________________________________________________________________________________");
-                }
+        public static void DashDivide()
+        {
+            Console.WriteLine("_________________________________________________________________________________________");
+        }
         public static string GetUserChoiceYN()
         {
             while (true)
@@ -59,10 +69,12 @@ namespace The_Singletons_Bank
         }
         public static void NoContentMsg()
         {
+            startColoring(ConsoleColor.DarkGray);
             DashDivide();
-            Console.WriteLine("\nTryck på valfri tangent för att återgå till huvudmenyn");
+            Console.WriteLine("Tryck på valfri tangent för att återgå till huvudmenyn...");
             Console.ReadKey();
             Console.Clear();
+            stopColoring();
         }
 
         public static int GetUserNumberMinMax(int min, int max)
@@ -91,9 +103,12 @@ namespace The_Singletons_Bank
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
+                startColoring(ConsoleColor.Red);
                 Console.WriteLine("Du måste ange ett decimaltal.");
+                Console.WriteLine("Observera: Använd komma (,) istället för punkt (.)");
+                stopColoring();
             }
-            return input; 
+            return input;
         }
 
         public static int GetUserNumbermsg(string msg)
@@ -159,11 +174,11 @@ namespace The_Singletons_Bank
             {
                 foreach (string line in art)
                 {
-                    
+
                     Console.WriteLine(line.Substring(0, maxWidth));
                 }
             }
-            
+
         }
     }
 }

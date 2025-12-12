@@ -25,7 +25,6 @@ namespace The_Singletons_Bank
 
                 Console.Clear();
                 Utilities.AsciiArtPrinter(true);
-
                 Menu.PrintLogInMenu();
                 int input = Utilities.GetUserNumberMinMax(1, 2);
 
@@ -41,6 +40,7 @@ namespace The_Singletons_Bank
 
                         if (user is Customer customer)
                         {
+
                             RunCustomerProgram(customer);
                         }
                         else if (user is Admin admin)
@@ -61,11 +61,19 @@ namespace The_Singletons_Bank
         public static void RunCustomerProgram(Customer customer)
         {
             bool loggedIn = true;
+            
             while (loggedIn)
             {
                 Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
                 Menu.PrintCustomerMainMenu();
                 loggedIn = Menu.CustomerMainMenuChoice(customer);
+                
+                TimeSpan diff = DateTime.Now - Bank.LastTransaction;
+                if(diff.TotalMinutes >= 1)
+                {
+                    TransactionQueue.RunQueue();
+                    Bank.LastTransaction = DateTime.Now;
+                }
             }
 
         }

@@ -10,6 +10,7 @@ namespace The_Singletons_Bank
     internal class Bank
     {
         private static List<User> _users = new List<User>();
+        public static DateTime LastTransaction = DateTime.Now;
 
 
         public static List<User> GetUsers()
@@ -40,9 +41,6 @@ namespace The_Singletons_Bank
             var admin = new Admin("Admin", "4321", true);
             _users.Add(admin);
 
-            //Ta bort detta  *****************************************************************************************************************
-            var test = new Admin("2", "2", true);            
-            _users.Add(test);
 
         }
 
@@ -51,6 +49,22 @@ namespace The_Singletons_Bank
         {
             foreach (var user in _users)
             {
+                if (user.GetUsername() == username && user is Customer customer)
+                {
+                    return customer;
+                }
+            }
+            return null;
+        }
+
+        public static User GetUserType(string username)
+        {
+            foreach (var user in _users)
+            {
+                if (user.GetUsername() == username && user is Admin admin)
+                {
+                    return admin;
+                }
                 if (user.GetUsername() == username && user is Customer customer)
                 {
                     return customer;
@@ -76,7 +90,7 @@ namespace The_Singletons_Bank
             User? currentUser = null;
             while (currentUser == null)
             {
-                Console.WriteLine("Ange användarnamn:");
+                Console.Write("Ange användarnamn:");
                 string userName = Console.ReadLine();
                 bool check = userExists(userName);
 
@@ -85,44 +99,54 @@ namespace The_Singletons_Bank
                     Console.WriteLine("Användaren finns inte. Försök igen");
                     continue;
                 }
-
-                Console.WriteLine("Ange Lösenord:");
-                string passWord = Console.ReadLine();
-
-                foreach (var user in _users)
+                
+                else if (check == true && GetUserType(userName).UserIsBlocked == true)
                 {
-                    if (user.GetUsername() == userName && user.UserIsBlocked == true)
-                    {
-                        Console.WriteLine("Användare blockerad. Var god kontakta administratör");
-                        Console.ReadLine();
-                        return null;
-                    }
+                    Console.WriteLine("Användare blockerad. Var god kontakta administratör");
+                    continue;
+                }
 
-                    if (user.Logincheck(passWord, userName))
-                    {
-                        Console.WriteLine("Lyckad inloggning");
-                        Thread.Sleep(1000);
-                        Console.Clear();
+                else
+                {
+                    Console.Write("Ange Lösenord:");
+                    string passWord = Console.ReadLine();
 
-                        return user;
-                    }
-
-                    else if (user.GetUsername() == userName && user.IsAdmin == false)
+                    foreach (var user in _users)
                     {
-                        if (user.LoginAttempts == 1)
+                        if (user.GetUsername() == userName && user.UserIsBlocked == true)
                         {
-                            user.UserIsBlocked = true;
-                            Console.WriteLine($"Användare {user.GetUsername()} är låst. Var god kontakta administratör");
+                            Console.WriteLine("Användare blockerad. Var god kontakta administratör");
+                            Console.ReadLine();
                             return null;
                         }
 
-                        user.LoginAttempts--;
-                        Console.Write($"Fel lösenord för {user.GetUsername()}, Du har ");
-                        Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
-                        Console.Write($"{user.LoginAttempts}");
-                        Console.ResetColor();
-                        Console.Write(" försök kvar.\n");
-                        break;
+                        if (user.Logincheck(passWord, userName))
+                        {
+                            Console.WriteLine("Lyckad inloggning");
+                            Thread.Sleep(1000);
+                            Console.Clear();
+
+                            return user;
+                        }
+
+                        else if (user.GetUsername() == userName && user.IsAdmin == false)
+                        {
+
+                            if (user.LoginAttempts == 1)
+                            {
+                                user.UserIsBlocked = true;
+                                Console.WriteLine($"Användare {user.GetUsername()} är låst. Var god kontakta administratör");
+                                return null;
+                            }
+
+                            user.LoginAttempts--;
+                            Console.Write($"Fel lösenord för {user.GetUsername()}, Du har ");
+                            Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
+                            Console.Write($"{user.LoginAttempts}");
+                            Console.ResetColor();
+                            Console.Write(" försök kvar.\n");
+                            break;
+                        }
                     }
                 }
             }
@@ -184,7 +208,16 @@ namespace The_Singletons_Bank
                         Console.WriteLine("Användarnamn upptaget");
                         userNameUnique = false;
                     }
-                }                
+                }
+
+                foreach (var user in _users)
+                {
+                    if (user.GetUsername() == userName)
+                    {
+                        Console.WriteLine("Användarnamn upptaget");
+                        userNameUnique = false;
+                    }
+                }
 
             } while (!userNameUnique);
 

@@ -23,7 +23,7 @@ namespace The_Singletons_Bank
 
         public string ShowLoandetails()
         {
-            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nKostnad för lån: {Loanamount*(Interestrate / 100)}SEK");
+            string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nÅrlig räntekostnad: {Loanamount * (Interestrate / 100)}SEK");
             return loandetails;
 
         }
@@ -35,21 +35,21 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserDecimal();
+            decimal loanamount = Utilities.GetUserNumberMinMax(1, 999999999);
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
             if (limitOk && hasActiveTicket == false)
             {
 
-                Console.WriteLine($"Din låneförfrågan på {loanamount}SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
+                Console.WriteLine($"\nDin låneförfrågan på {loanamount} SEK har skickats till banken. Ditt ärende hanteras inom 1-3 bankdagar.");
                 Admin.Loantickets.Add(owner, loanamount);//Om en låneförfrågan redan finns så kan man inte göra en ny PGA samma key redan finns.
                 Utilities.NoContentMsg();
 
             }
             else if (limitOk == false && hasActiveTicket == false)
             {
-                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns på {owner.TotalFunds() * 5}Kr.\nSänk ditt belopp för att göra en ny förfrågan.");
+                Console.WriteLine($"Din låneförfrågan överskrider din maxgräns.\nSänk ditt belopp för att göra en ny förfrågan.");
                 Utilities.NoContentMsg();
             }
             else
@@ -71,7 +71,7 @@ namespace The_Singletons_Bank
 
         public static bool HasActiveTicket(Customer owner)
         {
-            if (Admin.Loantickets.ContainsKey(owner)||owner._inbox.Count()!=0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]
+            if (Admin.Loantickets.ContainsKey(owner) || owner._inbox.Count() != 0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]
             {
                 return true;
             }
@@ -79,14 +79,13 @@ namespace The_Singletons_Bank
                 return false;
         }
 
-      public static bool IsLoanDeclinedMsg(Customer owner)
+        public static bool IsLoanDeclinedMsg(Customer owner)
         {
             foreach (var msg in owner._inbox)
             {
                 if (msg.Contains("Ränta:"))
                 {
                     return false;
-
                 }
                 else
                 {
@@ -95,8 +94,6 @@ namespace The_Singletons_Bank
             }
             return false;
         }
-
-
     }
 }
 

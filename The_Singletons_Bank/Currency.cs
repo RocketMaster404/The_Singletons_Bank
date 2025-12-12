@@ -11,34 +11,9 @@ namespace The_Singletons_Bank
         private static Dictionary<string, decimal> _currencies = new Dictionary<string, decimal>()
         {
             { "SEK", 1m },
-            { "USD", 0.1m },
-            { "EUR", 0.08m }
+            { "USD", 10m },
+            { "EUR", 8m }
         };
-        public static bool AskIfToChangeCurrencyExchangeRate()
-        {
-            bool answer = false;
-            Console.WriteLine("Vill du ändra någon av valutornas växelkurs?");
-
-            Utilities.startColoring(ConsoleColor.Green, ConsoleColor.Black);
-            Console.WriteLine("[1]: Ja");
-            Utilities.stopColoring();
-
-            Utilities.startColoring(ConsoleColor.Red, ConsoleColor.Black);
-            Console.WriteLine("[2]: Nej");
-            Utilities.stopColoring();
-
-            int stringAnswer = Utilities.GetUserNumberMinMax(1, 2);
-            if(stringAnswer == 1)
-            {
-                answer = true;
-            }
-            else
-            {
-                answer = false;
-                Console.Clear();
-            }
-                return answer;
-        }
 
         public static void ChangeCurrencyExchangeRate(string currencyCode, decimal newRate)
         {
@@ -76,6 +51,7 @@ namespace The_Singletons_Bank
             decimal newValue = Utilities.GetUserDecimalInput();
 
             //Inte direkt det bästa sätet att göra detta men det får bli så denna behöver expandera om det läggs till nya valutor
+            //Inte direkt dynamiskt men de e va de e
             if (answer == 1)
             {
                 currencyToChange = "USD";
@@ -113,7 +89,8 @@ namespace The_Singletons_Bank
                 decimal rateTo = _currencies[currencyCode2];
 
                 // Omvandlar pengarna
-                decimal convertedAmount = (amountToConvert / rateFrom) * rateTo;
+                decimal convertedAmount = amountToConvert * (rateFrom / rateTo);
+
 
                 return convertedAmount;
             }
