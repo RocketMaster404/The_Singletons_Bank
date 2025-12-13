@@ -35,7 +35,7 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserNumberMinMax(1, 999999999);
+            decimal loanamount = Utilities.GetUserDecimalMinMax(1, (owner.TotalFunds()*5));
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 

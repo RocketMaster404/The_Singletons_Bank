@@ -291,7 +291,8 @@ namespace The_Singletons_Bank
                 Utilities.DashDivide();
                 Console.WriteLine(LoanHandlingCounter + ".");
                 Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                Console.Write("Kredittrovärdighet: " + kvp.Key.CredibilityCalculator());
+                Console.Write("Kredittrovärdighet: ");
+                Console.WriteLine(kvp.Key.CredibilityCalculator());
                 Utilities.stopColoring();
                 Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
                 Utilities.DashDivide();
@@ -319,7 +320,8 @@ namespace The_Singletons_Bank
                         UnderMenuHeader("--Inkomna låneförfrågningar--");
                         Utilities.DashDivide();
                         Console.WriteLine($"Förfrågan inkommen från: {kvp.Key.GetUsername()}");
-                        Console.Write("Kredittrovärdighet: " + kvp.Key.CredibilityCalculator());
+                        Console.Write("Kredittrovärdighet: ");
+                        Console.WriteLine(kvp.Key.CredibilityCalculator());
                         Utilities.stopColoring();
                         Console.WriteLine($"Ansökt belopp: {kvp.Value} SEK");
                         Utilities.DashDivide();
