@@ -7,13 +7,13 @@ namespace The_Singletons_Bank
 {
     internal class DatabaseAccounts
     {
-        static string pathAccounts = "Accounts.txt";        
+        static string pathAccounts = "Accounts.txt";
 
         public static void AddAllAccounts(List<User> users)
         {
             List<string> existingAccounts = new List<string>();
             List<string> compareAccounts = new List<string>();
-            List<string> addAccounts = new List<string>();            
+            List<string> addAccounts = new List<string>();
 
             using (StreamReader reader = new StreamReader(pathAccounts))
             {
@@ -137,26 +137,52 @@ namespace The_Singletons_Bank
                             string name = parts[2];
                             decimal balance = decimal.Parse(parts[4]);
                             string currency = parts[5];
-
                             var acc = new Account(name, balance, currency);
-                            customer.AddToAccountList(acc);
+
+                            bool alreadyExists = customer.GetAccountList().Any(a =>
+                            a.Name == acc.Name &&
+                            a.GetBalance() == acc.GetBalance() &&
+                            a.GetCurrency() == acc.GetCurrency()
+                            );
+
+                            if (!alreadyExists)
+                            {
+                                customer.AddToAccountList(acc);
+                            }
                             break;
 
                         case "SAVING":
                             string nameS = parts[2];
                             decimal BalanceS = decimal.Parse(parts[4]);
                             decimal rate = decimal.Parse(parts[6]);
-
                             var sav = new SavingAccount(nameS, BalanceS, rate);
-                            customer.AddToSavingAccountList(sav);
+
+                            alreadyExists = customer.GetSavingAccountList().Any(a =>
+                            a.Name == sav.Name &&
+                            a.GetBalance() == sav.GetBalance() &&
+                            a.GetInterest() == sav.GetInterest()
+                            );
+
+                            if (!alreadyExists)
+                            {
+                                customer.AddToSavingAccountList(sav);
+                            }
                             break;
 
                         case "LOAN":
                             decimal amount = decimal.Parse(parts[2]);
                             decimal rateL = decimal.Parse(parts[3]);
-
                             var loan = new Loan(customer, rateL, amount);
-                            customer.AddToLoanList(loan);
+
+                            alreadyExists = customer.GetLoansList().Any(a =>
+                            a.ShowLoanInterestrate() == loan.ShowLoanInterestrate() &&
+                            a.Loanamount == loan.Loanamount
+                            );
+
+                            if (!alreadyExists)
+                            {
+                                customer.AddToLoanList(loan);
+                            }
                             break;
 
                         case "INBOX":
