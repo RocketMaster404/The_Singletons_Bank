@@ -12,6 +12,8 @@ namespace The_Singletons_Bank
         public static void Run()
         {
             bool runProgram = true;
+            DatabaseLogins.CreateFileLogin();
+            DatabaseAccounts.CreateFileAccount();
             Bank.MonthlyInterest();
             Bank.CreateTestUsers();
             DatabaseLogins.AddAllLogins(Bank.GetUsers());
