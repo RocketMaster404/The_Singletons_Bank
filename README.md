@@ -92,3 +92,8 @@ Hjälpklasser för att hantera konsolgränssnittet.
     *   Statisk hjälpklass.
     *   Hanterar inmatning från användaren (säkerställer att man skriver in siffror när det krävs, etc.).
     *   Sköter färgändringar i konsolen och utskrift av ASCII-art.
+ 
+
+Länk till Trello: https://trello.com/b/P8tRXuvY/bankomat-sut25
+
+
