@@ -4,7 +4,7 @@ namespace The_Singletons_Bank
 {
     internal class DatabaseLogins
     {
-        static string path = "C:\\Users\\liamb\\Desktop\\Shared Code\\Logins.txt";
+        static string pathLogins = "Logins.txt";
 
         public static void AddAllLogins(List<User> users)
         {
@@ -19,8 +19,9 @@ namespace The_Singletons_Bank
                     accountsToAdd.Add(newUser);
                 }
             }
-            using (StreamWriter writer = new StreamWriter(path, true))
-            {
+
+            using (StreamWriter writer = new StreamWriter(pathLogins, true))
+            {  
                 foreach (string line in accountsToAdd)
                 {
                     writer.WriteLine(line);
@@ -31,7 +32,7 @@ namespace The_Singletons_Bank
         {
             string line = "";
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(pathLogins))
             {
                 while (!reader.EndOfStream)
                 {
@@ -62,13 +63,14 @@ namespace The_Singletons_Bank
                         }
                     }
                 }
+                reader.Close();
             }
         }
         public static List<string> ReadFile()
         {
             List<string> accounts = new List<string>();
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(pathLogins))
             {
                 while (!reader.EndOfStream)
                 {
@@ -91,6 +93,11 @@ namespace The_Singletons_Bank
         public static string GetUserString(User user)
         {
             return $"{user.GetUsername()};{user.GetPassword()};{user.LoginAttempts};{user.UserIsBlocked};{user.IsAdmin}";
+        }
+        public static void CreateFileLogin()
+        {
+            StreamWriter writer = new StreamWriter(pathLogins, true);
+            writer.Close();
         }
     }
 }

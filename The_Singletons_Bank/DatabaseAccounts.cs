@@ -7,15 +7,15 @@ namespace The_Singletons_Bank
 {
     internal class DatabaseAccounts
     {
-        static string path = "C:\\Users\\liamb\\Desktop\\Shared Code\\Accounts.txt";
+        static string pathAccounts = "Accounts.txt";        
 
         public static void AddAllAccounts(List<User> users)
         {
             List<string> existingAccounts = new List<string>();
             List<string> compareAccounts = new List<string>();
-            List<string> addAccounts = new List<string>();
+            List<string> addAccounts = new List<string>();            
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(pathAccounts))
             {
                 while (!reader.EndOfStream)
                 {
@@ -54,7 +54,7 @@ namespace The_Singletons_Bank
                 {
                     foreach (Account rawAccount in customer.GetAccountList())
                     {
-                        string line = GetAccountString(rawAccount, customer);                       
+                        string line = GetAccountString(rawAccount, customer);
                         string[] parts = line.Split(';');
 
                         string add = $"{parts[0]};{parts[1]};{parts[2]};{parts[4]};{parts[5]}";
@@ -62,7 +62,7 @@ namespace The_Singletons_Bank
                         compareAccounts.Add(add);
                         addAccounts.Add(addFile);
                     }
-                    
+
                     foreach (SavingAccount rawSaveAccount in customer.GetSavingAccountList())
                     {
                         string line = GetSavingString(rawSaveAccount, customer);
@@ -73,7 +73,7 @@ namespace The_Singletons_Bank
                         compareAccounts.Add(add);
                         addAccounts.Add(addFile);
                     }
-                    
+
                     foreach (Loan rawLoan in customer.GetLoansList())
                     {
                         string line = GetLoanString(rawLoan, customer);
@@ -84,7 +84,7 @@ namespace The_Singletons_Bank
                         compareAccounts.Add(add);
                         addAccounts.Add(addFile);
                     }
-                    
+
                     foreach (string msg in customer.GetInboxList())
                     {
                         string line = GetInboxString(msg, customer);
@@ -97,8 +97,8 @@ namespace The_Singletons_Bank
                     }
                 }
             }
-            
-            using (StreamWriter writer = new StreamWriter(path, true))
+
+            using (StreamWriter writer = new StreamWriter(pathAccounts, true))
             {
                 for (int i = 0; i < compareAccounts.Count; i++)
                 {
@@ -116,7 +116,7 @@ namespace The_Singletons_Bank
         {
             string line = "";
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(pathAccounts))
             {
                 while (!reader.EndOfStream)
                 {
@@ -182,6 +182,11 @@ namespace The_Singletons_Bank
         public static string GetInboxString(string inbox, Customer customer)
         {
             return $"INBOX;{customer.GetUsername()};{inbox}";
+        }
+        public static void CreateFileAccount()
+        {
+            StreamWriter writer = new StreamWriter(pathAccounts, true);
+            writer.Close();
         }
     }
 }
