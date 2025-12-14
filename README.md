@@ -2,6 +2,8 @@
 
 Detta dokument beskriver strukturen och arkitekturen för **The Singletons Bank**, en konsolbaserad bankapplikation skriven i C#. Nedan följer en genomgång av projektets klasser, objekt och deras ansvarsområden.
 
+Länk till Trello: https://trello.com/b/P8tRXuvY/bankomat-sut25
+
 ## 1. Programflöde och Kärna
 Dessa klasser hanterar applikationens start, livscykel och centrala datalagring.
 
@@ -16,7 +18,7 @@ Dessa klasser hanterar applikationens start, livscykel och centrala datalagring.
     *   Kör transaktionskön med jämna mellanrum.
 
 *   **`Bank.cs`**
-    *   Agerar databas och centralt nav.
+    *   Agerar databas i minnet (runtime) och centralt nav.
     *   Håller en statisk lista över alla användare (`_users`).
     *   Hanterar inloggningslogik (`LogIn`) och validering av användare.
     *   Innehåller metoder för att skapa nya användare och köra månatliga ränteberäkningar.
@@ -92,8 +94,16 @@ Hjälpklasser för att hantera konsolgränssnittet.
     *   Statisk hjälpklass.
     *   Hanterar inmatning från användaren (säkerställer att man skriver in siffror när det krävs, etc.).
     *   Sköter färgändringar i konsolen och utskrift av ASCII-art.
- 
 
-Länk till Trello: https://trello.com/b/P8tRXuvY/bankomat-sut25
+## 6. Databas och Filhantering
+Klasser som hanterar persistens genom att spara och ladda data från textfiler, så att information inte går förlorad när programmet stängs av.
 
+*   **`DatabaseLogins.cs`**
+    *   Ansvarar för att spara och läsa in användarinformation från filen `Logins.txt`.
+    *   Hanterar användarnamn, lösenord, administratörsstatus samt om användaren är blockerad.
+    *   Säkerställer att användarlistan uppdateras vid programstart.
 
+*   **`DatabaseAccounts.cs`**
+    *   Ansvarar för att spara och läsa in finansiell data från filen `Accounts.txt`.
+    *   Hanterar lagring av kunders vanliga konton (`Account`), sparkonton (`SavingAccount`) och lån (`Loan`).
+    *   Ser till att rätt konton och lån kopplas till rätt kund (`Customer`) när datan laddas in i systemet.
