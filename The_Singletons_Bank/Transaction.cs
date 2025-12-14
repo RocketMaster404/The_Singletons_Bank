@@ -20,10 +20,10 @@ namespace The_Singletons_Bank
     internal class Transaction
     {
         private static Queue<TransactionHistory> _transactionQueue = new Queue<TransactionHistory>();
-        //Denna kommer skriva ut alla ens interna översättningar
+
+        //Denna metod kommer skriva ut alla ens interna översättningar
         public static void PrintInternalTransactions(Customer user)
         {
-            //Console.Clear();
             Menu.UnderMenuHeader("--Interna Tansaktioner--");
 
             Console.WriteLine($"{"Avsändare",-25} {"Mottagare",-20} {"Belopp",-10} {"Valuta",-10}  ");
@@ -37,7 +37,8 @@ namespace The_Singletons_Bank
             }
             Console.WriteLine();
         }
-        //Denna kommer skriva ut alla ens externa översättningar
+
+        //Denna metod kommer skriva ut alla ens externa översättningar
         public static void PrintExternalTransactions(Customer user)
         {
             Utilities.startColoring(ConsoleColor.Yellow);
@@ -56,26 +57,12 @@ namespace The_Singletons_Bank
                 }
             }
         }
-        //Detta kommer skriva ut alla ens insättningar
-        public static void PrintDeposits(Customer user)
-        {
-            Console.WriteLine($"Insättningar");
-            Console.WriteLine($"{"Konto",-25} {"Valuta",-20} {"Belopp",-10}");
-            Console.WriteLine();
-            foreach (var transaction in _transactionQueue)
-            {
-                if (transaction.Type == TransferType.Deposit && user == transaction.AccountThatCreatedTheTransaction)
-                {
-                    Console.WriteLine($"{transaction.senderName,-25} {transaction.recipientName,-20} {transaction.amount,-10}");
-                }
-            }
-        }
-        //Detta kommer hitta vilket namn i konto listan som är kopplad till en int
+
+        //Denna metod kommer hitta vilket namn i konto listan som är kopplad till en int
         public static string returnSpecificAccountName(Customer user, int j)
         {
             List<Account> accounts = user.GetAccountList();
             List<SavingAccount> savingAccounts = user.GetSavingAccountList();
-
 
             if (j >= 2 && j < accounts.Count + 2)
             {
@@ -88,10 +75,9 @@ namespace The_Singletons_Bank
                 return savingAccounts[j - accounts.Count - 2].Name;
             }
 
-
             return "NoName";
-
         }
+
         public static void PrintAllTransactionLogs(Customer user)
         {
             Console.Clear();
@@ -104,7 +90,7 @@ namespace The_Singletons_Bank
             Console.Clear();
         }
 
-        //Detta kommer skriva ut alla konton en har och information om kontona
+        //Denna metod kommer skriva ut alla konton en har och information om kontona
         public static void printOutAccounts(Customer user)
         {
             List<Account> accounts = user.GetAccountList();
@@ -127,7 +113,8 @@ namespace The_Singletons_Bank
                 //Console.WriteLine($"{i + 2 + accounts.Count}, {accountName} Har ett saldo av: {balance}{savingAccounts[i].GetCurrency()}");
             }
         }
-        //Detta kommer skriva ut vad ett specifikt konto beroende på namn har gjort interna och externa överföringar
+
+        //Denna metod kommer skriva ut vad ett specifikt konto beroende på namn har gjort interna och externa överföringar
         public static void PrintOutSpecificAccount(Customer user, string pickedAccountName)
         {
             Console.Clear();
@@ -164,6 +151,7 @@ namespace The_Singletons_Bank
             TransactionHistory transactionToSave = new TransactionHistory(user, transferType, senderName, recipientName, senderId, senderCurrency, recipientId, recipientCurrency, ammountSent, time);
             _transactionQueue.Enqueue(transactionToSave);
         }
+
         public static void InternalTransfer(Customer user)
         {
             Console.Clear();
@@ -241,7 +229,6 @@ namespace The_Singletons_Bank
                                     else
                                     {
                                         senderValid = true;
-
                                     }
                                 }
                                 else
@@ -426,10 +413,11 @@ namespace The_Singletons_Bank
                 }
             }
         }
+
         private static bool TryFindRecipientAccount(
-    int accountNumber,
-    out Customer recipientCustomer,
-    out Account recipientAccount)
+        int accountNumber,
+        out Customer recipientCustomer,
+        out Account recipientAccount)
         {
             recipientCustomer = null;
             recipientAccount = null;
@@ -457,7 +445,6 @@ namespace The_Singletons_Bank
                     }
                 }
             }
-
             return false;
         }
 
@@ -483,8 +470,6 @@ namespace The_Singletons_Bank
                     Console.Clear();
                     break;
                 }
-
-
 
                 if (validNumber == true)
                 {
@@ -565,22 +550,10 @@ namespace The_Singletons_Bank
 
                     TransactionQueue.CreateQuedTransaction(user, recipientCustomer, senderAccount.GetAccountNumber(), recipientAccount.GetAccountNumber(), amount);
 
-
-
-
-
-
-
                     return;
                 }
             }
         }
-
-
-
-
-
-
         public static Queue<TransactionHistory> GetQueue() { return _transactionQueue; }
     }
 }

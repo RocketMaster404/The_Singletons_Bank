@@ -20,12 +20,10 @@ namespace The_Singletons_Bank
             Loanamount = loanamount;
         }
 
-
         public string ShowLoandetails()
         {
             string loandetails = ($"Ränta: {Interestrate}%\nLånebelopp: {Loanamount}SEK\nÅrlig räntekostnad: {Loanamount * (Interestrate / 100)}SEK");
             return loandetails;
-
         }
 
         public decimal ShowLoanInterestrate()
@@ -35,7 +33,7 @@ namespace The_Singletons_Bank
 
         public static void CreateLoan(Customer owner)
         {
-            decimal loanamount = Utilities.GetUserDecimalMinMax(1, (owner.TotalFunds()*5));
+            decimal loanamount = Utilities.GetUserDecimalMinMax(1, (owner.TotalFunds() * 5));
             bool limitOk = Loangrantedtest(loanamount, owner.TotalFunds());
             bool hasActiveTicket = HasActiveTicket(owner);
 
@@ -59,7 +57,6 @@ namespace The_Singletons_Bank
 
             }
         }
-
         public static bool Loangrantedtest(decimal loanRequest, decimal balance)
         {
             if (loanRequest > (balance * 5))
@@ -68,7 +65,6 @@ namespace The_Singletons_Bank
             }
             return true;
         }
-
         public static bool HasActiveTicket(Customer owner)
         {
             if (Admin.Loantickets.ContainsKey(owner) || owner._inbox.Count() != 0)//Detta villkor måste ändras om vi vill använda inbox till nått annat än lån [Daniel 28/11]

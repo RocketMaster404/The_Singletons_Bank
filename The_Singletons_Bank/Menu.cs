@@ -11,17 +11,13 @@ namespace The_Singletons_Bank
 {
     internal class Menu
     {
-
-
         public static void PrintLogInMenu()
         {
             Console.WriteLine("Singletons Bank - since 1807\n");
-            Console.WriteLine($"1. Logga in",-25);
-            Console.WriteLine($"2. Avsluta",-25);
-            Console.Write($"\nAnge val: ",-25);
+            Console.WriteLine($"1. Logga in", -25);
+            Console.WriteLine($"2. Avsluta", -25);
+            Console.Write($"\nAnge val: ", -25);
         }
-
-
 
         public static void PrintCustomerMainMenu()
         {
@@ -101,6 +97,7 @@ namespace The_Singletons_Bank
             }
             Console.WriteLine("5. Logga ut");
         }
+
         public static bool AskIfToChangeCurrencyExchangeRate()
         {
             bool answer = false;
@@ -145,7 +142,7 @@ namespace The_Singletons_Bank
                     else if (choice == 2)
                     {
                         Bank.AddAdminAccount();
-                    }                    
+                    }
 
                     return true;
                 case 2:
@@ -158,7 +155,7 @@ namespace The_Singletons_Bank
                     }
 
                     return true;
-                case 3: // I have added this case and functon for unlocking accounts [Simon, 2025-11-19]
+                case 3:
                     UnderMenuHeader("--Avblockera användare--");
                     Admin.AvBlockeraAnvändare();
 
@@ -187,7 +184,6 @@ namespace The_Singletons_Bank
                     return false;
             }
             return true;
-
         }
 
         public static void PrintTransferMenu()
@@ -198,6 +194,7 @@ namespace The_Singletons_Bank
             Console.WriteLine("3. Se historiken");
             Console.WriteLine("4. Gå tillbaka");
         }
+
         public static void TransferMenuChoice(Customer user)
         {
             int input = Utilities.GetUserNumberMinMax(1, 4);
@@ -233,6 +230,7 @@ namespace The_Singletons_Bank
             Transaction.printOutAccounts(user);
             PrintAccountHistoryOutput(user);
         }
+
         public static void PrintAccountHistoryOutput(Customer user)
         {
             int input = Utilities.GetUserNumberMinMax(1, user.GetAccountList().Count + user.GetSavingAccountList().Count + 1);
@@ -259,7 +257,6 @@ namespace The_Singletons_Bank
         }
         public static void CreateBankAccountMenuChoice(Customer user)
         {
-
             int input = Utilities.GetUserNumberMinMax(1, 3);
             switch (input)
             {
@@ -310,11 +307,11 @@ namespace The_Singletons_Bank
             {
                 Console.Write("Ange ärendenummer från listan:");
                 int casechoice = Utilities.GetUserNumberMinMax(1, Admin.Loantickets.Count());
-                string keyToRemove = Admin.cases[(casechoice - 1)];//Key to remove blir username för den som skickade låneförslag. 
+                string keyToRemove = Admin.cases[(casechoice - 1)]; //Key to remove blir username för den som skickade låneförslag. 
 
-                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets)//Loopar för att hitta rätt användare med keytoremove
+                foreach (KeyValuePair<Customer, decimal> kvp in Admin.Loantickets) //Loopar för att hitta rätt användare med keytoremove
                 {
-                    if (keyToRemove == kvp.Key.GetUsername())//om användaren finns i dictionaryn så hanterar man det caset
+                    if (keyToRemove == kvp.Key.GetUsername()) //om användaren finns i dictionaryn så hanterar man det caset
                     {
                         Console.Clear();
                         UnderMenuHeader("--Inkomna låneförfrågningar--");
@@ -423,7 +420,6 @@ namespace The_Singletons_Bank
             Console.WriteLine("4.Gör avbetalning");
             Console.WriteLine("5.Gå tillbaka");
             int choice = Utilities.GetUserNumberMinMax(1, 5);
-
 
             switch (choice)
             {
@@ -628,7 +624,6 @@ namespace The_Singletons_Bank
                     Console.Clear();
                     break;
             }
-
         }
 
         public static void DepositMenu(Customer user)
@@ -672,7 +667,6 @@ namespace The_Singletons_Bank
                 }
             }
         }
-
         public static void UnderMenuHeader(string header)
         {
             Console.Clear();
@@ -682,8 +676,5 @@ namespace The_Singletons_Bank
             Utilities.DashDivide();
             Console.WriteLine();
         }
-
-
-
     }
 }

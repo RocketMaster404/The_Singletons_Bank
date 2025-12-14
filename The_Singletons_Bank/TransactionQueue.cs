@@ -12,11 +12,6 @@ namespace The_Singletons_Bank
     {
         private static Queue<PendingTransaction> _que = new();
 
-        public static void EnqueueTransaction(PendingTransaction transaction)
-        {
-            _que.Enqueue(transaction);
-        }
-
         public static void CreateQuedTransaction(Customer sender, Customer reciver, int senderAccountNumber, int reciverAccountNumber, decimal amount)
         {
             var transaction = new PendingTransaction(sender, reciver, senderAccountNumber, reciverAccountNumber, amount);
@@ -25,8 +20,6 @@ namespace The_Singletons_Bank
 
         public static void RunQueue()
         {
-
-
             while (_que.Count > 0)
             {
                 PendingTransaction transaction = _que.Dequeue();
@@ -61,8 +54,6 @@ namespace The_Singletons_Bank
 
 
                 }
-
-
             }
         }
     }

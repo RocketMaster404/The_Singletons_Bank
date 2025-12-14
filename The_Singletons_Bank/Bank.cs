@@ -12,21 +12,22 @@ namespace The_Singletons_Bank
         private static List<User> _users = new List<User>();
         public static DateTime LastTransaction = DateTime.Now;
 
-
         public static List<User> GetUsers()
         {
             return _users;
         }
+
         public static void AddUser(User user)
         {
             _users.Add(user);
         }
+
         public static void CreateTestUsers()
         {
 
             var olof = new Customer("olof", "1234");
             olof.AddToAccountList(new Account("Lönekonto", 5000, "SEK"));
-            olof.AddToAccountList(new Account("Sparkonto", 12000, "SEK"));
+            olof.AddToAccountList(new Account("Sparkonto", 12000, "SEK", 12345678));
             olof.AddToAccountList(new Account("USA konto", 120, "USD"));
             olof.AddToSavingAccountList(new SavingAccount("Standard Spar", 100, 1.5m));
             olof.AddToSavingAccountList(new SavingAccount("Medel Spar", 100, 1.7m));
@@ -34,26 +35,11 @@ namespace The_Singletons_Bank
             _users.Add(olof);
 
             var stig = new Customer("stig", "2345");
-            stig.AddToAccountList(new Account("Konto 1", 2000, "SEK"));
+            stig.AddToAccountList(new Account("Konto 1", 2000, "SEK", 87654321));
             _users.Add(stig);
 
             var admin = new Admin("Admin", "4321", true);
             _users.Add(admin);
-
-
-        }
-
-
-        public static Customer GetSpecificUser(string username)
-        {
-            foreach (var user in _users)
-            {
-                if (user.GetUsername() == username && user is Customer customer)
-                {
-                    return customer;
-                }
-            }
-            return null;
         }
 
         public static User GetUserType(string username)
@@ -98,7 +84,7 @@ namespace The_Singletons_Bank
                     Console.WriteLine("Användaren finns inte. Försök igen");
                     continue;
                 }
-                
+
                 else if (check == true && GetUserType(userName).UserIsBlocked == true)
                 {
                     Console.WriteLine("Användare blockerad. Var god kontakta administratör");
@@ -234,8 +220,6 @@ namespace The_Singletons_Bank
 
         public static void MonthlyInterest()
         {
-
-
             if (DateTime.Now.Day == 1 && DateTime.Now.Hour == 12 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
             {
                 foreach (var user in _users)
@@ -250,7 +234,5 @@ namespace The_Singletons_Bank
                 }
             }
         }
-
-
     }
 }

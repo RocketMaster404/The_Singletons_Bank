@@ -16,11 +16,6 @@ namespace The_Singletons_Bank
 
         public static List<string> cases { get; set; }
 
-        public Admin(string username, string password) : base(username, password)
-        {
-
-        }
-
         public Admin(string username, string password, bool isadmin) : base(username, password, isadmin)
         {
 
@@ -37,6 +32,7 @@ namespace The_Singletons_Bank
             string invoice = msg;
             owner._inbox.Add(invoice);
         }
+
         public static void HandleLoanRequest(Customer owner, decimal loanrequest)
         {
             Console.Write("Sätt ränta:");
@@ -46,23 +42,11 @@ namespace The_Singletons_Bank
             Loan loan = new Loan(owner, setInterest, loanRequest);
             Sendinvoice(owner, loan);
             Loan.PendingLoans.Add(owner, loan);
-
-            //return loan; //ändra från void till Loan ifall det finns behov i framtiden
         }
 
-        public static void CreateUser()
+        public static void AvBlockeraAnvändare()
         {
-            Console.Clear();
-            Console.WriteLine("Ange användarnamn: ");
-            string userName = Utilities.GetUserString();
-            Console.WriteLine("Ange Lösenord: ");
-            string password = Utilities.GetUserString();
-
-        }
-
-      public static void AvBlockeraAnvändare()
-      {
-         Console.WriteLine("Ange användarnamnet eller numret av kontot du vill avblockera.");
+            Console.WriteLine("Ange användarnamnet eller numret av kontot du vill avblockera.");
 
             List<User> _users = Bank.GetUsers();
             Console.WriteLine("Blockerade konton:");
@@ -79,7 +63,7 @@ namespace The_Singletons_Bank
                     Utilities.stopColoring();
                 }
             }
-            if(i == 0)
+            if (i == 0)
             {
                 Utilities.startColoring(ConsoleColor.Red);
                 Console.WriteLine("Det fanns inget konto att avblockera");
@@ -87,8 +71,8 @@ namespace The_Singletons_Bank
                 Console.Clear();
                 Utilities.stopColoring();
             }
-            
-            if(i != 0)
+
+            if (i != 0)
             {
                 i = 0;
                 string userInput = Utilities.GetUserString();
@@ -154,7 +138,7 @@ namespace The_Singletons_Bank
 
                 }
             }
-            
+
 
         }
     }

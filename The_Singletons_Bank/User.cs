@@ -10,7 +10,7 @@ namespace The_Singletons_Bank
     {
         private string _username;
 
-        private string _password { get; set; } 
+        private string _password { get; set; }
 
         public int LoginAttempts { get; set; } = 3;
 
@@ -23,7 +23,7 @@ namespace The_Singletons_Bank
         {
             _username = username;
             _password = password;
-            
+
         }
 
         public User(string username, string password, bool isadmin)
@@ -33,29 +33,20 @@ namespace The_Singletons_Bank
             IsAdmin = isadmin;
         }
 
-      
-       public bool Admincheck(string password, string username)
+        public bool Logincheck(string password, string username)
         {
-            if (_password == password && _username == username && IsAdmin==true)
-            {
-                return true;
-            }
-            return false;
-        }
-        public  bool Logincheck(string password, string username)
-        {
-            
-            if (_password == password && _username==username )
+
+            if (_password == password && _username == username)
             {
                 return true;
             }
 
             return false;
         }
-        public string GetUsername() // En metod för att se vad username innehåller
+        public string GetUsername()
         {
             return _username;
-        } 
+        }
         public string GetPassword()
         {
             return _password;

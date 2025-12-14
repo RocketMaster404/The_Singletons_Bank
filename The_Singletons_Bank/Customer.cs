@@ -22,8 +22,7 @@ namespace The_Singletons_Bank
             _savingAccounts = new List<SavingAccount>();
             _loans = new List<Loan>();
             _inbox = new List<string>();
-
-        }      
+        }
 
         public void ShowInbox()
         {
@@ -72,8 +71,6 @@ namespace The_Singletons_Bank
                 }
                 return false;
             }
-
-
         }
 
         public decimal TotalFunds()
@@ -92,13 +89,13 @@ namespace The_Singletons_Bank
 
         public decimal ShowSavingAccountsFunds(int choice)
         {
-            decimal balance = _savingAccounts[choice-1].GetBalance();
+            decimal balance = _savingAccounts[choice - 1].GetBalance();
             return balance;
         }
 
         public decimal ShowAccountsFunds(int choice)
         {
-            decimal balance = _accounts[choice-1].GetBalance();
+            decimal balance = _accounts[choice - 1].GetBalance();
             return balance;
         }
 
@@ -121,21 +118,15 @@ namespace The_Singletons_Bank
         {
             _savingAccounts.Add(account);
         }
+
         public void AddToLoanList(Loan loan)
         {
             _loans.Add(loan);
         }
-        public void AddToInboxList(string inbox)
-        {
-            _inbox.Add(inbox);
-        }
+
         public List<Loan> GetLoansList()
         {
             return _loans;
-        }
-        public List<string> GetInboxList()
-        {
-            return _inbox;
         }
 
         public static void ShowCustomerAccounts(Customer user)
@@ -165,15 +156,13 @@ namespace The_Singletons_Bank
         }
 
         public string CredibilityCalculator()
-
         {
-
             //Räknar först kredittrovärdighet baserat på lån
             foreach (Loan loan in _loans)
             {
                 if (loan.Loanamount >= TotalFunds() * 5)
                 {
-                    CreditCred = Math.Max(CreditCred - 40, 0);//Tar det högsta värdet och returnerar så det aldrig kan gå under 0
+                    CreditCred = Math.Max(CreditCred - 40, 0); //Tar det högsta värdet och returnerar så det aldrig kan gå under 0
                 }
                 else if (loan.Loanamount >= TotalFunds() * 4)
                 {
@@ -234,11 +223,5 @@ namespace The_Singletons_Bank
                 return low;
             }
         }
-
-
-
-
-
     }
-
 }

@@ -39,7 +39,6 @@ namespace The_Singletons_Bank
                             completeString = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
                             break;
                     }
-
                     existingAccounts.Add(completeString);
                 }
             }
@@ -82,7 +81,6 @@ namespace The_Singletons_Bank
                     }
                 }
             }
-
             using (StreamWriter writer = new StreamWriter(pathAccounts, true))
             {
                 for (int i = 0; i < compareAccounts.Count; i++)
@@ -168,7 +166,7 @@ namespace The_Singletons_Bank
                             {
                                 customer.AddToLoanList(loan);
                             }
-                            break;                       
+                            break;
                     }
                 }
             }
