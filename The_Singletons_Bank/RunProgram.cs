@@ -8,7 +8,6 @@ namespace The_Singletons_Bank
 {
     internal class RunProgram
     {
-
         public static void Run()
         {
             bool runProgram = true;
@@ -59,25 +58,23 @@ namespace The_Singletons_Bank
             }
         }
 
-
         public static void RunCustomerProgram(Customer customer)
         {
             bool loggedIn = true;
-            
+
             while (loggedIn)
             {
                 Console.WriteLine($"Inloggad användare {customer.GetUsername()}");
                 Menu.PrintCustomerMainMenu();
                 loggedIn = Menu.CustomerMainMenuChoice(customer);
-                
+
                 TimeSpan diff = DateTime.Now - Bank.LastTransaction;
-                if(diff.TotalMinutes >= 1)
+                if (diff.TotalMinutes >= 1)
                 {
                     TransactionQueue.RunQueue();
                     Bank.LastTransaction = DateTime.Now;
                 }
             }
-
         }
 
         public static void RunAdminProgram(Admin admin)
@@ -87,7 +84,6 @@ namespace The_Singletons_Bank
             {
                 Menu.PrintAdminMainMenu();
                 loggedIn = Menu.AdminMainMenuChoice(admin);
-
             }
         }
     }

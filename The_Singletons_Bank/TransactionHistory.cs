@@ -14,6 +14,7 @@ namespace The_Singletons_Bank
             External = 1, // Represents an external transfer
             Deposit = 2   // Represents a deposit
         }
+
         public TransferType Type { get; private set; }
         public int senderId { get; set; }
         public string senderName { get; set; }

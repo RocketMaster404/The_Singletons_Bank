@@ -15,37 +15,21 @@ namespace The_Singletons_Bank
             { "EUR", 8m }
         };
 
-        public static void ChangeCurrencyExchangeRate(string currencyCode, decimal newRate)
-        {
-            
-            if (_currencies.ContainsKey(currencyCode))
-            {
-                
-                _currencies[currencyCode] = newRate;
-                Console.WriteLine($"Växelkurs för {currencyCode} uppdaterad till {newRate}.");
-            }
-            else
-            {
-                
-                Console.WriteLine($"Växelkurs för '{currencyCode}' finns inte.");
-            }
-        }
-
         public static void ChangeCurrencyExchangeRateMenu()
         {
             Console.WriteLine("vilken valutas växelkurs vill du ändra?");
             int index = 0;
             foreach (var KeyValuePair in _currencies)
             {
-                
+
                 if (KeyValuePair.Key != "SEK")
                 {
                     index++;
                     Console.WriteLine($"{index}|Valuta: {KeyValuePair.Key}, Värde gemfört med SEK: {KeyValuePair.Value}");
                 }
-                
+
             }
-            int answer = Utilities.GetUserNumberMinMax(1,2);
+            int answer = Utilities.GetUserNumberMinMax(1, 2);
             Console.WriteLine("Vad vill du sätta den till?");
             string currencyToChange = "0";
             decimal newValue = Utilities.GetUserDecimalInput();
@@ -62,9 +46,9 @@ namespace The_Singletons_Bank
             }
 
             bool foundValue = false;
-            foreach (var currency in _currencies.Keys) 
+            foreach (var currency in _currencies.Keys)
             {
-                if (currencyToChange == currency) 
+                if (currencyToChange == currency)
                 {
                     _currencies[currency] = newValue;
                     foundValue = true;
@@ -84,20 +68,18 @@ namespace The_Singletons_Bank
             // Denna kollar om båda valutorna som är valda finns i dictionaryn
             if (_currencies.ContainsKey(currencyCode1) && _currencies.ContainsKey(currencyCode2))
             {
-
                 decimal rateFrom = _currencies[currencyCode1];
                 decimal rateTo = _currencies[currencyCode2];
 
                 // Omvandlar pengarna
                 decimal convertedAmount = amountToConvert * (rateFrom / rateTo);
 
-
                 return convertedAmount;
             }
             else
             {
                 Console.WriteLine("En eller båda valutor finns inte i vårat system.");
-                return 0; 
+                return 0;
             }
         }
 

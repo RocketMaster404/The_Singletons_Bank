@@ -66,12 +66,6 @@ namespace The_Singletons_Bank
                     break;
             }
             Utilities.NoContentMsg();
-
-
-
-
-
-
         }
 
         public void IncreaseBalanceInterestRate()
@@ -79,19 +73,11 @@ namespace The_Singletons_Bank
             decimal balance = GetBalance();
             decimal newBalance = balance * (_interestRate / 100);
             changeBalance(newBalance);
-
         }
-
-
-
-
 
         public static void ShowSavingAccountInfo(SavingAccount account)
         {
             Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10:F2} {"SEK",-10} {account.GetInterest()}{"%"}");
-
-
         }
-
     }
 }

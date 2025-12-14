@@ -44,10 +44,12 @@ namespace The_Singletons_Bank
 
             return answer;
         }
+
         public static void DashDivide()
         {
             Console.WriteLine("_________________________________________________________________________________________");
         }
+
         public static string GetUserChoiceYN()
         {
             while (true)
@@ -109,17 +111,6 @@ namespace The_Singletons_Bank
                 stopColoring();
             }
             return input;
-        }
-
-        public static int GetUserNumbermsg(string msg)
-        {
-            int input;
-            while (!int.TryParse(Console.ReadLine(), out input))
-            {
-                Console.WriteLine(msg);
-            }
-            return input;
-
         }
 
         public static void startColoring(ConsoleColor frontColor, ConsoleColor backgroundColor = ConsoleColor.Black)

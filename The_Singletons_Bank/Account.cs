@@ -57,8 +57,6 @@ namespace The_Singletons_Bank
             _balance -= ammount;
         }
 
-
-
         public int GenerateAccountNumber()
         {
             Random random = new Random();
@@ -84,9 +82,7 @@ namespace The_Singletons_Bank
 
         public static void ShowAccount(Account account)
         {
-           Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
-
-
+            Console.WriteLine($"{account.Name,-25} {account.GetAccountNumber(),-20} {account.GetBalance(),-10} {account._currency,-10} {"",6}");
         }
 
         public void changeBalance(decimal balance)
@@ -103,7 +99,7 @@ namespace The_Singletons_Bank
 
         public void Deposit(decimal deposit)
         {
-            if(deposit <= 0)
+            if (deposit <= 0)
             {
                 Console.WriteLine("Du måste ange ett positivt belopp");
             }
@@ -112,13 +108,6 @@ namespace The_Singletons_Bank
                 _balance += deposit;
                 Depositcounter++;
             }
-            
         }
-
-
-
-
-
-
     }
 }
