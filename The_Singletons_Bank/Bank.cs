@@ -31,7 +31,6 @@ namespace The_Singletons_Bank
             olof.AddToSavingAccountList(new SavingAccount("Standard Spar", 100, 1.5m));
             olof.AddToSavingAccountList(new SavingAccount("Medel Spar", 100, 1.7m));
             olof.AddToSavingAccountList(new SavingAccount("Långsiktigt Spar", 100, 2.0m));
-            olof.AddToLoanList(new Loan(olof,2.65m,10000m));
             _users.Add(olof);
 
             var stig = new Customer("stig", "2345");
