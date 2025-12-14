@@ -497,6 +497,8 @@ namespace The_Singletons_Bank
                         if (userchoice == 1)
                         {
                             bool accept = owner.HandleLoanSuggestion(1, owner);//Satte siffran 1 då användaren inte kan ha fler än 1 låneförfrågan åt gången just nu. [Daniel-01/12}
+                            DatabaseAccounts.AddAllAccounts(Bank.GetUsers());
+                            DatabaseAccounts.LoadAllAccounts(Bank.GetUsers());
                             break;
                         }
                         else

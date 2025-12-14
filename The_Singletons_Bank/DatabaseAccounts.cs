@@ -38,10 +38,6 @@ namespace The_Singletons_Bank
                         case "LOAN":
                             completeString = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
                             break;
-
-                        case "INBOX":
-                            completeString = $"{parts[0]};{parts[1]};{parts[2]}";
-                            break;
                     }
 
                     existingAccounts.Add(completeString);
@@ -81,17 +77,6 @@ namespace The_Singletons_Bank
 
                         string add = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
                         string addFile = $"{parts[0]};{parts[1]};{parts[2]};{parts[3]}";
-                        compareAccounts.Add(add);
-                        addAccounts.Add(addFile);
-                    }
-
-                    foreach (string msg in customer.GetInboxList())
-                    {
-                        string line = GetInboxString(msg, customer);
-                        string[] parts = line.Split(';');
-
-                        string add = $"{parts[0]};{parts[1]};{parts[2]}";
-                        string addFile = $"{parts[0]};{parts[1]};{parts[2]}";
                         compareAccounts.Add(add);
                         addAccounts.Add(addFile);
                     }
@@ -183,12 +168,7 @@ namespace The_Singletons_Bank
                             {
                                 customer.AddToLoanList(loan);
                             }
-                            break;
-
-                        case "INBOX":
-                            string message = parts[2];
-                            customer.AddToInboxList(message);
-                            break;
+                            break;                       
                     }
                 }
             }
