@@ -1,109 +1,107 @@
 # The Singletons Bank
 
-Detta dokument beskriver strukturen och arkitekturen för **The Singletons Bank**, en konsolbaserad bankapplikation skriven i C#. Nedan följer en genomgång av projektets klasser, objekt och deras ansvarsområden.
+This document describes the structure and architecture for **The Singletons Bank**, a console-based banking application written in C#. Below is an overview of the project's classes, objects, and their areas of responsibility.
 
-Länk till Trello: https://trello.com/b/P8tRXuvY/bankomat-sut25
-
-## 1. Programflöde och Kärna
-Dessa klasser hanterar applikationens start, livscykel och centrala datalagring.
+## 1. Program Flow and Core
+These classes handle the application's startup, lifecycle, and central data storage.
 
 *   **`Program.cs`**
-    *   Innehåller `Main`-metoden som är programmets startpunkt.
-    *   Anropar `RunProgram.Run()` för att starta applikationen.
+    *   Contains the `Main` method, which is the program's entry point.
+    *   Calls `RunProgram.Run()` to start the application.
 
 *   **`RunProgram.cs`**
-    *   Hanterar huvudloopen för programmet ("Game loop").
-    *   Initierar systemet (skapar testanvändare, räknar ränta).
-    *   Styr flödet mellan inloggningsvyn och de specifika vyerna för kund (`Customer`) eller administratör (`Admin`).
-    *   Kör transaktionskön med jämna mellanrum.
+    *   Handles the main loop of the program ("Game loop").
+    *   Initializes the system (creates test users, calculates interest).
+    *   Controls the flow between the login view and the specific views for customer (`Customer`) or administrator (`Admin`).
+    *   Runs the transaction queue at regular intervals.
 
 *   **`Bank.cs`**
-    *   Agerar databas i minnet (runtime) och centralt nav.
-    *   Håller en statisk lista över alla användare (`_users`).
-    *   Hanterar inloggningslogik (`LogIn`) och validering av användare.
-    *   Innehåller metoder för att skapa nya användare och köra månatliga ränteberäkningar.
+    *   Acts as an in-memory database (runtime) and central hub.
+    *   Holds a static list of all users (`_users`).
+    *   Handles login logic (`LogIn`) and user validation.
+    *   Contains methods to create new users and run monthly interest calculations.
 
-## 2. Användare och Roller
-Applikationen använder arv för att hantera olika typer av behörigheter.
+## 2. Users and Roles
+The application uses inheritance to handle different types of permissions.
 
-*   **`User.cs` (Abstrakt basklass)**
-    *   Grundläggande egenskaper för alla användare: användarnamn, lösenord, inloggningsförsök och om kontot är blockerat.
-    *   Innehåller logik för inloggningskontroll (`Logincheck`).
+*   **`User.cs` (Abstract base class)**
+    *   Basic properties for all users: username, password, login attempts, and if the account is blocked.
+    *   Contains logic for login checks (`Logincheck`).
 
-*   **`Customer.cs` (Ärver av `User`)**
-    *   Representerar bankens kunder.
-    *   Håller listor för kundens vanliga konton (`_accounts`), sparkonton (`_savingAccounts`) och lån (`_loans`).
-    *   Har en inkorg (`_inbox`) för meddelanden från banken (t.ex. om lån).
-    *   Innehåller logik för att beräkna kreditvärdighet (`CredibilityCalculator`) och hantera låneförslag.
+*   **`Customer.cs` (Inherits from `User`)**
+    *   Represents the bank's customers.
+    *   Holds lists for the customer's regular accounts (`_accounts`), savings accounts (`_savingAccounts`), and loans (`_loans`).
+    *   Has an inbox (`_inbox`) for messages from the bank (e.g., regarding loans).
+    *   Contains logic to calculate creditworthiness (`CredibilityCalculator`) and handle loan proposals.
 
-*   **`Admin.cs` (Ärver av `User`)**
-    *   Representerar bankens administratörer.
-    *   Har behörighet att se och hantera inkomna låneansökningar (`Loantickets`).
-    *   Kan skapa nya användare och avblockera låsta användarkonton.
-    *   Kan skicka fakturor och meddelanden till kunder.
+*   **`Admin.cs` (Inherits from `User`)**
+    *   Represents the bank's administrators.
+    *   Has permission to view and manage incoming loan applications (`Loantickets`).
+    *   Can create new users and unblock locked user accounts.
+    *   Can send invoices and messages to customers.
 
-## 3. Konton och Ekonomi
-Klasser som hanterar pengar, valutor och bankkonton.
+## 3. Accounts and Finance
+Classes that handle money, currencies, and bank accounts.
 
 *   **`Account.cs`**
-    *   Basklass för bankkonton.
-    *   Genererar unika kontonummer.
-    *   Hanterar saldo (`_balance`), valuta (`_currency`) och insättningar/uttag.
+    *   Base class for bank accounts.
+    *   Generates unique account numbers.
+    *   Handles balance (`_balance`), currency (`_currency`), and deposits/withdrawals.
 
-*   **`SavingAccount.cs` (Ärver av `Account`)**
-    *   Specialiserad kontotyp för sparande.
-    *   Har en räntesats (`_interestRate`) och logik för att applicera ränta på saldot.
+*   **`SavingAccount.cs` (Inherits from `Account`)**
+    *   Specialized account type for savings.
+    *   Has an interest rate (`_interestRate`) and logic to apply interest to the balance.
 
 *   **`Loan.cs`**
-    *   Representerar ett lån.
-    *   Innehåller information om lånebelopp och ränta.
-    *   Innehåller statisk logik för att ansöka om lån och kontrollera om en kund får ta lån (baserat på inkomst/tillgångar).
+    *   Represents a loan.
+    *   Contains information about the loan amount and interest.
+    *   Contains static logic to apply for loans and check if a customer is allowed to take a loan (based on income/assets).
 
 *   **`Currency.cs`**
-    *   Hanterar växelkurser (SEK, USD, EUR).
-    *   Innehåller metoder för att konvertera belopp mellan olika valutor (`ConvertCurrency`).
-    *   Tillåter admin att ändra växelkurser.
+    *   Handles exchange rates (SEK, USD, EUR).
+    *   Contains methods to convert amounts between different currencies (`ConvertCurrency`).
+    *   Allows admins to change exchange rates.
 
-## 4. Transaktionssystem
-Ett system för att hantera överföringar, historik och köer.
+## 4. Transaction System
+A system to handle transfers, history, and queues.
 
 *   **`Transaction.cs`**
-    *   Hanterar logiken för att utföra överföringar (både interna mellan egna konton och externa till andra användare).
-    *   Ansvarar för att skriva ut transaktionshistorik till konsolen.
-    *   Validerar att täckning finns och att kontonummer är korrekta.
+    *   Handles the logic for executing transfers (both internal between own accounts and external to other users).
+    *   Responsible for printing transaction history to the console.
+    *   Validates that sufficient funds exist and that account numbers are correct.
 
 *   **`TransactionHistory.cs`**
-    *   En datamodell (objekt) som sparar information om en genomförd transaktion (avsändare, mottagare, belopp, datum, typ).
+    *   A data model (object) that saves information about a completed transaction (sender, receiver, amount, date, type).
 
 *   **`PendingTransaction.cs`**
-    *   En datamodell för en transaktion som ligger i kö och väntar på att genomföras.
+    *   A data model for a transaction that is currently in the queue waiting to be executed.
 
 *   **`TransactionQueue.cs`**
-    *   Simulerar bankens transaktionstid.
-    *   Håller en kö (`Queue`) av väntande transaktioner.
-    *   `RunQueue()` bearbetar kön och slutför överföringen av pengar mellan konton.
+    *   Simulates the bank's transaction time.
+    *   Holds a queue (`Queue`) of pending transactions.
+    *   `RunQueue()` processes the queue and completes the transfer of money between accounts.
 
-## 5. Gränssnitt och Verktyg
-Hjälpklasser för att hantera konsolgränssnittet.
+## 5. Interfaces and Tools
+Helper classes to handle the console interface.
 
 *   **`Menu.cs`**
-    *   Innehåller alla utskrifter av menyer (Inloggning, Huvudmeny Kund, Huvudmeny Admin).
-    *   Hanterar `switch`-satserna som styr vad som händer när användaren gör ett val i menyn.
+    *   Contains all menu outputs (Login, Main Menu Customer, Main Menu Admin).
+    *   Handles the `switch` statements that control what happens when the user makes a selection in the menu.
 
 *   **`Utilities.cs`**
-    *   Statisk hjälpklass.
-    *   Hanterar inmatning från användaren (säkerställer att man skriver in siffror när det krävs, etc.).
-    *   Sköter färgändringar i konsolen och utskrift av ASCII-art.
+    *   Static helper class.
+    *   Handles input from the user (ensures numbers are entered when required, etc.).
+    *   Manages color changes in the console and printing of ASCII art.
 
-## 6. Databas och Filhantering
-Klasser som hanterar persistens genom att spara och ladda data från textfiler, så att information inte går förlorad när programmet stängs av.
+## 6. Database and File Handling
+Classes that handle persistence by saving and loading data from text files, so information is not lost when the program is turned off.
 
 *   **`DatabaseLogins.cs`**
-    *   Ansvarar för att spara och läsa in användarinformation från filen `Logins.txt`.
-    *   Hanterar användarnamn, lösenord, administratörsstatus samt om användaren är blockerad.
-    *   Säkerställer att användarlistan uppdateras vid programstart.
+    *   Responsible for saving and reading user information from the file `Logins.txt`.
+    *   Handles usernames, passwords, administrator status, and if the user is blocked.
+    *   Ensures the user list is updated at program start.
 
 *   **`DatabaseAccounts.cs`**
-    *   Ansvarar för att spara och läsa in finansiell data från filen `Accounts.txt`.
-    *   Hanterar lagring av kunders vanliga konton (`Account`), sparkonton (`SavingAccount`) och lån (`Loan`).
-    *   Ser till att rätt konton och lån kopplas till rätt kund (`Customer`) när datan laddas in i systemet.
+    *   Responsible for saving and reading financial data from the file `Accounts.txt`.
+    *   Handles storage of customers' regular accounts (`Account`), savings accounts (`SavingAccount`), and loans (`Loan`).
+    *   Ensures the correct accounts and loans are linked to the correct customer (`Customer`) when data is loaded into the system.
