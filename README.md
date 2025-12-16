@@ -1,5 +1,7 @@
 # The Singletons Bank
 
+Trello: https://trello.com/b/P8tRXuvY/bankomat-sut25
+
 This document describes the structure and architecture for **The Singletons Bank**, a console-based banking application written in C#. Below is an overview of the project's classes, objects, and their areas of responsibility.
 
 ## 1. Program Flow and Core
